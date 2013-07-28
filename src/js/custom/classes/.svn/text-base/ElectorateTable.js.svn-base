@@ -1,0 +1,251 @@
+ElectorateTable = function() {
+	this.placeIn
+	this.rows = dataInterface.electorates;
+	this.sortOn = 'name';
+	this.sortDirection = 'Down'
+	this.showSwing = false;
+	this.selectedRow
+	this.selectedKey
+}
+
+ElectorateTable.prototype.buildTable = function(placeIn) {
+	this.placeIn = placeIn;
+	var selfRef = this;
+	var sortFunc = this.sortOn + this.sortDirection;
+	selfRef.rows.sort(selfRef[sortFunc])
+
+	var tableHTML = '<div class="resultsTable"><table>';
+	tableHTML += '<tr>';
+
+	var headers = [];
+
+	headers.push({
+		name : 'Region',
+		key : 'region',
+		intDir : 'Down'
+	})
+
+	if(this.showSwing) {
+		headers.push({
+			name : 'Margin %',
+			key : 'marginSwing',
+			intDir : 'Up'
+		})
+	} else {
+		headers.push({
+			name : 'Margin %',
+			key : 'margin',
+			intDir : 'Up'
+		})
+	}
+
+	headers.push({
+		name : 'Held by',
+		key : 'party',
+		intDir : 'Up'
+	})
+	headers.push({
+		name : 'Electorate',
+		key : 'name',
+		intDir : 'Down'
+	})
+
+	var i = headers.length - 1;
+	while(i >= 0) {
+		var header = headers[i];
+		var className = '';
+		if(this.sortOn == header.key) {
+			className = 'selected ' + this.sortDirection.toLowerCase();
+		}
+		tableHTML += '<th class="' + className + '" key="' + header.key + '" intDir="' + header.intDir + '">' + header.name + '</th>';
+		i--;
+	};
+	tableHTML += '<tr>';
+	
+	
+
+	var i = this.rows.length - 1;
+	while(i >= 0) {
+
+		var electorate = this.rows[i]
+		var partyOnePercent = electorate.partyOnePercent;
+		var partyTwoPercent = electorate.partyTwoPercent;
+		if(this.showSwing) {
+			partyOnePercent = (electorate.newPartyOnePercent) ? electorate.newPartyOnePercent : electorate.partyOnePercent
+			partyTwoPercent = (electorate.newPartyTwoPercent) ? electorate.newPartyTwoPercent : electorate.partyTwoPercent
+		}
+		var margin = Number(partyOnePercent) - 50;
+		winningParty = electorate.partyOneCode;
+		if(margin < 0) {
+			winningParty = electorate.partyTwoCode;
+		}
+		margin = mathExt.roundNumber(Math.abs(margin), 2)
+		//
+		var shownCode = (winningParty == 'ZZZ') ? 'IND' : winningParty
+
+		var extraClasses = '';
+		if(this.selectedKey == electorate.name) {
+			extraClasses = 'selected'
+		}
+		if(this.showSwing) {
+			extraClasses = 'swingRow'
+		}
+		tableHTML += '<tr key="' + electorate.name + '" class="resultRow ' + extraClasses + '"><td class="name">' + electorate.name + '</td><td class="party" style="color:' + dataInterface.parties[winningParty].colour + '">' + shownCode + '</td><td>' + margin + '%</td><td>' + electorate.region + '</td></tr>';
+		i--;
+	}
+	tableHTML += '</table></div>';
+	$(placeIn).html(tableHTML)
+	
+	if(this.selectedKey){
+		this.selectedRow = $(placeIn + ' .resultsTable .selected');
+	}
+	
+	if(!$.browser.msie) {
+		$(placeIn + ' .resultsTable').jScrollPane();
+	}
+
+	$(placeIn + ' .resultsTable table tr th').each(function(index) {
+		$(this).click(function() {
+			if(selfRef.sortOn == $(this).attr('key')) {
+				if(selfRef.sortDirection == "Down") {
+					selfRef.sortDirection = 'Up';
+				} else {
+					selfRef.sortDirection = 'Down';
+
+				}
+
+			} else {
+				selfRef.sortDirection = $(this).attr('intDir')
+			}
+			selfRef.sortOn = $(this).attr('key')
+			selfRef.buildTable(selfRef.placeIn);
+
+		})
+	});
+	if(!this.showSwing) {
+		$(placeIn + " .resultsTable table tr.resultRow").each(function(index) {
+			$(this).click(function() {
+				selfRef.deSelect();
+				selfRef.selectedKey = $(this).attr('key')
+				selfRef.selectedRow = this;
+				$(selfRef.selectedRow).addClass('selected')
+				$(selfRef).trigger('selected', $(this).attr('key'));
+			})
+		});
+	}
+}
+ElectorateTable.prototype.deSelect = function() {
+	if(this.selectedRow) {
+		$(this.selectedRow).removeClass('selected')
+		this.selectedKey = ''
+	}
+}
+
+ElectorateTable.prototype.partyUp = function(a, b) {
+	var A = a.partyOneCode.toLowerCase();
+	var B = b.partyOneCode.toLowerCase();
+
+	if(A < B) {
+		return -1;
+	} else if(A > B) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+ElectorateTable.prototype.partyDown = function(a, b) {
+	var A = b.partyOneCode.toLowerCase();
+	var B = a.partyOneCode.toLowerCase();
+	if(A < B) {
+		return -1;
+	} else if(A > B) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
+ElectorateTable.prototype.regionUp = function(a, b) {
+	var A = a.region.toLowerCase();
+	var B = b.region.toLowerCase();
+	if(A < B) {
+		return -1;
+	} else if(A > B) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+ElectorateTable.prototype.regionDown = function(a, b) {
+	var A = b.region.toLowerCase();
+	var B = a.region.toLowerCase();
+	if(A < B) {
+		return -1;
+	} else if(A > B) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
+ElectorateTable.prototype.nameUp = function(a, b) {
+	var A = a.name.toLowerCase();
+	var B = b.name.toLowerCase();
+	if(A < B) {
+		return -1;
+	} else if(A > B) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+ElectorateTable.prototype.nameDown = function(a, b) {
+	var A = b.name.toLowerCase();
+	var B = a.name.toLowerCase();
+	if(A < B) {
+		return -1;
+	} else if(A > B) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
+ElectorateTable.prototype.marginUp = function(a, b) {
+	var ApartyOnePercent = a.partyOnePercent
+	var ApartyTwoPercent = a.partyTwoPercent
+	var BpartyOnePercent = b.partyOnePercent
+	var BpartyTwoPercent = b.partyTwoPercent
+
+	return (Number(ApartyOnePercent) - Number(ApartyTwoPercent)) - (Number(BpartyOnePercent) - Number(BpartyTwoPercent));
+}
+ElectorateTable.prototype.marginDown = function(a, b) {
+	var ApartyOnePercent = a.partyOnePercent
+	var ApartyTwoPercent = a.partyTwoPercent
+	var BpartyOnePercent = b.partyOnePercent
+	var BpartyTwoPercent = b.partyTwoPercent
+
+	return (Number(BpartyOnePercent) - Number(BpartyTwoPercent)) - (Number(ApartyOnePercent) - Number(ApartyTwoPercent));
+}
+
+ElectorateTable.prototype.marginSwingDown = function(a, b) {
+	var ApartyOnePercent = a.newPartyOnePercent
+	var ApartyTwoPercent = a.newPartyTwoPercent
+	var BpartyOnePercent = b.newPartyOnePercent
+	var BpartyTwoPercent = b.newPartyTwoPercent
+
+	var marginOne = Math.abs(Number(ApartyOnePercent) - 50)
+	var marginTwo = Math.abs(Number(BpartyOnePercent) - 50)
+
+	return marginOne - marginTwo;
+}
+ElectorateTable.prototype.marginSwingUp = function(a, b) {
+	var ApartyOnePercent = a.newPartyOnePercent
+	var ApartyTwoPercent = a.newPartyTwoPercent
+	var BpartyOnePercent = b.newPartyOnePercent
+	var BpartyTwoPercent = b.newPartyTwoPercent
+	var marginOne = Math.abs(Number(ApartyOnePercent) - 50)
+	var marginTwo = Math.abs(Number(BpartyOnePercent) - 50)
+
+	return marginTwo - marginOne;
+};

@@ -1,0 +1,112 @@
+<project name="Build example" default="all" basedir=".">
+    <!-- Setup -->
+    <property name="SRC_DIR" value="src" description="Source folder" />
+    <property name="SRC_CSS_DIR" value="${SRC_DIR}/css" description="CSS source folder" />
+    <property name="SRC_JS_DIR" value="${SRC_DIR}/js" description="JavaScript source folder" />
+    <property name="DIST_DIR" value="dist" description="Output folder for build targets" />
+    <property name="DIST_CSS_DIR" value="${DIST_DIR}/css" description="Output folder for CSS files" />
+    <property name="DIST_JS_DIR" value="${DIST_DIR}/js" description="Output folder for JavaScript files" />
+    <property name="BUILD_DIR" value="build" description="Files needed to build" />
+    <property name="YUI" value="${BUILD_DIR}/yuicompressor-2.4.2.jar" description="YUICompressor" />
+
+    <!-- Files names for distribution -->
+    <property name="CSS" value="${DIST_CSS_DIR}/styles.css" />
+    <property name="CSS_MIN" value="${DIST_CSS_DIR}/styles.min.css" />
+    <property name="JS_CUS" value="${DIST_JS_DIR}/custom.concate.js" />
+    <property name="JS_CUS_MIN" value="${DIST_JS_DIR}/custom.concate.min.js" />
+	<property name="JS_TP" value="${DIST_JS_DIR}/thirdparty.concate.js" />
+	<property name="JS_TP_MIN" value="${DIST_JS_DIR}/thirdparty.concate.min.js" />
+
+    <!-- Targets -->
+    <target name="html" description="Copy HTML files to the output folder">
+        <mkdir dir="${DIST_DIR}" />
+        <copy todir="${DIST_DIR}">
+            <fileset dir="${SRC_DIR}">
+                <include name="*.*" />
+            </fileset>
+        </copy>
+    </target>
+	<!-- Concatenate CSS source files -->
+    <target name="css" depends="html" description="Concatenate CSS source files">
+        <echo message="Building ${CSS}" />
+        <concat destfile="${CSS}">
+        	<fileset dir="${SRC_CSS_DIR}" includes="cssresets.css" />
+        	<fileset dir="${SRC_CSS_DIR}" includes="jquery.autocomplete.css" />
+        	<fileset dir="${SRC_CSS_DIR}" includes="jquery.jscrollpane.css" />
+            <fileset dir="${SRC_CSS_DIR}" includes="styles.css" />
+        </concat>
+        <echo message="${CSS} built." />
+    </target>
+	<!-- Minimize CSS files-->
+    <target name="css.min" depends="css" description="Minimize CSS files">
+        <echo message="Building ${CSS_MIN}" />
+        <apply executable="java" parallel="false" verbose="true" dest="${DIST_CSS_DIR}">
+            <fileset dir="${DIST_CSS_DIR}">
+                <include name="styles.css" />
+            </fileset>
+            <arg line="-jar" />
+            <arg path="${YUI}" />
+            <arg value="--charset" />
+            <arg value="ANSI" />
+            <arg value="-o" />
+            <targetfile />
+            <mapper type="glob" from="styles.css" to="styles.min.css" />
+        </apply>
+        <echo message="${CSS_MIN} built." />
+    </target>
+	
+    <target name="js" depends="html" description="Concatenate JavaScript source files">
+    	<!-- Concatenate Custom JavaScript source files -->
+        <echo message="Building ${JS_CUS}" />
+        <concat destfile="${JS_CUS}">
+            <fileset dir="${SRC_JS_DIR}/custom/" includes="*.*,*/**" />
+        </concat>
+        <echo message="${JS_CUS} built." />
+    	<!-- Concatenate Thirdpary JavaScript source files -->
+	  <echo message="Building ${JS_TP}" />
+	    <concat destfile="${JS_TP}">
+	        <fileset dir="${SRC_JS_DIR}/thirdparty/" includes="*.*,*/**" />
+	    </concat>
+	    <echo message="${JS_TP} built." />
+    </target>
+	
+    <target name="js.min" depends="js" description="Minimize JavaScript files">
+    	<!-- Minimize Custom JavaScript files -->
+        <echo message="Building ${JS_CUS_MIN}" />
+        <apply executable="java" parallel="false" verbose="true" dest="${DIST_JS_DIR}">
+            <fileset dir="${DIST_JS_DIR}">
+                <include name="custom.concate.js" />
+            </fileset>
+            <arg line="-jar" />
+            <arg path="${YUI}" />
+            <arg value="--charset" />
+            <arg value="ANSI" />
+            <arg value="-o" />
+            <targetfile />
+            <mapper type="glob" from="*.js" to="custom.concate.min.js" />
+        </apply>
+        <echo message="${JS_CUS_MIN} built." />
+    	<!-- Minimize Thirdparty JavaScript files -->
+    	<echo message="Building ${JS_TP_MIN}" />
+        <apply executable="java" parallel="false" verbose="true" dest="${DIST_JS_DIR}">
+            <fileset dir="${DIST_JS_DIR}">
+                <include name="thirdparty.concate.js" />
+            </fileset>
+            <arg line="-jar" />
+            <arg path="${YUI}" />
+            <arg value="--charset" />
+            <arg value="ANSI" />
+            <arg value="-o" />
+            <targetfile />
+            <mapper type="glob" from="*.js" to="thirdparty.concate.min.js" />
+        </apply>
+        <echo message="${JS_TP_MIN} built." />	
+    </target>
+    <target name="clean">
+        <delete dir="${DIST_DIR}" />
+    </target>
+
+    <target name="all" depends="clean, html, css, css.min, js, js.min">
+        <echo message="Build complete." />
+    </target>
+</project>

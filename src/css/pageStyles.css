@@ -1,0 +1,27 @@
+#section-header {display: none;}
+#content-1 .group-header {border:none;
+background: url('http://media.theaustralian.com.au/multimedia/2012/01/qld-elections/img/sprites.png');
+margin: 0;
+height: 95px;
+border-bottom: 1px solid #BEBDB4;
+}
+#content-1 .group .group-header h2 {display:none;}
+#content-1 .group-header .more-links { left: 7px;}
+#content-1 .group-header .more-links li {
+float:left; 
+text-indent: -9999px;
+background: red;
+width: 115px;
+height: 27px;
+padding: 0;
+margin: 20px 0 0 0;
+background: url('http://media.theaustralian.com.au/multimedia/2012/01/qld-elections/img/sprites.png') -872px -329px;
+cursor: pointer;
+}
+#content-1 .group-header .more-links li:hover {
+	background-position:-872px -365px;
+}
+
+#content-1 .group-header  .js-socialise-wrapper {border:none; width: 350px; float: right; margin: 35px 0 0 0; }
+#content-1 .group-header  .js-socialise {float: right;}
+#content-1 .module.iframe  {margin: 0px;}

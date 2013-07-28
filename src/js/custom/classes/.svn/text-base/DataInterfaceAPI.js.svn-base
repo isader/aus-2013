@@ -1,0 +1,605 @@
+DataInterface = function() {
+	// var
+	this.useAPI = false;
+	this.dataAPIURL = 'http://uat.api.ni.news.com.au/mm/dataset/';
+	// data
+	this.electorates = [];
+	this.electoratesLoaded = false;
+	this.canditates = [];
+	this.canditatesLoaded = false;
+	this.searchList = [];
+	// news poll
+	this.newspollLoaded = false;
+	this.qldParties = [];
+	this.primary = [];
+	this.satisfaction = [];
+	this.betterPM = [];
+	this.twoPartyPerferred = [];
+	// parties
+	this.parties = {}
+	this.parties['ALP'] = {
+		name : 'Australian Labor Party',
+		colour : '#ef5b46'
+	};
+	this.parties['LNP'] = {
+		name : 'Liberal National Party',
+		colour : '#277e9c'
+	};
+	this.parties['GRN'] = {
+		name : 'The Greens',
+		colour : '#8da13e'
+	};
+	this.parties['KAP'] = {
+		name : "Katter's Australian Party",
+		colour : '#8da13e'
+	};
+	this.parties['DSQ'] = {
+		name : 'DS4SEQ',
+		colour : '#000000'
+	};
+	this.parties['FFP'] = {
+		name : 'Family First Party',
+		colour : '#000000'
+	};
+	this.parties['ONP'] = {
+		name : 'One Nation',
+		colour : '#dfded2'
+	};
+	this.parties['ZZZ'] = {
+		name : 'Other Candidates',
+		colour : '#999999'
+	};
+	// regions
+
+	this.regions = []
+
+	this.regions.push({
+		name : 'Brisbane North',
+		latlog : new google.maps.LatLng(-27.351033176215836, 153.04298400878906),
+		zoom : 9
+	})
+	this.regions.push({
+		name : 'Brisbane South',
+		latlog : new google.maps.LatLng(-27.60871316531578, 153.050537109375),
+		zoom : 9
+	})
+	this.regions.push({
+		name : 'Cairns Region',
+		latlog : new google.maps.LatLng(-16.9233991, 145.773851),
+		zoom : 7
+	})
+	this.regions.push({
+		name : 'Darling Downs Region',
+		latlog : new google.maps.LatLng(-27.5299906, 150.5820676),
+		zoom : 7
+	})
+	this.regions.push({
+		name : 'Gold Coast',
+		latlog : new google.maps.LatLng(-28.0410141, 153.297505),
+		zoom : 8
+	})
+	this.regions.push({
+		name : 'Hervey Bay Region',
+		latlog : new google.maps.LatLng(-25.28940455649481, 152.8314971923828),
+		zoom : 7
+	})
+	this.regions.push({
+		name : 'Ipswich Region',
+		latlog : new google.maps.LatLng(-27.6140934, 152.7584716),
+		zoom : 7
+	})
+	this.regions.push({
+		name : 'Mackay Region',
+		latlog : new google.maps.LatLng(-21.1412101, 149.1856253),
+		zoom : 7
+	})
+	this.regions.push({
+		name : 'Rockhampton Region',
+		latlog : new google.maps.LatLng(-23.3776546, 150.5099759),
+		zoom : 7
+	})
+	this.regions.push({
+		name : 'Sunshine Coast',
+		latlog : new google.maps.LatLng(-26.5727351, 152.9205918),
+		zoom : 7
+	})
+	this.regions.push({
+		name : 'Townsville Region',
+		latlog : new google.maps.LatLng(-19.2576223, 146.8178787),
+		zoom : 7
+	})
+	this.regions.push({
+		name : 'West Queensland',
+		latlog : new google.maps.LatLng(-23.60426184707018, 142.03125),
+		zoom : 6
+	})
+	// events
+	this.ELECTORATES_LOADED = 'electorates_loaded';
+	this.NEWSPOLL_LOADED = 'newspoll_loaded';
+}
+/**
+ * getRegion
+ * @param teh region name
+ */
+DataInterface.prototype.getRegion = function(region) {
+	for(var i = 0; i < this.regions.length; i++) {
+		if(this.regions[i].name.toLowerCase() == region.toLowerCase()) {
+			return this.regions[i];
+		}
+	};
+	console.log(region + 'not found')
+}
+/**
+ * Loads and returns the electorates
+ * @param startOffset offset row to start the load from the DATA API
+ */
+DataInterface.prototype.requestElectorates = function() {
+	if(this.electoratesLoaded) {
+		$(this).trigger(this.ELECTORATES_LOADED);
+	} else {
+		this.loadElectorates();
+	}
+}
+/**
+ *
+ */
+DataInterface.prototype.loadElectorates = function(startOffset) {
+	var selfRef = this;
+	var startOffset = (startOffset == null) ? 1 : startOffset;
+	var searchTerms = {}
+	var url = selfRef.dataAPIURL + 'qld_electorates/select';
+	var dataType = "jsonp";
+	var data = {
+		format : "json",
+		args : {
+			offset : startOffset,
+			count : 100
+		}
+	}
+
+	if(!this.useAPI) {
+		url = 'json/electorates.json';
+		dataType = "json";
+		data = {};
+	}
+
+	$.ajax({
+		url : url,
+		dataType : dataType,
+		data : data,
+		success : function(data) {
+
+			// Push the loaded data into an array
+			for(var i = 0; i < data.items.length; i++) {
+				//selfRef.electorates.push(data.items[i]);
+				//var districtName =  data.items[i].name.toLowerCase();
+				//selfRef.electorates[districtName] = data.items[i]
+
+				var electorate = data.items[i]
+				selfRef.electorates.push(electorate);
+
+				if(searchTerms[electorate.name.toProperCase()] == null) {
+					searchTerms[electorate.name.toProperCase()] = electorate.name.toProperCase()
+				}
+
+				var suburbs = electorate.suburbs.split(',');
+				var p = suburbs.length - 1;
+				while(p >= 0) {
+
+					var sub = suburbs[p].toProperCase()
+					if(searchTerms[sub] == null) {
+						searchTerms[sub] = sub
+					}
+					p--;
+				}
+
+				var postCodes = electorate.postCodes.split(',');
+				var r = postCodes.length - 1;
+				while(r >= 0) {
+				
+					var postcode = postCodes[r]
+					if(searchTerms[postcode] == null) {
+						searchTerms[postcode] = postcode
+					}
+					r--;
+				}
+
+			};
+			
+			for(var key in searchTerms){
+				selfRef.searchList.push(searchTerms[key])
+			}
+
+			if(data.count < 100 || !selfRef.useAPI) {
+				// All the election data has been loaded
+				//selfRef.loadLastElectionResults();
+				//selfRef.electoratesLoaded = true;
+				//$(selfRef).trigger(selfRef.ELECTORATES_LOADED);
+				selfRef.loadCandidates();
+			} else {
+				// Request more rows
+				selfRef.loadElectorates(startOffset + 100);
+			}
+		},
+		error : function(data) {
+
+			console.log('error getAllRows');
+		}
+	});
+}
+/**
+ * Loads and returns the electorates
+ * @param startOffset offset row to start the load from the DATA API
+ */
+DataInterface.prototype.requestNewspoll = function() {
+
+	if(this.newspollLoaded) {
+		$(this).trigger(this.NEWSPOLL_LOADED);
+	} else {
+		this.loadPrimary();
+	}
+}
+/**
+ * load the primary vote newspoll
+ */
+DataInterface.prototype.loadPrimary = function(startOffset) {
+	var selfRef = this;
+	var startOffset = (startOffset == null) ? 1 : startOffset;
+
+	var url = selfRef.dataAPIURL + 'newspoll_qld_primary/select';
+	var dataType = "jsonp";
+	var data = {
+		format : "json",
+		args : {
+			offset : startOffset,
+			count : 100
+		}
+	}
+
+	if(!this.useAPI) {
+		url = 'json/newspoll_qld_primary.json';
+		dataType = "json";
+		data = {};
+	}
+
+	$.ajax({
+		url : url,
+		dataType : dataType,
+		data : data,
+		success : function(data) {
+
+			// Push the loaded data into an array
+			for(var i = 0; i < data.items.length; i++) {
+				//selfRef.electorates.push(data.items[i]);
+				//var districtName =  data.items[i].name.toLowerCase();
+				//selfRef.electorates[districtName] = data.items[i]
+				selfRef.primary.push(data.items[i]);
+			};
+			if(data.count < 100 || !selfRef.useAPI) {
+				// All the election data has been loaded
+				//selfRef.loadLastElectionResults();
+				//selfRef.electoratesLoaded = true;
+				//$(selfRef).trigger(selfRef.ELECTORATES_LOADED);
+				selfRef.loadSatisfaction();
+			} else {
+				// Request more rows
+				selfRef.loadPrimary(startOffset + 100);
+			}
+		},
+		error : function(data) {
+
+			console.log('error get primary');
+		}
+	});
+}
+/**
+ * load the pm satisfaction
+ */
+DataInterface.prototype.loadSatisfaction = function(startOffset) {
+	var selfRef = this;
+	var startOffset = (startOffset == null) ? 1 : startOffset;
+
+	var url = selfRef.dataAPIURL + 'newspoll_qld_satisfaction/select';
+	var dataType = "jsonp";
+	var data = {
+		format : "json",
+		args : {
+			offset : startOffset,
+			count : 100
+		}
+	}
+
+	if(!this.useAPI) {
+		url = 'json/newspoll_qld_satisfaction.json';
+		dataType = "json";
+		data = {};
+	}
+
+	$.ajax({
+		url : url,
+		dataType : dataType,
+		data : data,
+		success : function(data) {
+
+			// Push the loaded data into an array
+			for(var i = 0; i < data.items.length; i++) {
+				//selfRef.electorates.push(data.items[i]);
+				//var districtName =  data.items[i].name.toLowerCase();
+				//selfRef.electorates[districtName] = data.items[i]
+				selfRef.satisfaction.push(data.items[i]);
+			};
+			if(data.count < 100 || !selfRef.useAPI) {
+				// All the election data has been loaded
+				//selfRef.loadLastElectionResults();
+				//selfRef.electoratesLoaded = true;
+				//$(selfRef).trigger(selfRef.ELECTORATES_LOADED);
+				selfRef.loadbetterPM();
+			} else {
+				// Request more rows
+				selfRef.loadSatisfaction(startOffset + 100);
+			}
+		},
+		error : function(data) {
+			console.log(data);
+			console.log('error get pmSatisfaction');
+		}
+	});
+}
+/**
+ * load the better bm
+ */
+DataInterface.prototype.loadbetterPM = function(startOffset) {
+	var selfRef = this;
+	var startOffset = (startOffset == null) ? 1 : startOffset;
+
+	var url = selfRef.dataAPIURL + 'newspoll_qld_better_pm/select';
+	var dataType = "jsonp";
+	var data = {
+		format : "json",
+		args : {
+			offset : startOffset,
+			count : 100
+		}
+	}
+
+	if(!this.useAPI) {
+		url = 'json/newspoll_qld_better_pm.json';
+		dataType = "json";
+		data = {};
+	}
+
+	$.ajax({
+		url : url,
+		dataType : dataType,
+		data : data,
+		success : function(data) {
+
+			// Push the loaded data into an array
+			for(var i = 0; i < data.items.length; i++) {
+				//selfRef.electorates.push(data.items[i]);
+				//var districtName =  data.items[i].name.toLowerCase();
+				//selfRef.electorates[districtName] = data.items[i]
+				selfRef.betterPM.push(data.items[i]);
+			};
+			if(data.count < 100) {
+				// All the election data has been loaded
+				//selfRef.loadLastElectionResults();
+				//selfRef.electoratesLoaded = true;
+				//$(selfRef).trigger(selfRef.ELECTORATES_LOADED);
+				selfRef.loadTwoParty();
+			} else {
+				// Request more rows
+				selfRef.loadbetterPM(startOffset + 100);
+			}
+		},
+		error : function(data) {
+			console.log(data);
+			console.log('error get opp satisfaction');
+		}
+	});
+}
+/**
+ * load 2 party perferred
+ */
+DataInterface.prototype.loadTwoParty = function(startOffset) {
+	var selfRef = this;
+	var startOffset = (startOffset == null) ? 1 : startOffset;
+
+	var url = selfRef.dataAPIURL + 'newspoll_qld_2pp/select';
+	var dataType = "jsonp";
+	var data = {
+		format : "json",
+		args : {
+			offset : startOffset,
+			count : 100
+		}
+	}
+
+	if(!this.useAPI) {
+		url = 'json/newspoll_qld_2pp.json';
+		dataType = "json";
+		data = {};
+	}
+
+	$.ajax({
+		url : url,
+		dataType : dataType,
+		data : data,
+		success : function(data) {
+
+			// Push the loaded data into an array
+			for(var i = 0; i < data.items.length; i++) {
+				//selfRef.electorates.push(data.items[i]);
+				//var districtName =  data.items[i].name.toLowerCase();
+				//selfRef.electorates[districtName] = data.items[i]
+				selfRef.twoPartyPerferred.push(data.items[i]);
+			};
+			if(data.count < 100 || !selfRef.useAPI) {
+				// All the election data has been loaded
+				//selfRef.loadLastElectionResults();
+				selfRef.newspollLoaded = true;
+				$(selfRef).trigger(selfRef.NEWSPOLL_LOADED);
+
+			} else {
+				// Request more rows
+				selfRef.loadTwoParty(startOffset + 100);
+			}
+		},
+		error : function(data) {
+			console.log(data);
+			console.log('error get opp satisfaction');
+		}
+	});
+}
+/**
+ * load Candidates
+ */
+DataInterface.prototype.loadCandidates = function(startOffset) {
+
+	var selfRef = this;
+	var startOffset = (startOffset == null) ? 1 : startOffset;
+
+	var url = selfRef.dataAPIURL + 'qld_candidate/select';
+	var dataType = "jsonp";
+	var data = {
+		format : "json",
+		args : {
+			offset : startOffset,
+			count : 100
+		}
+	}
+
+	if(!this.useAPI) {
+		url = 'json/candidates.json';
+		dataType = "json";
+		data = {};
+	}
+
+	$.ajax({
+		url : url,
+		dataType : dataType,
+		data : data,
+		success : function(data) {
+			// Push the loaded data into an array
+			for(var i = 0; i < data.items.length; i++) {
+				//selfRef.electorates.push(data.items[i]);
+				//var districtName =  data.items[i].name.toLowerCase();
+				//selfRef.electorates[districtName] = data.items[i]
+				selfRef.canditates.push(data.items[i]);
+			};
+			if(data.count < 100 || !selfRef.useAPI) {
+				// All the election data has been loaded
+				//selfRef.loadLastElectionResults();
+				selfRef.electoratesLoaded = true;
+				$(selfRef).trigger(selfRef.ELECTORATES_LOADED);
+			} else {
+				// Request more rows
+				selfRef.loadCandidates(startOffset + 100);
+			}
+		},
+		error : function(data) {
+			console.log(data);
+			console.log('error getAllRows');
+		}
+	});
+}
+/**
+ * Find Electorate
+ */
+DataInterface.prototype.findElectorateData = function(electorate) {
+	for(var i = 0; i < this.electorates.length; i++) {
+		if(electorate.toLowerCase() == this.electorates[i].name.toLowerCase()) {
+			return this.electorates[i];
+		}
+	}
+}
+/**
+ * Find Electorate By PostCode
+ */
+DataInterface.prototype.findElectorateByPostCode = function(postCode) {
+	var e = this.electorates.length - 1
+	while(e >= 0) {
+		var electorate = this.electorates[e];
+		var postCodes = this.electorates[e].postCodes.split(',');
+		var p = postCodes.length - 1;
+		while(p >= 0) {
+			if(postCode == postCodes[p]) {
+				return electorate;
+			}
+			p--;
+		}
+		e--;
+	}
+}
+/**
+ * Find Electorate By Suburb
+ */
+DataInterface.prototype.findElectorateBySuburb = function(suburb) {
+	var e = this.electorates.length - 1
+	while(e >= 0) {
+		var electorate = this.electorates[e];
+		var suburbs = this.electorates[e].suburbs.split(',');
+		var p = suburbs.length - 1;
+		while(p >= 0) {
+			if(suburb.toLowerCase() == suburbs[p].toLowerCase()) {
+				return electorate;
+			}
+			p--;
+		}
+		e--;
+	}
+}
+/**
+ * get electorates in region
+ * @param teh region name
+ */
+DataInterface.prototype.getElectorates = function(region) {
+	var electorates = [];
+	for(var i = 0; i < this.electorates.length; i++) {
+		if(this.electorates[i].region == region) {
+			electorates.push(this.electorates[i]);
+		}
+	};
+	return electorates;
+}
+/**
+ * Find getCadidates
+ */
+DataInterface.prototype.getCadidates = function(electorate) {
+	var canditatesList = [];
+	for(var i = 0; i < this.canditates.length; i++) {
+
+		if(electorate.toLowerCase() == this.canditates[i].electorate.toLowerCase()) {
+			canditatesList.push(this.canditates[i]);
+		}
+	}
+	return canditatesList;
+}
+/**
+ * Loads and the last election results and merges them with the electorates
+ */
+DataInterface.prototype.loadLastElectionResults = function() {
+	var selfRef = this;
+
+	$.ajax({
+		type : "GET",
+		url : "publicResults.xml",
+		dataType : "xml",
+		success : function(xml) {
+			// loop through the results and match them up with the districts
+			$(xml).find("district").each(function() {
+				var districtName = $(this).attr("name").toLowerCase();
+				// find the electorate
+				if(selfRef.electorates[districtName]) {
+					selfRef.electorates[districtName].result = this;
+				} else {
+					console.log('district ' + districtName + ' was not found');
+				}
+			});
+			selfRef.electoratesLoaded = true;
+			$(selfRef).trigger(selfRef.ELECTORATES_LOADED);
+		}
+	});
+
+}
+var dataInterface = new DataInterface();
