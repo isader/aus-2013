@@ -25,7 +25,8 @@ ElectoratesPanel.prototype.create = function(id) {
 	panelHTML += '<div class="results infoPanel"><h3>Seats to watch</h3><div class="keyseats"></div></div>';
 	panelHTML += '<div class="electorate infoPanel"><h3 class="back">back to Seats to watch</h3><div class="seat"></div></div>';
 	panelHTML += '</div></div>';
-	panelHTML += '</div><div id="graphToolTip">ToolTip</div>';
+	panelHTML += '</div><div class="table-seats"></div>';
+	panelHTML += '<div id="graphToolTip">ToolTip</div>';
 	//'<div class="leftCol"></div><div class="rightCol"></div>';
 	return panelHTML;
 }
@@ -74,7 +75,7 @@ ElectoratesPanel.prototype.opened = function($data) {
 	
 	this.electorateTable.rows = dataInterface.electorates;
 	//this.sortOn = 'margin';
-	this.electorateTable.buildTable("#panel-electorates .leftCol")
+	this.electorateTable.buildTable("#panel-electorates .table-seats")
 	this.electorateTable.deSelect();
 	//
 	$('#panel-electorates input').val(this.searchMessage);
@@ -184,7 +185,7 @@ ElectoratesPanel.prototype.build = function() {
 			return [row.suburb, row.postcode];
 		}
 	}}).result(function(event, item) {
-		var electorate = item[0];
+		var electorate = item.name;
 		$(this).val(selfRef.searchMessage);
 		selfRef.openElectorate(electorate);
 	});
@@ -214,11 +215,13 @@ ElectoratesPanel.prototype.build = function() {
 	//tabs
 	$('#panel-electorates .mapTab').click(function() {
 		$(selfRef).trigger('showMap');
+		$('#panel-electorates .table-seats').hide();
 		$('#panel-electorates .mapTab').addClass('selected');
 		$('#panel-electorates .tableTab').removeClass('selected');
 	});
 	$('#panel-electorates .tableTab').click(function() {
 		$(selfRef).trigger('hideMap');
+		$('#panel-electorates .table-seats').show();
 		$('#panel-electorates .tableTab').addClass('selected');
 		$('#panel-electorates .mapTab').removeClass('selected');
 	});
@@ -229,7 +232,7 @@ ElectoratesPanel.prototype.build = function() {
  * Open Electorate
  */
 ElectoratesPanel.prototype.buildTable = function() {
-	this.electorateTable.buildTable("#panel-electorates .leftCol")
+	this.electorateTable.buildTable("#panel-electorates .table-seats")
 	var selfRef = this;	
 }
 /**
@@ -240,8 +243,8 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 	
 	
 	var selfRef = this;
-	var electorateData = dataInterface.findElectorateData(electorate)
-	
+	var electorateData = dataInterface.findElectorateData(electorate);
+
 	if(!electorateData) { 
 		if (!isNaN(electorate)){
 			electorateData = dataInterface.findElectorateByPostCode(electorate)
@@ -269,7 +272,6 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 				extraClass = 'last';
 			}
 			var cadidate = cadidatesList[i];
-			console.log(candidate);
 			var cCode = (cadidate.partyCode=='ZZZ') ? 'IND' : cadidate.partyCode;
 			electorateHTML += "<li class='"+extraClass+"'><span style='color:" + dataInterface.parties[cadidate.partyCode].colour + "'> " + cCode + "</span>" + cadidate.candidate+ "</li>";
 		};
@@ -282,7 +284,7 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 		electorateHTML += "<div class='clear'></div>";
 		electorateHTML += "<div class='graph'><h4>Population by Age %</h4>";
 		electorateHTML += "<div class='graphArea'>";
-
+console.log(electorateData);
 		var ageGroups = []
 		ageGroups.push({
 			value : electorateData.age0to14,
@@ -335,14 +337,14 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 		regionMap.selectRegion(electorateData.seat)
 	
 		// add events to the regiosn
-	$("#panel-" + this.id + " .rightCol .viewRegion").each(function(index) {
-		$(this).click(function() {
-			selfRef.openRegion($(this).attr('key'));
-			var regionData = dataInterface.getRegion($(this).attr('key'))
-			
-			regionMap.zoomToLoction(regionData.latlog, regionData.zoom)
+		$("#panel-" + this.id + " .rightCol .viewRegion").each(function(index) {
+			$(this).click(function() {
+				selfRef.openRegion($(this).attr('key'));
+				var regionData = dataInterface.getRegion($(this).attr('key'))
+				
+				regionMap.zoomToLoction(regionData.latlog, regionData.zoom)
+			});
 		});
-	});
 	
 		
 	}
@@ -427,7 +429,6 @@ ElectoratesPanel.prototype.closeRegion = function(region) {
  * Electorate over
  */
 ElectoratesPanel.prototype.electorateOver = function(electorateName) {
-console.log(electorateName);
 	var electorate = dataInterface.findElectorateData(electorateName);
 	var partyOnePercent = Number(electorate.partyOnePercent)
 	var partyTwoPercent = Number(electorate.partyTwoPercent)

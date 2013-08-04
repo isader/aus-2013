@@ -96,7 +96,7 @@ RegionMap.prototype.buildMap = function(id) {
 	var myOptions = {
 		zoom : this.orgZoom,
 		minZoom : this.orgZoom,
-		panControl : false,
+		panControl : true,
 		scaleControl : false,
 		zoomControl : true,
 		mapTypeControl: false,
@@ -134,6 +134,68 @@ RegionMap.prototype.buildMap = function(id) {
 		return isCCW;
 	};
 
+	var _assignRegion = function (regionPolygon, regionName, electorateData, bounds) {
+		var marker;
+
+		if(electorateData.keyseat == 0) {
+			marker = new google.maps.Marker({
+				map : selfRef.map,
+				draggable : false,
+				position : bounds.getCenter(),
+				visible : false
+			});
+		}
+		else {
+			var image = 'img/keySeatMarker.png';
+
+			marker = new google.maps.Marker({
+				position : bounds.getCenter(),
+				map : selfRef.map,
+				title : regionName,
+				icon : image,
+				id : count
+			});
+
+			google.maps.event.addListener(marker, "click", function (evt) {
+				console.log('Marker Clicked')
+				$(selfRef).trigger('selected', regionName);
+			});
+		}
+
+		selfRef.districtMarkers[regionName] = marker;
+
+		google.maps.event.addListener(regionPolygon, "click", function (evt) {
+			$(selfRef).trigger('selected', regionName);
+		});
+
+		google.maps.event.addListener(regionPolygon, "mouseover", function (evt) {
+			selfRef.overName = regionName;
+			$(selfRef).stop();
+			$(selfRef).animate({
+				count : selfRef.selfRef + 1000
+			}, 500, function() {
+				selfRef.overInfo();
+			});
+
+			if(selfRef.selectedRegion != this) {
+				this.setOptions({
+					fillOpacity : 0.8
+				});
+			}
+		});
+
+		google.maps.event.addListener(regionPolygon, "mouseout", function (evt) {
+			selfRef.closeInfo(regionName);
+			$(selfRef).stop();
+			if (selfRef.selectedRegion != this) {
+				this.setOptions({
+					fillOpacity : 0.6
+				});
+			}
+		});
+
+		regionPolygon.setMap(selfRef.map);
+	};
 
 	var geojson = mapRegions;
 	var obj = [];
@@ -192,70 +254,12 @@ RegionMap.prototype.buildMap = function(id) {
 				googleObj = new google.maps.Polygon(opts);
 				selfRef.districtPolygons[regionName] = googleObj;
 
-				(function (regionName) {
-					var marker;
-					if(electorateData.keyseat == 0) {
-						marker = new google.maps.Marker({
-							map : selfRef.map,
-							draggable : false,
-							position : bounds.getCenter(),
-							visible : false
-						});
-					}
-					else {
-						var image = 'img/keySeatMarker.png';
-						marker = new google.maps.Marker({
-							position : bounds.getCenter(),
-							map : selfRef.map,
-							title : regionName,
-							icon : image,
-							id : count
-						});
-						google.maps.event.addListener(marker, "click", function(evt) {
-							console.log('Marker Clicked')
-							$(selfRef).trigger('selected', regionName);
-						});
-					}
-
-					selfRef.districtMarkers[regionName.replace('\'', '')] = marker;
-
-					google.maps.event.addListener(googleObj, "click", function(evt) {
-						$(selfRef).trigger('selected', regionName);
-					});
-
-					google.maps.event.addListener(googleObj, "mouseover", function(evt) {
-						selfRef.overName = regionName;
-						$(selfRef).stop();
-						$(selfRef).animate({
-							count : selfRef.selfRef + 1000
-						}, 500, function() {
-							selfRef.overInfo();
-						});
-						if(selfRef.selectedRegion != this) {
-							this.setOptions({
-								fillOpacity : 0.8
-							});
-
-						}
-					});
-
-					google.maps.event.addListener(googleObj, "mouseout", function(evt) {
-						selfRef.closeInfo(regionName);
-						$(selfRef).stop();
-						if(selfRef.selectedRegion != this) {
-							this.setOptions({
-								fillOpacity : 0.6
-							});
-						}
-					});
-
-				})(regionName);
-				
-				googleObj.setMap(selfRef.map);
+				_assignRegion(googleObj, regionName, electorateData, bounds);
 
 				if (geojsonProperties) {
 					googleObj.set("geojsonProperties", geojsonProperties);
 				}
+
 				break;
 				
 			case "MultiPolygon":
@@ -280,14 +284,16 @@ RegionMap.prototype.buildMap = function(id) {
 							interiorDirection = _ccw(path);
 							if(exteriorDirection == interiorDirection){
 								paths.push(path.reverse());
-							}else{
+							}
+							else{
 								paths.push(path);
 							}
 						}
 						else{
 							if(exteriorDirection == interiorDirection){
 								paths.push(path.reverse());
-							}else{
+							}
+							else{
 								paths.push(path);
 							}
 						}
@@ -297,7 +303,13 @@ RegionMap.prototype.buildMap = function(id) {
 					googleObj.push(new google.maps.Polygon(opts));
 				}
 				if (geojsonProperties) {
+					selfRef.districtPolygons[regionName.replace('\'', '')] = googleObj[0];
+					_assignRegion(googleObj[0], regionName, electorateData, bounds);
+
+					googleObj[0].set("geojsonProperties", geojsonProperties);
+
 					/**
+
 					var areas = [];
 					for (var k = 0; k < googleObj.length; k++) {
 						areas.push(google.maps.geometry.spherical.computeArea(googleObj[k].getPath()));
@@ -312,9 +324,8 @@ RegionMap.prototype.buildMap = function(id) {
 					    }
 					}
 					console.log(mI, m);
-					**/
 
-					selfRef.districtPolygons[regionName.replace('\'', '')] = googleObj[0];
+					---------------------------
 
 					(function (regionName) {
 						var marker;
@@ -359,7 +370,6 @@ RegionMap.prototype.buildMap = function(id) {
 								this.setOptions({
 									fillOpacity : 0.8
 								});
-
 							}
 						});
 
@@ -376,8 +386,7 @@ RegionMap.prototype.buildMap = function(id) {
 					})(regionName.replace('\'', ''));
 
 					googleObj[0].setMap(selfRef.map);
-
-					googleObj[0].set("geojsonProperties", geojsonProperties);
+					**/
 				}
 				break;
 				
@@ -386,8 +395,6 @@ RegionMap.prototype.buildMap = function(id) {
 		}
 		count++;
 	}
-
-	console.log(this.districtPolygons);
 
 /**
 

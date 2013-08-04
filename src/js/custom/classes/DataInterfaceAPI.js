@@ -120,13 +120,13 @@ DataInterface = function() {
 		name: 'nsw',
 		fullName : 'New South Wales',
 		latlog : new google.maps.LatLng(-31.253218, 146.921099),
-		zoom : 8
+		zoom : 6
 	})
 	this.regions.push({
 		name: 'qld',
 		fullName : 'Queensland',
 		latlog : new google.maps.LatLng(-20.917574, 142.702796),
-		zoom : 7
+		zoom : 5
 	})
 	this.regions.push({
 		name: 'vic',
@@ -138,7 +138,7 @@ DataInterface = function() {
 		name: 'wa',
 		fullName : 'Western Australia',
 		latlog : new google.maps.LatLng(-27.672817, 121.628310),
-		zoom : 7
+		zoom : 5
 	})
 	this.regions.push({
 		name: 'tas',
@@ -156,7 +156,7 @@ DataInterface = function() {
 		name: 'nt',
 		fullName : 'Northen Territories',
 		latlog : new google.maps.LatLng(-19.491411, 132.550960),
-		zoom : 7
+		zoom : 5
 	})
 	this.regions.push({
 		name: 'sa',
@@ -209,7 +209,7 @@ DataInterface.prototype.loadElectorates = function(startOffset) {
 	}
 
 	if(!this.useAPI) {
-		url = 'json/federal_electorals.json';
+		url = 'json/federal_seats.json';
 		dataType = "json";
 		data = {};
 	}
@@ -649,7 +649,6 @@ DataInterface.prototype.getElectorates = function(region) {
 DataInterface.prototype.getCadidates = function(electorate) {
 	var canditatesList = [];
 	for(var i = 0; i < this.canditates.length; i++) {
-
 		if(electorate.toLowerCase() == this.canditates[i].electorate.toLowerCase()) {
 			canditatesList.push(this.canditates[i]);
 		}

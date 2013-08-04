@@ -53,7 +53,7 @@ SwingPanel.prototype.build = function() {
 		var electorate = dataInterface.electorates[i]
 		// Colour Electorates by winner of last election
 		var declaredPartyCode = electorate.partyOneCode;
-		regionMap.colourRegion(electorate.name, dataInterface.parties[declaredPartyCode].colour);
+		regionMap.colourRegion(electorate.seat, dataInterface.parties[declaredPartyCode].colour);
 	}
 	this.swingChange(0);
 	this.buildTable();
@@ -143,8 +143,7 @@ SwingPanel.prototype.swingChange = function(percent) {
 		}
 		
 		// Colour electorates by winner of last election
-		
-		regionMap.colourRegion(electiorateData.name, dataInterface.parties[seatWinner].colour);
+		regionMap.colourRegion(electiorateData.seat, dataInterface.parties[seatWinner].colour);
 		//
 		l--;
 	}
