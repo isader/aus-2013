@@ -7,6 +7,7 @@ ElectoratesPanel = function() {
 	this.electorateTable = new ElectorateTable();
 	var selfRef = this;
 	$(this.electorateTable).bind('selected',function(e,key){
+		console.log(key);
 		selfRef.openElectorate(key);
 	})
 }
@@ -268,6 +269,7 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 				extraClass = 'last';
 			}
 			var cadidate = cadidatesList[i];
+			console.log(candidate);
 			var cCode = (cadidate.partyCode=='ZZZ') ? 'IND' : cadidate.partyCode;
 			electorateHTML += "<li class='"+extraClass+"'><span style='color:" + dataInterface.parties[cadidate.partyCode].colour + "'> " + cCode + "</span>" + cadidate.candidate+ "</li>";
 		};
@@ -425,7 +427,7 @@ ElectoratesPanel.prototype.closeRegion = function(region) {
  * Electorate over
  */
 ElectoratesPanel.prototype.electorateOver = function(electorateName) {
-
+console.log(electorateName);
 	var electorate = dataInterface.findElectorateData(electorateName);
 	var partyOnePercent = Number(electorate.partyOnePercent)
 	var partyTwoPercent = Number(electorate.partyTwoPercent)

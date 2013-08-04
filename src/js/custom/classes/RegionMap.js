@@ -9,8 +9,8 @@ google.maps.Polygon.prototype.getBounds = function() {
 		}
 	}
 	return bounds;
-}
-//
+};
+
 RegionMap = function() {
 	this.overTimer
 	this.overId = 0;
@@ -20,7 +20,8 @@ RegionMap = function() {
 	this.districtMarkers = [];
 	this.districtInfoBoxes = [];
 	this.currentTip
-}
+};
+
 regionMap = new RegionMap();
 
 RegionMap.prototype.buildMap = function(id) {
@@ -84,7 +85,8 @@ RegionMap.prototype.buildMap = function(id) {
 		}, {
 			saturation : -75
 		}]
-	}]
+	}];
+
 	var ausMapStyles = new google.maps.StyledMapType(ausMapStylesDef, {
 		name : "Aus Map Styles"
 	});
@@ -108,101 +110,6 @@ RegionMap.prototype.buildMap = function(id) {
 	this.map.mapTypes.set('aus_styles', ausMapStyles);
 	this.map.setMapTypeId('aus_styles');
 
-
-
-
-	var _geometryToGoogleMaps = function( geojsonGeometry, opts, geojsonProperties ){
-		
-		var googleObj,
-			bounds = new google.maps.LatLngBounds();;
-		
-		switch ( geojsonGeometry.type ){
-			case "Polygon":
-				var paths = [];
-				var exteriorDirection;
-				var interiorDirection;
-				for (var i = 0; i < geojsonGeometry.coordinates.length; i++){
-					var path = [];
-					for (var j = 0; j < geojsonGeometry.coordinates[i].length; j++){
-						var ll = new google.maps.LatLng(geojsonGeometry.coordinates[i][j][1], geojsonGeometry.coordinates[i][j][0]);
-						path.push(ll);
-					}
-					if(!i){
-						exteriorDirection = _ccw(path);
-						paths.push(path);
-					}else if(i == 1){
-						interiorDirection = _ccw(path);
-						if(exteriorDirection == interiorDirection){
-							paths.push(path.reverse());
-						}else{
-							paths.push(path);
-						}
-					}else{
-						if(exteriorDirection == interiorDirection){
-							paths.push(path.reverse());
-						}else{
-							paths.push(path);
-						}
-					}
-				}
-				opts.paths = paths;
-				googleObj = new google.maps.Polygon(opts);
-				googleObj.setMap(selfRef.map);
-				if (geojsonProperties) {
-					googleObj.set("geojsonProperties", geojsonProperties);
-				}
-				break;
-				
-			case "MultiPolygon":
-				googleObj = [];
-				for (var i = 0; i < geojsonGeometry.coordinates.length; i++){
-					var paths = [];
-					var exteriorDirection;
-					var interiorDirection;
-					for (var j = 0; j < geojsonGeometry.coordinates[i].length; j++){
-						var path = [];
-						for (var k = 0; k < geojsonGeometry.coordinates[i][j].length; k++){
-							var ll = new google.maps.LatLng(geojsonGeometry.coordinates[i][j][k][1], geojsonGeometry.coordinates[i][j][k][0]);
-							path.push(ll);
-						}
-						if(!j){
-							exteriorDirection = _ccw(path);
-							paths.push(path);
-						}else if(j == 1){
-							interiorDirection = _ccw(path);
-							if(exteriorDirection == interiorDirection){
-								paths.push(path.reverse());
-							}else{
-								paths.push(path);
-							}
-						}else{
-							if(exteriorDirection == interiorDirection){
-								paths.push(path.reverse());
-							}else{
-								paths.push(path);
-							}
-						}
-					}
-					opts.paths = paths;
-					googleObj.push(new google.maps.Polygon(opts));
-				}
-				if (geojsonProperties) {
-					for (var k = 0; k < googleObj.length; k++){
-						//console.log(geojsonProperties);
-						googleObj[k].setMap(selfRef.map);
-						googleObj[k].set("geojsonProperties", geojsonProperties);
-					}
-				}
-				break;
-				
-			default:
-				googleObj = _error("Invalid GeoJSON object: Geometry object must be one of \"Point\", \"LineString\", \"Polygon\" or \"MultiPolygon\".");
-		}
-		
-		return googleObj;
-		
-	};
-	
 	var _error = function( message ){
 	
 		return {
@@ -238,52 +145,114 @@ RegionMap.prototype.buildMap = function(id) {
 		fillOpacity : 0.6
 	};
 
-
-//_geometryToGoogleMaps(geojson.features[i].geometry, opts, geojson.features[i].properties);
-	for (var i = 0; i < geojson.features.length; i++) {
-		var geojsonGeometry = geojson.features[i].geometry;
-		var geojsonProperties = geojson.features[i].properties;
-		var regionName = geojson.features[i].properties.ELECT_DIV;
-		var electorateData = dataInterface.findElectorateData(regionName.toLowerCase());
+	var count = 0;
+	for (var z = 0; z < geojson.features.length; z++) {
+		var geojsonGeometry = geojson.features[z].geometry;
+		var geojsonProperties = geojson.features[z].properties;
+		var regionName = geojson.features[z].properties.ELECT_DIV.toLowerCase().replace('\'', '');
+		var electorateData = dataInterface.findElectorateData(regionName);
 		var bounds = new google.maps.LatLngBounds();
 		var googleObj;
 
-		(function () {
 		switch ( geojsonGeometry.type ){
 			case "Polygon":
 				var paths = [];
 				var exteriorDirection;
 				var interiorDirection;
-				for (var i = 0; i < geojsonGeometry.coordinates.length; i++){
+				for (var i = 0; i < geojsonGeometry.coordinates.length; i++) {
 					var path = [];
-					for (var j = 0; j < geojsonGeometry.coordinates[i].length; j++){
+					for (var j = 0; j < geojsonGeometry.coordinates[i].length; j++) {
 						var ll = new google.maps.LatLng(geojsonGeometry.coordinates[i][j][1], geojsonGeometry.coordinates[i][j][0]);
-						//bounds.extend(ll);
+						bounds.extend(ll);
 						path.push(ll);
 					}
-					if(!i){
+					if(!i) {
 						exteriorDirection = _ccw(path);
 						paths.push(path);
-					}else if(i == 1){
+					}
+					else if(i == 1){
 						interiorDirection = _ccw(path);
 						if(exteriorDirection == interiorDirection){
 							paths.push(path.reverse());
 						}else{
 							paths.push(path);
 						}
-					}else{
+					}
+					else{
 						if(exteriorDirection == interiorDirection){
 							paths.push(path.reverse());
-						}else{
+						}
+						else{
 							paths.push(path);
 						}
 					}
 				}
 				opts.paths = paths;
+				opts.id = count;
 				googleObj = new google.maps.Polygon(opts);
-				//console.log(geojsonProperties);
+				selfRef.districtPolygons[regionName] = googleObj;
+
+				(function (regionName) {
+					var marker;
+					if(electorateData.keyseat == 0) {
+						marker = new google.maps.Marker({
+							map : selfRef.map,
+							draggable : false,
+							position : bounds.getCenter(),
+							visible : false
+						});
+					}
+					else {
+						var image = 'img/keySeatMarker.png';
+						marker = new google.maps.Marker({
+							position : bounds.getCenter(),
+							map : selfRef.map,
+							title : regionName,
+							icon : image,
+							id : count
+						});
+						google.maps.event.addListener(marker, "click", function(evt) {
+							console.log('Marker Clicked')
+							$(selfRef).trigger('selected', regionName);
+						});
+					}
+
+					selfRef.districtMarkers[regionName.replace('\'', '')] = marker;
+
+					google.maps.event.addListener(googleObj, "click", function(evt) {
+						$(selfRef).trigger('selected', regionName);
+					});
+
+					google.maps.event.addListener(googleObj, "mouseover", function(evt) {
+						selfRef.overName = regionName;
+						$(selfRef).stop();
+						$(selfRef).animate({
+							count : selfRef.selfRef + 1000
+						}, 500, function() {
+							selfRef.overInfo();
+						});
+						if(selfRef.selectedRegion != this) {
+							this.setOptions({
+								fillOpacity : 0.8
+							});
+
+						}
+					});
+
+					google.maps.event.addListener(googleObj, "mouseout", function(evt) {
+						selfRef.closeInfo(regionName);
+						$(selfRef).stop();
+						if(selfRef.selectedRegion != this) {
+							this.setOptions({
+								fillOpacity : 0.6
+							});
+						}
+					});
+
+				})(regionName);
+				
 				googleObj.setMap(selfRef.map);
-				this.districtPolygons[(regionName.toLowerCase()).replace('\'', '')] = googleObj;
+
 				if (geojsonProperties) {
 					googleObj.set("geojsonProperties", geojsonProperties);
 				}
@@ -291,7 +260,8 @@ RegionMap.prototype.buildMap = function(id) {
 				
 			case "MultiPolygon":
 				googleObj = [];
-				for (var i = 0; i < geojsonGeometry.coordinates.length; i++){
+
+				for (var i = 0; i < geojsonGeometry.coordinates.length; i++) {
 					var paths = [];
 					var exteriorDirection;
 					var interiorDirection;
@@ -302,17 +272,19 @@ RegionMap.prototype.buildMap = function(id) {
 							bounds.extend(ll);
 							path.push(ll);
 						}
-						if(!j){
+						if(!j) {
 							exteriorDirection = _ccw(path);
 							paths.push(path);
-						}else if(j == 1){
+						}
+						else if(j == 1){
 							interiorDirection = _ccw(path);
 							if(exteriorDirection == interiorDirection){
 								paths.push(path.reverse());
 							}else{
 								paths.push(path);
 							}
-						}else{
+						}
+						else{
 							if(exteriorDirection == interiorDirection){
 								paths.push(path.reverse());
 							}else{
@@ -321,28 +293,103 @@ RegionMap.prototype.buildMap = function(id) {
 						}
 					}
 					opts.paths = paths;
+					opts.id = count;
 					googleObj.push(new google.maps.Polygon(opts));
 				}
 				if (geojsonProperties) {
-					for (var k = 0; k < googleObj.length; k++){
-						//console.log(geojsonProperties);
-						googleObj[k].setMap(selfRef.map);
-						googleObj[k].set("geojsonProperties", geojsonProperties);
+					/**
+					var areas = [];
+					for (var k = 0; k < googleObj.length; k++) {
+						areas.push(google.maps.geometry.spherical.computeArea(googleObj[k].getPath()));
 					}
+					
+					var c = 0, m = areas[0], mI = 0;
+
+					while(++c < areas.length) {
+					    if(areas[c] > m) {
+					        mI = c;
+					        m = areas[c];
+					    }
+					}
+					console.log(mI, m);
+					**/
+
+					selfRef.districtPolygons[regionName.replace('\'', '')] = googleObj[0];
+
+					(function (regionName) {
+						var marker;
+						if (electorateData.keyseat == 0) {
+							marker = new google.maps.Marker({
+								map : selfRef.map,
+								draggable : false,
+								position : bounds.getCenter(),
+								visible : false
+							});
+						}
+						else {
+							var image = 'img/keySeatMarker.png';
+							marker = new google.maps.Marker({
+								position : bounds.getCenter(),
+								map : selfRef.map,
+								title : regionName,
+								icon : image,
+								id : count
+							});
+							google.maps.event.addListener(marker, "click", function(evt) {
+								console.log('Marker Clicked')
+								$(selfRef).trigger('selected', regionName);
+							});
+						}
+
+						selfRef.districtMarkers[regionName.replace('\'', '')] = marker;
+
+						google.maps.event.addListener(googleObj[0], "click", function(evt) {
+							$(selfRef).trigger('selected', regionName);
+						});
+
+						google.maps.event.addListener(googleObj[0], "mouseover", function(evt) {
+							selfRef.overName = regionName;
+							$(selfRef).stop();
+							$(selfRef).animate({
+								count : selfRef.selfRef + 1000
+							}, 500, function() {
+								selfRef.overInfo();
+							});
+							if(selfRef.selectedRegion != this) {
+								this.setOptions({
+									fillOpacity : 0.8
+								});
+
+							}
+						});
+
+						google.maps.event.addListener(googleObj[0], "mouseout", function(evt) {
+							selfRef.closeInfo(regionName)
+							$(selfRef).stop();
+							if(selfRef.selectedRegion != this) {
+								this.setOptions({
+									fillOpacity : 0.6
+								});
+							}
+						});
+
+					})(regionName.replace('\'', ''));
+
+					googleObj[0].setMap(selfRef.map);
+
+					googleObj[0].set("geojsonProperties", geojsonProperties);
 				}
 				break;
 				
 			default:
 				googleObj = _error("Invalid GeoJSON object: Geometry object must be one of \"Point\", \"LineString\", \"Polygon\" or \"MultiPolygon\".");
 		}
-		})();
+		count++;
 	}
 
+	console.log(this.districtPolygons);
 
-console.log(this.districtPolygons);
-
-
-
+/**
 
 	this.mapRegions = new MapRegions();
 	var regionsList = this.mapRegions.getRegions();
@@ -430,7 +477,7 @@ console.log(this.districtPolygons);
 		});
 		i--;
 	}
-
+**/
 	//this.colourRegions();
 }
 RegionMap.prototype.showMarkers = function(){
@@ -484,11 +531,10 @@ RegionMap.prototype.getRegion = function(regionName) {
 	}
 }
 
-RegionMap.prototype.overInfo = function() {
+RegionMap.prototype.overInfo = function(regionName) {
 
 	$(this).stop();
-
-	$(this).trigger('over', this.mapRegions.getRegions()[this.overId].name.split('_').join(' '));
+	$(this).trigger('over', this.overName);
 }
 
 RegionMap.prototype.reset = function() {
@@ -520,7 +566,7 @@ RegionMap.prototype.unSelectRegion = function() {
 
 RegionMap.prototype.selectRegion = function(regionName) {
 	this.unSelectRegion();
-	var polyName = regionName.toLowerCase().split(' ').join('_');
+	var polyName = regionName.toLowerCase().replace('\'', '');
 	var regionPolygon = this.districtPolygons[polyName];
 	this.map.fitBounds(regionPolygon.getBounds());
 
@@ -539,7 +585,7 @@ RegionMap.prototype.selectRegion = function(regionName) {
 }
 
 RegionMap.prototype.openInfo = function(regionName, infoBoxOptions) {
-	var polyName = regionName.toLowerCase().split(' ').join('_');
+	var polyName = regionName.toLowerCase().replace('\'', '');
 	if(!this.districtInfoBoxes[polyName]) {
 		this.districtInfoBoxes[polyName] = new InfoBox(infoBoxOptions);
 
@@ -550,7 +596,7 @@ RegionMap.prototype.openInfo = function(regionName, infoBoxOptions) {
 }
 
 RegionMap.prototype.closeInfo = function(regionName) {
-	var polyName = regionName.toLowerCase().split(' ').join('_');
+	var polyName = regionName.toLowerCase().replace('\'', '');
 	if(this.districtInfoBoxes[polyName]) {
 		this.districtInfoBoxes[polyName].close();
 	}
@@ -558,7 +604,7 @@ RegionMap.prototype.closeInfo = function(regionName) {
 }
 
 RegionMap.prototype.colourRegion = function(regionName, colour) {this
-	var polyName = regionName.toLowerCase().split(' ').join('_');
+	var polyName = regionName.toLowerCase().replace('\'', '');
 	var regionPolygon = this.districtPolygons[polyName];
 	if(regionPolygon) {
 		var newPolyOptions = {

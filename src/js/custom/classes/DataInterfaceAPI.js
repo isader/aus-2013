@@ -51,11 +51,11 @@ DataInterface = function() {
 	};
 	this.parties['NAT'] = {
 		name : 'Nationalist Party of Australia',
-		colour : '#dfded2'
+		colour : 'purple'
 	};
 	this.parties['WAN'] = {
 		name : 'National Alliance',
-		colour : '#dfded2'
+		colour : '#123456'
 	};
 	this.parties['PUA'] = {
 		name : 'Palmer United Australia',
@@ -589,7 +589,7 @@ DataInterface.prototype.loadCandidates = function(startOffset) {
  */
 DataInterface.prototype.findElectorateData = function(electorate) {
 	for(var i = 0; i < this.electorates.length; i++) {
-		if(electorate.toLowerCase() == this.electorates[i].seat.toLowerCase()) {
+		if(electorate.toLowerCase() == this.electorates[i].seat.toLowerCase().replace('\'', '')) {
 			return this.electorates[i];
 		}
 	}
