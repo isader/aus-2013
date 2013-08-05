@@ -7,7 +7,8 @@ ElectoratesPanel = function() {
 	this.electorateTable = new ElectorateTable();
 	var selfRef = this;
 	$(this.electorateTable).bind('selected',function(e,key){
-		console.log(key);
+		$('.table-seats').hide();
+		$(selfRef).trigger('showMap');
 		selfRef.openElectorate(key);
 	})
 }
@@ -187,6 +188,7 @@ ElectoratesPanel.prototype.build = function() {
 	}}).result(function(event, item) {
 		var electorate = item.name;
 		$(this).val(selfRef.searchMessage);
+		selfRef.closeAllSeats();
 		selfRef.openElectorate(electorate);
 	});
 	// input change test
@@ -214,19 +216,45 @@ ElectoratesPanel.prototype.build = function() {
 	var selfRef = this;
 	//tabs
 	$('#panel-electorates .mapTab').click(function() {
-		$(selfRef).trigger('showMap');
-		$('#panel-electorates .table-seats').hide();
-		$('#panel-electorates .mapTab').addClass('selected');
-		$('#panel-electorates .tableTab').removeClass('selected');
+		selfRef.closeAllSeats();
 	});
 	$('#panel-electorates .tableTab').click(function() {
-		$(selfRef).trigger('hideMap');
-		$('#panel-electorates .table-seats').show();
-		$('#panel-electorates .tableTab').addClass('selected');
-		$('#panel-electorates .mapTab').removeClass('selected');
+		selfRef.openAllSeats();
 	});
 
 	
+}
+/**
+ * Open All Seats
+ */
+ElectoratesPanel.prototype.openAllSeats = function() {
+	var selfRef = this;
+
+	$('#panel-electorates .table-seats').show();
+	$(this).trigger('hideMap');
+	$('#panel-electorates .tableTab').addClass('selected');
+	$('#panel-electorates .mapTab').removeClass('selected');
+
+	$('h3.back').text("back to All Seats").unbind().bind("click", function () {
+		selfRef.openAllSeats();
+		selfRef.closeElectorate();
+	});
+}
+/**
+ * Close All Seats
+ */
+ElectoratesPanel.prototype.closeAllSeats = function() {
+	var selfRef = this;
+
+	$('#panel-electorates .table-seats').hide();
+	$(this).trigger('showMap');
+	$('#panel-electorates .mapTab').addClass('selected');
+	$('#panel-electorates .tableTab').removeClass('selected');
+	selfRef.closeElectorate();
+	$('h3.back').text("back to Seats to Watch").unbind().bind("click", function () {
+		selfRef.closeAllSeats();
+		selfRef.closeElectorate();
+	});
 }
 /**
  * Open Electorate
@@ -284,7 +312,7 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 		electorateHTML += "<div class='clear'></div>";
 		electorateHTML += "<div class='graph'><h4>Population by Age %</h4>";
 		electorateHTML += "<div class='graphArea'>";
-console.log(electorateData);
+
 		var ageGroups = []
 		ageGroups.push({
 			value : electorateData.age0to14,

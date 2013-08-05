@@ -69,7 +69,7 @@ OverviewPanel.prototype.build = function() {
 		var electorate = this.seatsToWatch[i];
 		var seatHTML = '<div class="seat"><h3>' + electorate.seat + '</h3>';
 		var imageName = electorate.seat.split(' ').join('-').toLowerCase();
-		seatHTML += '<img src="img/'+imageName+'.jpg" width="240px" height="180px"/>'
+		seatHTML += '<img src="img/'+imageName+'.jpg" width="220px" height="180px"/>'
 		seatHTML += '<div class="description"><p>'+electorate.description+'</p><div class="pageBtn" key="'+electorate.seat+'">View seat in detail</div></div>';
 		seatHTML += '<div class="clear"></div>'
 		$('.seatsHolder').append(seatHTML);

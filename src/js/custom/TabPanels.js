@@ -145,6 +145,7 @@ TabPanels.prototype.moveToPanel = function($id, $data) {
 	}, 0, function() {
 		selfRef.panelOpened(selfRef.currentPageData);
 	});
+	$(".table-seats").hide();
 }
 /**
  * setUp Panel

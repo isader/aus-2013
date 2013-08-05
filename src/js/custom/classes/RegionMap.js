@@ -179,7 +179,7 @@ RegionMap.prototype.buildMap = function(id) {
 
 			if(selfRef.selectedRegion != this) {
 				this.setOptions({
-					fillOpacity : 0.8
+					fillOpacity : 0.7
 				});
 			}
 		});
@@ -583,7 +583,7 @@ RegionMap.prototype.selectRegion = function(regionName) {
 			strokeOpacity : 1,
 			strokeWeight : 3,
 			
-			fillOpacity : 1
+			fillOpacity : 0.9
 		}
 		regionPolygon.setOptions(newPolyOptions);
 	} else {

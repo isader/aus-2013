@@ -43,67 +43,67 @@ DataInterface = function() {
 	};
 	this.parties['ONP'] = {
 		name : 'One Nation',
-		colour : '#dfded2'
+		colour : '#999999'
 	};
 	this.parties['LCP'] = {
 		name : 'Liberal Country',
-		colour : '#dfded2'
+		colour : '#999999'
 	};
 	this.parties['NAT'] = {
 		name : 'Nationalist Party of Australia',
-		colour : 'purple'
+		colour : '#999999'
 	};
 	this.parties['WAN'] = {
 		name : 'National Alliance',
-		colour : '#123456'
+		colour : '#999999'
 	};
 	this.parties['PUA'] = {
 		name : 'Palmer United Australia',
-		colour : '#dfded2'
+		colour : '#999999'
 	};
 	this.parties['ACP'] = {
 		name : 'Australian Christian Party',
-		colour : '#dfded2'
+		colour : '#999999'
 	};
 	this.parties['ASP'] = {
 		name : 'Australian Sex Party',
-		colour : '#dfded2'
+		colour : '#999999'
 	};
 	this.parties['DLP'] = {
 		name : 'Democratic Labor Party',
-		colour : '#dfded2'
+		colour : '#999999'
 	};
 	this.parties['KAP'] = {
 		name : 'Katter\'s Australian Party',
-		colour : '#dfded2'
+		colour : '#999999'
 	};
 	this.parties['SPP'] = {
 		name : 'Stable Population Party',
-		colour : '#dfded2'
+		colour : '#999999'
 	};
 	this.parties['AF'] = {
 		name : 'Australia First',
-		colour : '#dfded2'
+		colour : '#999999'
 	};
 	this.parties['CDP'] = {
 		name : 'Christian Democratic Party',
-		colour : '#dfded2'
+		colour : '#999999'
 	};
 	this.parties['SA'] = {
 		name : 'Socialist Alliance',
-		colour : '#dfded2'
+		colour : '#999999'
 	};
 	this.parties['CEC'] = {
 		name : 'Citizens Electoral Council',
-		colour : '#dfded2'
+		colour : '#999999'
 	};
 	this.parties['CL'] = {
 		name : 'Country Liberals',
-		colour : '#dfded2'
+		colour : '#999999'
 	};
 	this.parties['ON'] = {
 		name : 'One Nation',
-		colour : '#dfded2'
+		colour : '#999999'
 	};
 	this.parties['IND'] = {
 		name : '',

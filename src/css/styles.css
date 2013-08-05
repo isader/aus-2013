@@ -239,42 +239,50 @@ input.message { color:#7f7f7f; }
   -moz-box-shadow:inset -3px 0 3px 0 rgba(0,0,0,0.1);
   box-shadow:inset -3px 0 3px 0 rgba(0,0,0,0.1);
 }
-.leftCol .resultsTable {
+.table-seats {
+  display: none;
+  position: absolute;
+  top: 66px;
+  left: 0;
+  width:873px;
+  background-color: #fff;
+}
+.table-seats .resultsTable {
   padding:5px;
-  height:540px;
+  height:554px;
   overflow:hidden;
   *overflow:scroll;
   background:#ffffff;
   margin:10px;
-  width:530px;
+  width:840px;
   font-size:12px;
 }
-.leftCol .resultsTable table {
+.table-seats .resultsTable table {
   width:100%;
   background:#ffffff;
   border-right:1px solid #c3c2b6;
   border-top:1px solid #c3c2b6;
 }
-.leftCol .resultsTable table tr:hover {
+.table-seats .resultsTable table tr:hover {
   background:#e4ecef;
   cursor:pointer;
 }
-.leftCol .resultsTable table tr:hover .name { text-decoration:underline; }
-.leftCol .resultsTable table tr.swingRow:hover {
+.table-seats .resultsTable table tr:hover .name { text-decoration:underline; }
+.table-seats .resultsTable table tr.swingRow:hover {
   background:none;
   cursor:auto;
 }
-.leftCol .resultsTable table tr.swingRow:hover .name { text-decoration:none; }
-.leftCol .resultsTable table tr.selected { background:#6ba3bc; }
-.leftCol .resultsTable table tr.selected .name { color:#ffffff; }
-.leftCol .resultsTable table tr.selected td { color:#ffffff; }
-.leftCol .resultsTable table tr.selected .party { color:#ffffff !important; }
-.leftCol .resultsTable table td, .leftCol .resultsTable table th {
+.table-seats .resultsTable table tr.swingRow:hover .name { text-decoration:none; }
+.table-seats .resultsTable table tr.selected { background:#6ba3bc; }
+.table-seats .resultsTable table tr.selected .name { color:#ffffff; }
+.table-seats .resultsTable table tr.selected td { color:#ffffff; }
+.table-seats .resultsTable table tr.selected .party { color:#ffffff !important; }
+.table-seats .resultsTable table td, .table-seats .resultsTable table th {
   border-left:1px solid #c3c2b6;
   border-bottom:1px solid #c3c2b6;
   padding:6px;
 }
-.leftCol .resultsTable table th {
+.table-seats .resultsTable table th {
   color:#277f9c;
   text-transform:uppercase;
   font-weight:bold;
@@ -285,20 +293,20 @@ input.message { color:#7f7f7f; }
   background:transparent url("../img/sprites.png") 0px -947px no-repeat !important;
   text-indent:0;
 }
-.leftCol .resultsTable table .name {
+.table-seats .resultsTable table .name {
   color:#277f9c;
   font-weight:bold;
 }
-.leftCol .resultsTable table .party { font-weight:bold; }
-.leftCol .resultsTable table th.selected {
+.table-seats .resultsTable table .party { font-weight:bold; }
+.table-seats .resultsTable table th.selected {
   background:#ffffff !important;
   color:#004563;
 }
-.leftCol .resultsTable table th.selected.up {
+.table-seats .resultsTable table th.selected.up {
   background:#ffffff url("../img/sprites.png") right -493px no-repeat !important;
   text-indent:0px;
 }
-.leftCol .resultsTable table th.selected.down {
+.table-seats .resultsTable table th.selected.down {
   background:#ffffff url("../img/sprites.png") right -447px no-repeat !important;
   text-indent:0px;
 }
@@ -319,14 +327,6 @@ input.message { color:#7f7f7f; }
   -moz-box-shadow:inset -2px 0 3px 0 rgba(0,0,0,0.1);
   box-shadow:inset -2px 0 3px 0 rgba(0,0,0,0.1);
   z-index:100;
-}
-.table-seats {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: -2px;
-  width:875px;
-  background-color: red;
 }
 .regionTip {
   cursor:pointer;
@@ -643,13 +643,13 @@ input.message { color:#7f7f7f; }
   padding-bottom:10px;
 }
 #panel-overview .leftCol .seats .seat img {
-  width:242px;
+  width:220px;
   float:left;
   border:0;
   padding:0;
 }
 #panel-overview .leftCol .seats .seat .description {
-  width:257px;
+  width:277px;
   *width:247px;
   float:left;
   margin-left:15px;
@@ -657,7 +657,7 @@ input.message { color:#7f7f7f; }
 #panel-overview .leftCol .seats .seat .description .pageBtn { margin:10px 0 0 0; }
 #panel-overview .leftCol .seats .seat .description p {
   line-height:14px;
-  font:13px/16px 'Times New Roman';
+  font:14px/18px 'Times New Roman';
 }
 #panel-overview .rightCol {
   height:470px;
@@ -745,6 +745,7 @@ input.message { color:#7f7f7f; }
   font-size:14px;
   font-weight:bold;
   margin-bottom:13px;
+  text-transform: uppercase;
 }
 #panel-electorates .region .btn {
   float:right;
@@ -843,8 +844,9 @@ input.message { color:#7f7f7f; }
 #panel-electorates .electorate h3 {
   font-family:'Times New Roman';
   color:#004563;
-  font-size:26px;
+  font-size:24px;
   margin:15px 10px 5px 10px;
+  text-transform: uppercase;
 }
 #panel-electorates .electorate h3 span {
   font-size:14px;

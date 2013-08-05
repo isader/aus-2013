@@ -20,10 +20,10 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 	var headers = [];
 
 	headers.push({
-		name : 'Region',
-		key : 'region',
-		intDir : 'Down'
-	})
+		name : 'Status',
+		key : 'status',
+		intDir : 'Up'
+	});
 
 	if(this.showSwing) {
 		headers.push({
@@ -43,12 +43,19 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 		name : 'Held by',
 		key : 'party',
 		intDir : 'Up'
-	})
+	});
+
+	headers.push({
+		name : 'State',
+		key : 'region',
+		intDir : 'Down'
+	});
+
 	headers.push({
 		name : 'Electorate',
 		key : 'name',
 		intDir : 'Down'
-	})
+	});
 
 	var i = headers.length - 1;
 	while(i >= 0) {
@@ -67,7 +74,8 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 	var i = this.rows.length - 1;
 	while(i >= 0) {
 
-		var electorate = this.rows[i]
+		var electorate = this.rows[i];
+		console.log(electorate);
 		var partyOnePercent = electorate.partyOnePercent;
 		var partyTwoPercent = electorate.partyTwoPercent;
 		if(this.showSwing) {
@@ -81,16 +89,16 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 		}
 		margin = mathExt.roundNumber(Math.abs(margin), 2)
 		//
-		var shownCode = (winningParty == 'ZZZ') ? 'IND' : winningParty
+		var shownCode = (winningParty == 'ZZZ') ? 'IND' : winningParty;
 
 		var extraClasses = '';
-		if(this.selectedKey == electorate.name) {
+		if(this.selectedKey == electorate.seat) {
 			extraClasses = 'selected'
 		}
 		if(this.showSwing) {
 			extraClasses = 'swingRow'
 		}
-		tableHTML += '<tr key="' + electorate.name + '" class="resultRow ' + extraClasses + '"><td class="name">' + electorate.name + '</td><td class="party" style="color:' + dataInterface.parties[winningParty].colour + '">' + shownCode + '</td><td>' + margin + '%</td><td>' + electorate.region + '</td></tr>';
+		tableHTML += '<tr key="' + electorate.seat + '" class="resultRow ' + extraClasses + '"><td class="name">' + electorate.seat + '</td><td class="party" style="color:' + dataInterface.parties[winningParty].colour + '">' + shownCode + '</td><td>' + electorate.swingNeededToChangeHands + '%</td><td>' + electorate.state.toUpperCase() + '</td><td>' + electorate.swingStatus + '</td></tr>';
 		i--;
 	}
 	tableHTML += '</table></div>';
@@ -101,7 +109,7 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 	}
 	
 	if(!$.browser.msie) {
-		$(placeIn + ' .resultsTable').jScrollPane();
+		$(placeIn + ' .resultsTable').jScrollPane({ autoReinitialise: true });
 	}
 
 	$(placeIn + ' .resultsTable table tr th').each(function(index) {
@@ -126,9 +134,9 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 		$(placeIn + " .resultsTable table tr.resultRow").each(function(index) {
 			$(this).click(function() {
 				selfRef.deSelect();
-				selfRef.selectedKey = $(this).attr('key')
+				selfRef.selectedKey = $(this).attr('key');
 				selfRef.selectedRow = this;
-				$(selfRef.selectedRow).addClass('selected')
+				$(selfRef.selectedRow).addClass('selected');
 				$(selfRef).trigger('selected', $(this).attr('key'));
 			})
 		});
