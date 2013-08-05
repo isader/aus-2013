@@ -477,7 +477,7 @@ $.Autocompleter.Cache = function(options) {
 			// if rawValue is a string, make an array otherwise just reference the array
 			rawValue = (typeof rawValue == "string") ? [rawValue] : rawValue;
 			var value = options.formatMatch(rawValue, i+1, options.data.length);
-
+			
 			if ( value === false )
 				continue;
 
@@ -528,7 +528,11 @@ $.Autocompleter.Cache = function(options) {
 				}
 			}
 		};
-
+/**
+		for (var e = 0; e < stMatchSets["b"].length; e++) {
+			console.log(stMatchSets["b"][e]);
+		}
+**/
 		// add the data items to the cache
 		$.each(stMatchSets, function(i, value) {
 			// increase the cache size
@@ -712,7 +716,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 				continue;
 			var formatted = "";//options.formatItem([data[i].data.name], i+1, max, data[i].value, term);
 			if (data[i].data.type === "Electorate") {
-				formatted = data[i].data.name + ", " + data[i].data.state;
+				formatted = data[i].data.name + ", " + data[i].data.state.toUpperCase();
 			}
 			else if (data[i].data.type === "Suburb") {
 				formatted = data[i].data.suburb + ", " + data[i].data.state.toUpperCase() + ", " + data[i].data.postcode;

@@ -197,7 +197,7 @@ DataInterface.prototype.requestElectorates = function() {
 DataInterface.prototype.loadElectorates = function(startOffset) {
 	var selfRef = this;
 	var startOffset = (startOffset == null) ? 1 : startOffset;
-	var searchTerms = {}
+	var searchTerms = [];
 	var url = selfRef.dataAPIURL + 'qld_electorates/select';
 	var dataType = "jsonp";
 	var data = {
@@ -221,81 +221,44 @@ DataInterface.prototype.loadElectorates = function(startOffset) {
 		success : function(data) {
 			// Push the loaded data into an array
 			for(var i = 0; i < data.items.length; i++) {
-				//selfRef.electorates.push(data.items[i]);
-				//var districtName =  data.items[i].name.toLowerCase();
-				//selfRef.electorates[districtName] = data.items[i]
-
 				var electorate = data.items[i]
 				selfRef.electorates.push(electorate);
 
-				if(searchTerms[electorate.seat.toProperCase()] == null) {
-					searchTerms[electorate.seat.toProperCase()] = {
-						name: electorate.seat.toProperCase(),
-						state: electorate.state.toProperCase(),
-						suburb: "",
-						postcode: "",
-						type: "Electorate"
-					};
-				}
+				searchTerms.push({
+					name: electorate.seat.toProperCase(),
+					state: electorate.state.toProperCase(),
+					suburb: "",
+					postcode: "",
+					type: "Electorate"
+				});
 
 				var suburbs = electorate.suburbs.split(',');
-				var postCodes = electorate.postCodes.split(',');
+				var postCodes = electorate.postCodes.split(', ');
 				var p = suburbs.length - 1;
 
 				if (suburbs.length !== postCodes.length) {
-					//console.log(electorate.name.toProperCase(), (suburbs.length - postCodes.length), suburbs.length, postCodes.length);
 					p = (suburbs.length < postCodes.length) ? suburbs.length - 1 : postCodes.length - 1;
 				}
 				while(p >= 0) {
 					var sub = (suburbs[p] !== null) ? suburbs[p].toProperCase() : "";
 					var postcode = (postCodes[p] !== null) ? postCodes[p] : "";
 
-					if (searchTerms[sub] == null) {
-						searchTerms[sub] = {
-							name: electorate.seat.toProperCase(),
-							state: electorate.state.toProperCase(),
-							suburb: sub,
-							postcode: postcode,
-							type: "Suburb"
-						};
-					}
+					searchTerms.push({
+						name: electorate.seat.toProperCase(),
+						state: electorate.state.toProperCase(),
+						suburb: sub,
+						postcode: postcode,
+						type: "Suburb"
+					});
 					p--;
 				}
-
-/**
-				var suburbs = electorate.suburbs.split(',');
-				var p = suburbs.length - 1;
-				while(p >= 0) {
-
-					var sub = suburbs[p].toProperCase()
-					if(searchTerms[sub] == null) {
-						searchTerms[sub] = sub
-					}
-					p--;
-				}
-
-				var postCodes = electorate.postCodes.split(',');
-				var r = postCodes.length - 1;
-				while(r >= 0) {
-				
-					var postcode = postCodes[r]
-					if(searchTerms[postcode] == null) {
-						searchTerms[postcode] = postcode
-					}
-					r--;
-				}
-**/
 			};
-			
-			for(var key in searchTerms){
-				selfRef.searchList.push(searchTerms[key]);
+
+			for(var c = 0; c < searchTerms.length; c++) {
+				selfRef.searchList.push(searchTerms[c]);
 			}
 
 			if(data.count < 100 || !selfRef.useAPI) {
-				// All the election data has been loaded
-				//selfRef.loadLastElectionResults();
-				//selfRef.electoratesLoaded = true;
-				//$(selfRef).trigger(selfRef.ELECTORATES_LOADED);
 				selfRef.loadCandidates();
 			} else {
 				// Request more rows
@@ -327,7 +290,7 @@ DataInterface.prototype.loadPrimary = function(startOffset) {
 	var selfRef = this;
 	var startOffset = (startOffset == null) ? 1 : startOffset;
 
-	var url = selfRef.dataAPIURL + 'newspoll_qld_primary/select';
+	var url = selfRef.dataAPIURL + 'newspoll_federal_primary/select';
 	var dataType = "jsonp";
 	var data = {
 		format : "json",
@@ -338,7 +301,7 @@ DataInterface.prototype.loadPrimary = function(startOffset) {
 	}
 
 	if(!this.useAPI) {
-		url = 'json/newspoll_qld_primary.json';
+		url = 'json/newspoll_federal_primary.json';
 		dataType = "json";
 		data = {};
 	}
@@ -380,7 +343,7 @@ DataInterface.prototype.loadSatisfaction = function(startOffset) {
 	var selfRef = this;
 	var startOffset = (startOffset == null) ? 1 : startOffset;
 
-	var url = selfRef.dataAPIURL + 'newspoll_qld_satisfaction/select';
+	var url = selfRef.dataAPIURL + 'newspoll_federal_satisfaction/select';
 	var dataType = "jsonp";
 	var data = {
 		format : "json",
@@ -391,7 +354,7 @@ DataInterface.prototype.loadSatisfaction = function(startOffset) {
 	}
 
 	if(!this.useAPI) {
-		url = 'json/newspoll_qld_satisfaction.json';
+		url = 'json/newspoll_federal_satisfaction.json';
 		dataType = "json";
 		data = {};
 	}
@@ -433,7 +396,7 @@ DataInterface.prototype.loadbetterPM = function(startOffset) {
 	var selfRef = this;
 	var startOffset = (startOffset == null) ? 1 : startOffset;
 
-	var url = selfRef.dataAPIURL + 'newspoll_qld_better_pm/select';
+	var url = selfRef.dataAPIURL + 'newspoll_federal_better_pm/select';
 	var dataType = "jsonp";
 	var data = {
 		format : "json",
@@ -444,7 +407,7 @@ DataInterface.prototype.loadbetterPM = function(startOffset) {
 	}
 
 	if(!this.useAPI) {
-		url = 'json/newspoll_qld_better_pm.json';
+		url = 'json/newspoll_federal_better_pm.json';
 		dataType = "json";
 		data = {};
 	}
@@ -486,7 +449,7 @@ DataInterface.prototype.loadTwoParty = function(startOffset) {
 	var selfRef = this;
 	var startOffset = (startOffset == null) ? 1 : startOffset;
 
-	var url = selfRef.dataAPIURL + 'newspoll_qld_2pp/select';
+	var url = selfRef.dataAPIURL + 'newspoll_federal_2pp/select';
 	var dataType = "jsonp";
 	var data = {
 		format : "json",
@@ -497,7 +460,7 @@ DataInterface.prototype.loadTwoParty = function(startOffset) {
 	}
 
 	if(!this.useAPI) {
-		url = 'json/newspoll_qld_2pp.json';
+		url = 'json/newspoll_federal_2pp.json';
 		dataType = "json";
 		data = {};
 	}

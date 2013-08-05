@@ -12,7 +12,7 @@ OverviewPanel.prototype.create = function(id) {
 	this.searchMessage = 'Search by suburb, postcode or electorate';
 	this.currentSeat = 0;
 	
-	var panelHTML = '<div class="intro"><div class="main-search"><input type="text" name="elecorateName" id="elecorateName" /><span class="search-icon"></span></div><a href="https://twitter.com/aus_politics" class="twitter-follow-button" data-show-count="false">Follow @aus_politics</a></div>';
+	var panelHTML = '<div class="intro"><div class="main-search"><input type="text" name="elecorateName" id="elecorateName" value="' + this.searchMessage + '" /><span class="search-icon"></span></div><a href="https://twitter.com/aus_politics" class="twitter-follow-button" data-show-count="false">Follow @aus_politics</a></div>';
 	panelHTML += '<div class="leftCol"><h2>Seats to Watch</h2><div class="nav"><div class="back"></div><div class="num">0 of 0</div><div class="next"></div></div><div class="seats"><div class="seatsHolder"></div></div></div>';
 	panelHTML += '<div class="rightCol">';
 	//panelHTML += '<div class="callout electSearch"><h2>electorate  search</h2><p>View the key seats and search for information about each electorate including candidates and demographic data.</p><input type="text" name="elecorateName" id="elecorateName" value="'+this.searchMessage+'" class="message"></input></div>';
@@ -83,6 +83,7 @@ OverviewPanel.prototype.build = function() {
 
 	// add the list of names to the auto complete
 	this.autoComplete = $('#panel-overview input').autocomplete(dataInterface.searchList, {showCount:1, appendNextToInput:1, formatMatch: function (row) {
+		//console.log(row);
 		if (row.type === "Electorate") {
 			return row.name;
 		}

@@ -55,13 +55,14 @@ NewsPoll.prototype.buildGraphs = function() {
 NewsPoll.prototype.buildNetSatisfaction = function() {
 	var selfRef = this;
 	var partyData ={};
-	partyData['ALP'] = []
-	partyData['LNP'] = []
-	partyData['NAT'] = []
+	partyData['ALP'] = [];
+	partyData['LIB'] = [];
+	partyData['NAT'] = [];
 
 	// place the data into parties
 	for (var i=0; i < dataInterface.satisfaction.length; i++) {
 	 	var dataPoint = dataInterface.satisfaction[i];
+	 	console.log(dataPoint);
 	 	// add gov data
 	 	if (partyData[dataPoint.party_id]==null){
 	 		partyData[dataPoint.party_id] = [];
@@ -98,7 +99,7 @@ NewsPoll.prototype.tooltipsSatisfaction = function(point) {
 		var selfRef = this;
 		var colours = {}
 	colours['ALP'] = '#ef5b46';
-	colours['LNP'] = '#277e9c';
+	colours['LIB'] = '#277e9c';
 	colours['NAT'] = '#f1e543';
 	$(document).unbind('mousemove', function(e){ selfRef.tooltipFollow(e) }); 
 	$(document).bind('mousemove', function(e){ selfRef.tooltipFollow(e) }); 
@@ -287,29 +288,40 @@ NewsPoll.prototype.tooltipBetterPM = function(point) {
 NewsPoll.prototype.buildPrimary = function() {
 	var selfRef = this;
 	var partyData ={};
-	partyData['ALP'] = []
-	partyData['LIB'] = []
-	partyData['LNP'] = []
-	partyData['GRN'] = []
-	partyData['NAT'] = []
-	partyData['DEM'] = []
-	partyData['ONE'] = []
-	partyData['OTH'] = []
+	var partyPoint = {};
+	partyData['ALP'] = [];
+	partyData['LIB'] = [];
+	partyData['LNP'] = [];
+	partyData['GRN'] = [];
+	partyData['NAT'] = [];
+	partyData['DEM'] = [];
+	partyData['ONE'] = [];
+	partyData['OTH'] = [];
 	// place the data into parties
 	for (var i=0; i < dataInterface.primary.length; i++) {
 	 	var dataPoint = dataInterface.primary[i];
 	 	var dateBreakdown = dataPoint.date.split('-');
 		var formatedDate = Date.UTC(Number(dateBreakdown[0]),Number(dateBreakdown[1])-1,Number(dateBreakdown[2]));
+
+		var parties = dataPoint.primary_vote.split(';');
+		for (var h = 0; h < parties.length - 1; h++) {
+			var party = parties[h].split(':');
+			if (party[0] === "APL") {
+				party[0] = "ALP";
+			}
+			else if (party[0] === "LIB_NAT") {
+				party[0] = "LNP";
+			}
+			partyPoint[party[0]] = party[1];
+		}
+
 	 	// loop over parties
-	 	for(var key in partyData){
-	 		//var partyDetails = dataInterface.qldParties[p];
-	 		// add opposition data
-	 		
-		 	if (partyData[key]==null){
+	 	for(var key in partyData) {
+		 	if (partyData[key] == null) {
 		 		partyData[key] = [];
 		 	}
-		 	var count = Number(dataPoint[key])
-		 	if (count<0){
+		 	var count = Number(partyPoint[key]);
+		 	if (count < 0){
 		 		count = null
 		 	} 
 		 	partyData[key].push([formatedDate,count]);
