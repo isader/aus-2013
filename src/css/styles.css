@@ -821,11 +821,13 @@ input.message { color:#7f7f7f; }
 }
 #panel-electorates ul.seatList li span {
   float:right;
+  width:47px;
   margin:-10px 0 -10px 0;
   font-size:11px;
-  padding:10px 25px 10px 0;
-  background:transparent url("../img/sprites.png") -926px -208px no-repeat !important;
+  padding:12px 25px 10px 0;
+  background:transparent url("../img/sprites.png") -900px -208px no-repeat !important;
   text-indent:0;
+  text-align: right;
 }
 #panel-electorates .electorate h3.back {
   color:#277f9c;
@@ -849,7 +851,8 @@ input.message { color:#7f7f7f; }
   text-transform: uppercase;
 }
 #panel-electorates .electorate h3 span {
-  font-size:14px;
+  font-family: Arial;
+  font-size:15px;
   font-weight:bold;
 }
 #panel-electorates .electorate h4 {
@@ -902,6 +905,7 @@ input.message { color:#7f7f7f; }
 }
 #panel-electorates .electorate h5.viewRegion:hover { text-decoration:underline; }
 #panel-electorates .electorate p {
+  font-family: 'Times New Roman';
   font-size:14px;
   line-height:18px;
   margin:0 10px 10px 10px;

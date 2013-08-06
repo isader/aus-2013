@@ -137,6 +137,10 @@ RegionMap.prototype.buildMap = function(id) {
 	var _assignRegion = function (regionPolygon, regionName, electorateData, bounds) {
 		var marker;
 
+		if (regionName === "lingiari") {
+			console.log(bounds);
+		}
+
 		if(electorateData.keyseat == 0) {
 			marker = new google.maps.Marker({
 				map : selfRef.map,
@@ -151,6 +155,7 @@ RegionMap.prototype.buildMap = function(id) {
 			marker = new google.maps.Marker({
 				position : bounds.getCenter(),
 				map : selfRef.map,
+				draggable : false,
 				title : regionName,
 				icon : image,
 				id : count
@@ -265,6 +270,30 @@ RegionMap.prototype.buildMap = function(id) {
 			case "MultiPolygon":
 				googleObj = [];
 
+
+				var paths = _.map(geojsonGeometry.coordinates, function(entry) {
+				    return _.reduce(entry, function(list, polygon) {
+				        _.each(_.map(polygon, function(point) {
+				            // Important: the lat/lng are vice-versa in GeoJSON
+				            var ll = new google.maps.LatLng(point[1], point[0]);
+				            bounds.extend(ll);
+				            return ll;
+				        }), function(point) {
+				            list.push(point);
+				        });
+
+				        return list;
+				    }, []);
+				});
+
+				opts.paths = paths;
+				opts.id = count;
+				googleObj = new google.maps.Polygon(opts);
+				selfRef.districtPolygons[regionName] = googleObj;
+
+				_assignRegion(googleObj, regionName, electorateData, bounds);
+
+/**
 				for (var i = 0; i < geojsonGeometry.coordinates.length; i++) {
 					var paths = [];
 					var exteriorDirection;
@@ -307,87 +336,8 @@ RegionMap.prototype.buildMap = function(id) {
 					_assignRegion(googleObj[0], regionName, electorateData, bounds);
 
 					googleObj[0].set("geojsonProperties", geojsonProperties);
-
-					/**
-
-					var areas = [];
-					for (var k = 0; k < googleObj.length; k++) {
-						areas.push(google.maps.geometry.spherical.computeArea(googleObj[k].getPath()));
-					}
-					
-					var c = 0, m = areas[0], mI = 0;
-
-					while(++c < areas.length) {
-					    if(areas[c] > m) {
-					        mI = c;
-					        m = areas[c];
-					    }
-					}
-					console.log(mI, m);
-
-					---------------------------
-
-					(function (regionName) {
-						var marker;
-						if (electorateData.keyseat == 0) {
-							marker = new google.maps.Marker({
-								map : selfRef.map,
-								draggable : false,
-								position : bounds.getCenter(),
-								visible : false
-							});
-						}
-						else {
-							var image = 'img/keySeatMarker.png';
-							marker = new google.maps.Marker({
-								position : bounds.getCenter(),
-								map : selfRef.map,
-								title : regionName,
-								icon : image,
-								id : count
-							});
-							google.maps.event.addListener(marker, "click", function(evt) {
-								console.log('Marker Clicked')
-								$(selfRef).trigger('selected', regionName);
-							});
-						}
-
-						selfRef.districtMarkers[regionName.replace('\'', '')] = marker;
-
-						google.maps.event.addListener(googleObj[0], "click", function(evt) {
-							$(selfRef).trigger('selected', regionName);
-						});
-
-						google.maps.event.addListener(googleObj[0], "mouseover", function(evt) {
-							selfRef.overName = regionName;
-							$(selfRef).stop();
-							$(selfRef).animate({
-								count : selfRef.selfRef + 1000
-							}, 500, function() {
-								selfRef.overInfo();
-							});
-							if(selfRef.selectedRegion != this) {
-								this.setOptions({
-									fillOpacity : 0.8
-								});
-							}
-						});
-
-						google.maps.event.addListener(googleObj[0], "mouseout", function(evt) {
-							selfRef.closeInfo(regionName)
-							$(selfRef).stop();
-							if(selfRef.selectedRegion != this) {
-								this.setOptions({
-									fillOpacity : 0.6
-								});
-							}
-						});
-
-					})(regionName.replace('\'', ''));
-
-					googleObj[0].setMap(selfRef.map);
-					**/
 				}
+**/
 				break;
 				
 			default:

@@ -132,7 +132,7 @@ ElectoratesPanel.prototype.build = function() {
 				stateName = dataInterface.regions[i].fullName;
 			}
 		}
-		var regionHTML = '<div class="region"><div class="btn" key="' + region + '">View State</div><h4>' + stateName + '</h4><ul class="seatList">'
+		var regionHTML = '<div class="region"><div class="btn" key="' + region + '">View All</div><h4>' + stateName + '</h4><ul class="seatList">'
 		var electorates = this.seatsToWatch[region];
 		for(var s = 0; s < electorates.length; s++) {
 			var electorate = electorates[s];
@@ -146,7 +146,7 @@ ElectoratesPanel.prototype.build = function() {
 				extraClass = 'last';
 			}
 			var shownCode = (declaredPartyCode=='ZZZ') ? 'IND' : declaredPartyCode;
-			regionHTML += '<li key="' + electorate.seat + '" class="' + extraClass + ' keyseat"><span style="color:' + dataInterface.parties[declaredPartyCode].colour + '">' + shownCode + '</span><label>' + electorate.seat + '</label></li>'
+			regionHTML += '<li key="' + electorate.seat + '" class="' + extraClass + ' keyseat"><span style="color:' + dataInterface.parties[declaredPartyCode].colour + '">' + shownCode + ' ' + electorate.swingNeededToChangeHands + '</span><label>' + electorate.seat + '</label></li>'
 		};
 		regionHTML += '</ul></div>';
 
@@ -402,11 +402,11 @@ ElectoratesPanel.prototype.openRegion = function(region) {
 		}
 	}
 	var regionHTML = "<h3>"+stateName+"</h3>"
-	/*
-	regionHTML += "<h4>Region summary</h4>";
+	
+	regionHTML += "<h4>State summary</h4>";
 	regionHTML += "<p>The district of Clayfield is an electoral division of the Queensland Legislative Assembly. It is centred around the inner northern suburb of Clayfield in the state capital of Brisbane.</p>";
-	*/
-	regionHTML += "<h4><span>Seats to watch</span>Seats in this region</h4>";
+	
+	regionHTML += "<h4><span>Seats to watch</span>Seats in this state</h4>";
 	regionHTML += "<div class='scrollList'><ul class='seatList'>";
 	var electorates = dataInterface.getElectorates(region);
 	for (var i=0; i < electorates.length; i++) {
@@ -461,7 +461,8 @@ ElectoratesPanel.prototype.electorateOver = function(electorateName) {
 	var partyOnePercent = Number(electorate.partyOnePercent)
 	var partyTwoPercent = Number(electorate.partyTwoPercent)
 	
-	var margin = mathExt.roundNumber(partyOnePercent - 50,2)
+	//var margin = mathExt.roundNumber(partyOnePercent - 50,2);
+	var margin = electorate.swingNeededToChangeHands;
 	var tipHTML = '<div class="regionTip"><h1>' + electorate.seat + '</h1>';
 	if(electorate.keyseat) {
 		tipHTML += '<h5>Seat to watch</h5>'
@@ -469,7 +470,7 @@ ElectoratesPanel.prototype.electorateOver = function(electorateName) {
 	var declaredPartyCode = electorate.partyOneCode;
 	var shownCode = (declaredPartyCode=='ZZZ') ? 'IND' : declaredPartyCode;
 	tipHTML += '<div class="results"><div class="held"><h2 style="background:' + dataInterface.parties[declaredPartyCode].colour + '">' + shownCode + '</h2></div>';
-	//tipHTML += '<div class="margin"><h2>haha'+ margin +'</h2></div>';
+	tipHTML += '<div class="margin"><h2>'+ margin +'%</h2></div>';
 	tipHTML += '<div class="clear"></div></div>';
 	tipHTML += '<h4>Click electorate for details</h4></div>';
 	var infoOptions = {

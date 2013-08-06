@@ -41,8 +41,7 @@ NewsPoll.prototype.buildGraphs = function() {
 	if(!$.browser.msie) {
 		$('#panel-newspoll .graphs').jScrollPane();
 	}
-	var lastdate = dataInterface.twoPartyPerferred[dataInterface.twoPartyPerferred.length-1].date.split('-');
-	
+	var lastdate = dataInterface.twoPartyPerferred[0].date.split('-');
 	$('#panel-newspoll .panelHeader h2').html('Latest Poll Results '+lastdate[2]+'/'+lastdate[1]+'/'+lastdate[0]);
 	this.buildTwoPartyPreferred();
 	this.buildPrimary();
@@ -62,7 +61,6 @@ NewsPoll.prototype.buildNetSatisfaction = function() {
 	// place the data into parties
 	for (var i=0; i < dataInterface.satisfaction.length; i++) {
 	 	var dataPoint = dataInterface.satisfaction[i];
-	 	console.log(dataPoint);
 	 	// add gov data
 	 	if (partyData[dataPoint.party_id]==null){
 	 		partyData[dataPoint.party_id] = [];
