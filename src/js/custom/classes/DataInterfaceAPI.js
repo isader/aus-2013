@@ -120,49 +120,57 @@ DataInterface = function() {
 		name: 'nsw',
 		fullName : 'New South Wales',
 		latlog : new google.maps.LatLng(-31.253218, 146.921099),
-		zoom : 6
+		zoom : 6,
+		description: "This is the description of NSW"
 	})
 	this.regions.push({
 		name: 'qld',
 		fullName : 'Queensland',
 		latlog : new google.maps.LatLng(-20.917574, 142.702796),
-		zoom : 5
+		zoom : 5,
+		description: "This is the description of QLD"
 	})
 	this.regions.push({
 		name: 'vic',
 		fullName : 'Victoria',
 		latlog : new google.maps.LatLng(-37.471308, 144.785153),
-		zoom : 7
+		zoom : 7,
+		description: "This is the description of VIC"
 	})
 	this.regions.push({
 		name: 'wa',
 		fullName : 'Western Australia',
 		latlog : new google.maps.LatLng(-27.672817, 121.628310),
-		zoom : 5
+		zoom : 5,
+		description: "This is the description of WA"
 	})
 	this.regions.push({
 		name: 'tas',
 		fullName : 'Tasmania',
 		latlog : new google.maps.LatLng(-41.365042, 146.628490),
-		zoom : 7
+		zoom : 7,
+		description: "This is the description of TAS"
 	})
 	this.regions.push({
 		name: 'act',
 		fullName : 'Australian Capital Territory',
 		latlog : new google.maps.LatLng(-35.473468, 149.012368),
-		zoom : 7
+		zoom : 7,
+		description: "This is the description of ACT"
 	})
 	this.regions.push({
 		name: 'nt',
 		fullName : 'Northen Territories',
 		latlog : new google.maps.LatLng(-19.491411, 132.550960),
-		zoom : 5
+		zoom : 5,
+		description: "This is the description of NT"
 	})
 	this.regions.push({
 		name: 'sa',
 		fullName : 'South Australia',
 		latlog : new google.maps.LatLng(-30.000232, 136.209155),
-		zoom : 6
+		zoom : 6,
+		description: "This is the description of SA"
 	})
 	// events
 	this.ELECTORATES_LOADED = 'electorates_loaded';

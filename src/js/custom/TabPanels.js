@@ -41,12 +41,14 @@ TabPanels = function() {
 		panel : new ElectoratesPanel(),
 		showMap : true
 	});
+	/**
 	this.panelList.push({
 		name : 'Swing-o-meter',
 		id : 'swing',
 		panel : new SwingPanel(),
 		showMap : true
 	});
+	**/
 	this.panelList.push({
 		name : 'Newspoll',
 		id : 'newspoll',

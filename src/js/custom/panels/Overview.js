@@ -16,7 +16,7 @@ OverviewPanel.prototype.create = function(id) {
 	panelHTML += '<div class="leftCol"><h2>Seats to Watch</h2><div class="nav"><div class="back"></div><div class="num">0 of 0</div><div class="next"></div></div><div class="seats"><div class="seatsHolder"></div></div></div>';
 	panelHTML += '<div class="rightCol">';
 	//panelHTML += '<div class="callout electSearch"><h2>electorate  search</h2><p>View the key seats and search for information about each electorate including candidates and demographic data.</p><input type="text" name="elecorateName" id="elecorateName" value="'+this.searchMessage+'" class="message"></input></div>';
-	panelHTML += '<div class="callout swing"><h2>Swing-o-meter</h2><p>See how vote swings in either direction can affect the outcome of the election.</p><div class="pageBtn">Try the swing-o-meter</div></div>';
+	//panelHTML += '<div class="callout swing"><h2>Swing-o-meter</h2><p>See how vote swings in either direction can affect the outcome of the election.</p><div class="pageBtn">Try the swing-o-meter</div></div>';
 	panelHTML += "<div class='callout polling'><h2>Polling</h2><p>Find out what Queensland really thinks with Newspoll's insights into voters' preferred party and Premier.</p><div class='pageBtn'>View the latest polls</div></div>";
 	//panelHTML += '<div class="callout twitter"><h2>Twitter</h2><p>Find out what Queensland really thinks with Newspoll\'s insights into voters\' preffered party and Premier.</p><div class="pageBtn">View the latest headlines</div></div>';
 	panelHTML += '</div>';

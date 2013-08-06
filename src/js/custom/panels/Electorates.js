@@ -290,7 +290,10 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 		if(electorateData.keyseat) {
 			electorateHTML += "<h5 class='keyseat'>Key seat</h5>"
 		}
-		electorateHTML += "<h5 class='viewRegion' key='"+electorateData.state+"'>More seats in this state</h5><div class='clear'></div><h4>Candidates</h4><ul>";
+		electorateHTML += "<h5 class='viewRegion' key='"+electorateData.state+"'>More seats in this state</h5><div class='clear'></div>";
+		electorateHTML += "<h4>Seat summary</h4>";
+		electorateHTML += "<p>" + electorateData.description + "</p><div class='clear'></div>";
+		electorateHTML += "<h4>Main Candidates</h4><ul>";
 		
 		var cadidatesList = dataInterface.getCadidates(electorateData.seat);
 		
@@ -360,6 +363,10 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 		$('#panel-' + this.id + ' .rightCol .infoHolder').animate({
 			'margin-left' : -315
 		}, 200);
+
+		if(!$.browser.msie) {
+			$('#panel-' + this.id + ' .seat').jScrollPane({autoReinitialise:true});
+		}
 		//
 
 		regionMap.selectRegion(electorateData.seat)
@@ -396,15 +403,17 @@ ElectoratesPanel.prototype.openRegion = function(region) {
 	this.electorateTable.deSelect();
 	var selfRef = this;
 	var stateName = "";
+	var stateDescription = "";
 	for (var i = 0, len = dataInterface.regions.length; i < len; i = i + 1) {
 		if (region.toLowerCase() === dataInterface.regions[i].name.toLowerCase()) {
 			stateName = dataInterface.regions[i].fullName;
+			stateDescription = dataInterface.regions[i].description;
 		}
 	}
 	var regionHTML = "<h3>"+stateName+"</h3>"
 	
 	regionHTML += "<h4>State summary</h4>";
-	regionHTML += "<p>The district of Clayfield is an electoral division of the Queensland Legislative Assembly. It is centred around the inner northern suburb of Clayfield in the state capital of Brisbane.</p>";
+	regionHTML += "<p>" + stateDescription + "</p>";
 	
 	regionHTML += "<h4><span>Seats to watch</span>Seats in this state</h4>";
 	regionHTML += "<div class='scrollList'><ul class='seatList'>";

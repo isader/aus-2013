@@ -375,7 +375,6 @@ input.message { color:#7f7f7f; }
   font-weight:bold;
 }
 .regionTip .results .held {
-  width:47px;
   float:left;
 }
 .regionTip .results .margin {
@@ -710,6 +709,9 @@ input.message { color:#7f7f7f; }
   text-indent:0;
 }
 #panel-electorates label { padding:0 10px; }
+#panel-electorates .rightCol .seat {
+  height: 535px;
+}
 #panel-electorates .rightCol h2 {
   background:transparent url("../img/sprites.png") -244px -193px no-repeat !important;
   text-indent:-9999px;
@@ -921,14 +923,14 @@ input.message { color:#7f7f7f; }
 }
 #panel-electorates .electorate .demographics h4 { margin:5px 0 0 0; }
 #panel-electorates .electorate .demographics .demoBox {
-  width:136px;
+  width:130px;
   float:left;
   margin:10px 10px 0 0;
 }
 #panel-electorates .electorate .demographics .demoBox h5, #panel-electorates .electorate .demographics .demoBox h4 {
   background:#f4f4f1;
   text-align:center;
-  width:124px;
+  width:118px;
   padding:6px 6px 0 6px;
   font-weight:bold;
 }

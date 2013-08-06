@@ -719,7 +719,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 				formatted = data[i].data.name + ", " + data[i].data.state.toUpperCase();
 			}
 			else if (data[i].data.type === "Suburb") {
-				formatted = data[i].data.suburb + ", " + data[i].data.state.toUpperCase() + ", " + data[i].data.postcode;
+				formatted = data[i].data.suburb + ", " + data[i].data.state.toUpperCase() + ", " + data[i].data.postcode + " (" + data[i].data.name + ")";
 			}
 			if ( formatted === false )
 				continue;

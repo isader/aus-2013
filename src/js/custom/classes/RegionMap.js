@@ -135,17 +135,21 @@ RegionMap.prototype.buildMap = function(id) {
 	};
 
 	var _assignRegion = function (regionPolygon, regionName, electorateData, bounds) {
-		var marker;
+		var marker,
+			center = bounds.getCenter();
 
 		if (regionName === "lingiari") {
-			console.log(bounds);
+			center = new google.maps.LatLng(-19.491411,132.55096);
+		}
+		else if (regionName === "sydney") {
+			center = new google.maps.LatLng(-33.873052,151.200714);
 		}
 
 		if(electorateData.keyseat == 0) {
 			marker = new google.maps.Marker({
 				map : selfRef.map,
 				draggable : false,
-				position : bounds.getCenter(),
+				position : center,
 				visible : false
 			});
 		}
@@ -153,7 +157,7 @@ RegionMap.prototype.buildMap = function(id) {
 			var image = 'img/keySeatMarker.png';
 
 			marker = new google.maps.Marker({
-				position : bounds.getCenter(),
+				position : center,
 				map : selfRef.map,
 				draggable : false,
 				title : regionName,
