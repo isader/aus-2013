@@ -697,7 +697,7 @@ input.message { color:#7f7f7f; }
   text-indent:0;
 }
 #panel-overview .rightCol .polling {
-  background:transparent url("../img/sprites.png") -983px -912px no-repeat !important;
+  background:transparent url("../img/sprites.png") -983px -925px no-repeat !important;
   text-indent:0;
 }
 #panel-overview .rightCol .twitter {
