@@ -709,7 +709,7 @@ input.message { color:#7f7f7f; }
   text-indent:0;
 }
 #panel-electorates label { padding:0 10px; }
-#panel-electorates .rightCol .seat {
+#panel-electorates .rightCol .seat-scroll {
   height: 535px;
 }
 #panel-electorates .rightCol h2 {

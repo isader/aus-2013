@@ -24,7 +24,7 @@ ElectoratesPanel.prototype.create = function(id) {
 	panelHTML += '<div class="rightCol">';
 	panelHTML += '<div class="info"><div class="infoHolder">';
 	panelHTML += '<div class="results infoPanel"><h3>Seats to watch</h3><div class="keyseats"></div></div>';
-	panelHTML += '<div class="electorate infoPanel"><h3 class="back">back to Seats to watch</h3><div class="seat"></div></div>';
+	panelHTML += '<div class="electorate infoPanel"><h3 class="back">back to Seats to watch</h3><div class="seat-scroll"><div class="seat"></div></div></div>';
 	panelHTML += '</div></div>';
 	panelHTML += '</div><div class="table-seats"></div>';
 	panelHTML += '<div id="graphToolTip">ToolTip</div>';
@@ -362,8 +362,19 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 			'margin-left' : -315
 		}, 200);
 
+		var pane = $('#panel-' + this.id + ' .seat-scroll'),
+			api;
+
 		if(!$.browser.msie) {
-			$('#panel-' + this.id + ' .seat').jScrollPane();
+			if (!pane.hasClass('jspScrollable')) {
+				pane.jScrollPane({
+					maintainPosition: false
+				});
+			}
+			else {
+				api = pane.data('jsp');
+				api.reinitialise();
+			}
 		}
 		//
 
