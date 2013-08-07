@@ -46,7 +46,7 @@ DataInterface = function() {
 		colour : '#999999'
 	};
 	this.parties['LCP'] = {
-		name : 'Liberal Country',
+		name : 'Liberal Country Party',
 		colour : '#999999'
 	};
 	this.parties['NAT'] = {
@@ -97,8 +97,8 @@ DataInterface = function() {
 		name : 'Citizens Electoral Council',
 		colour : '#999999'
 	};
-	this.parties['CL'] = {
-		name : 'Country Liberals',
+	this.parties['CLP'] = {
+		name : 'Country Liberals Party',
 		colour : '#999999'
 	};
 	this.parties['ON'] = {

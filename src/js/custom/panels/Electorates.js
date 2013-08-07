@@ -318,31 +318,30 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 
 		var ageGroups = []
 		ageGroups.push({
-			value : electorateData.age0to14,
+			value : electorateData.populationByAge0_14,
 			percent : 0,
 			label : '0-14'
 		})
 		ageGroups.push({
-			value : electorateData.age15to24,
+			value : electorateData.populationByAge15_24,
 			percent : 0,
 			label : '15-24'
 		})
 		ageGroups.push({
-			value : electorateData.age25to44,
+			value : electorateData.populationByAge25_44,
 			percent : 0,
 			label : '25-44'
 		})
 		ageGroups.push({
-			value : electorateData.age45to64,
+			value : electorateData.populationByAge45_65,
 			percent : 0,
-			label : '45-64'
+			label : '45-65'
 		})
 		ageGroups.push({
-			value : electorateData.age65plus,
+			value : electorateData.populationByAge65plus,
 			percent : 0,
 			label : '65+'
 		})
-
 		var totalPopulation = 0;
 		var graphHeight = 73;
 		var graphDisplay = 79;
@@ -351,8 +350,7 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 			totalPopulation += ageGroups[i].value;
 		};
 		for( i = 0; i < ageGroups.length; i++) {
-			ageGroups[i].percent = ageGroups[i].value / (totalPopulation / 100);
-
+			ageGroups[i].percent = parseFloat(ageGroups[i].value.replace('%', ''));
 			var colHeight = realHeight / 100 * ageGroups[i].percent
 			var marginHeight = graphHeight - colHeight;
 			electorateHTML += "<div class='graphCol' style='margin-top:" + marginHeight + "px;'><div style='height:" + colHeight + "px;'></div><label>" + ageGroups[i].label + "</label></div>";
@@ -365,7 +363,7 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 		}, 200);
 
 		if(!$.browser.msie) {
-			$('#panel-' + this.id + ' .seat').jScrollPane({autoReinitialise:true});
+			$('#panel-' + this.id + ' .seat').jScrollPane();
 		}
 		//
 
