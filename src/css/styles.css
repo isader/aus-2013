@@ -336,7 +336,7 @@ input.message { color:#7f7f7f; }
 .regionTip {
   cursor:pointer;
   background:url('../img/hoverBox.png') no-repeat;
-  padding:9px 13px 13px 13px;
+  padding:12px 15px 13px 15px;
   width:163px;
   height:101px;
   *width:182px;
@@ -344,23 +344,24 @@ input.message { color:#7f7f7f; }
 }
 .regionTip h1 {
   color:#004563;
-  font-size:22px;
-  /*font-family:'Times New Roman';*/
+  font-size:20px;
+  font-family:'Arial';
 }
 .regionTip h5 {
   color:#918f75;
   font-size:11px;
   text-transform:uppercase;
   font-family:'Arial';
-  background:transparent url("../img/sprites.png") -690px -403px no-repeat !important;
+  background:transparent url("../img/sprites.png") -690px -405px no-repeat !important;
   text-indent:0;
-  padding:4px 0 4px 22px;
+  padding:4px 0 2px 18px;
 }
 .regionTip .results {
   border-top:1px solid #918f75;
   border-bottom:1px solid #918f75;
   padding:2px 0 2px 0;
-  margin:3px 0 3px 0;
+  margin:2px 0 4px 0;
+  width: 143px;
 }
 .regionTip .results h3 {
   color:#918f75;
@@ -381,14 +382,15 @@ input.message { color:#7f7f7f; }
 }
 .regionTip .results .held {
   float:left;
+  width: auto;
 }
 .regionTip .results .margin {
-  width:98px;
+  width:auto;
   float:left;
   margin:0 0 0 2px;
 }
 .regionTip .results .margin h2 {
-  background:#f4f4f1;
+  background:transparent;
   color:#918f75;
   font-style:italic;
   font-weight:normal;
