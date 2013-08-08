@@ -97,7 +97,7 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 		if(this.showSwing) {
 			extraClasses = 'swingRow'
 		}
-		tableHTML += '<tr key="' + electorate.seat + '" class="resultRow ' + extraClasses + '"><td class="name">' + electorate.seat + '</td><td>' + electorate.state.toUpperCase() + '</td><td class="party" style="color:' + dataInterface.parties[winningParty].colour + '">' + shownCode + '</td><td>' + electorate.swingNeededToChangeHands + '%</td><td>' + electorate.swingStatus + '</td></tr>';
+		tableHTML += '<tr key="' + electorate.seat + '" class="resultRow ' + extraClasses + '"><td class="name">' + electorate.seat + '</td><td>' + electorate.state.toUpperCase() + '</td><td class="party" style="color:' + dataInterface.parties[winningParty].colour + '">' + shownCode + '</td><td>' + margin + '%</td><td>' + electorate.swingStatus + '</td></tr>';
 		i--;
 	}
 	tableHTML += '</table></div>';

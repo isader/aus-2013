@@ -251,7 +251,7 @@ input.message { color:#7f7f7f; }
   width:873px;
   background-color: #fff;
 }
-.table-seats .resultsTable {
+.resultsTable {
   padding:5px;
   height:554px;
   overflow:hidden;
@@ -261,32 +261,36 @@ input.message { color:#7f7f7f; }
   width:840px;
   font-size:12px;
 }
-.table-seats .resultsTable table {
+.leftCol .resultsTable {
+  width: 530px;
+  height:554px;
+}
+.resultsTable table {
   width:100%;
   background:#ffffff;
   border-right:1px solid #c3c2b6;
   border-top:1px solid #c3c2b6;
 }
-.table-seats .resultsTable table tr:hover {
+.resultsTable table tr:hover {
   background:#e4ecef;
   cursor:pointer;
 }
-.table-seats .resultsTable table tr:hover .name { text-decoration:underline; }
-.table-seats .resultsTable table tr.swingRow:hover {
+.resultsTable table tr:hover .name { text-decoration:underline; }
+.resultsTable table tr.swingRow:hover {
   background:none;
   cursor:auto;
 }
-.table-seats .resultsTable table tr.swingRow:hover .name { text-decoration:none; }
-.table-seats .resultsTable table tr.selected { background:#6ba3bc; }
-.table-seats .resultsTable table tr.selected .name { color:#ffffff; }
-.table-seats .resultsTable table tr.selected td { color:#ffffff; }
-.table-seats .resultsTable table tr.selected .party { color:#ffffff !important; }
-.table-seats .resultsTable table td, .table-seats .resultsTable table th {
+.resultsTable table tr.swingRow:hover .name { text-decoration:none; }
+.resultsTable table tr.selected { background:#6ba3bc; }
+.resultsTable table tr.selected .name { color:#ffffff; }
+.resultsTable table tr.selected td { color:#ffffff; }
+.resultsTable table tr.selected .party { color:#ffffff !important; }
+.resultsTable table td, .resultsTable table th {
   border-left:1px solid #c3c2b6;
   border-bottom:1px solid #c3c2b6;
   padding:6px;
 }
-.table-seats .resultsTable table th {
+.resultsTable table th {
   color:#277f9c;
   text-transform:uppercase;
   font-weight:bold;
@@ -297,21 +301,21 @@ input.message { color:#7f7f7f; }
   background:transparent url("../img/sprites.png") 0px -947px no-repeat !important;
   text-indent:0;
 }
-.table-seats .resultsTable table .name {
+.resultsTable table .name {
   color:#277f9c;
   font-weight:bold;
   font-size: 14px;
 }
-.table-seats .resultsTable table .party { font-weight:bold; }
-.table-seats .resultsTable table th.selected {
+.resultsTable table .party { font-weight:bold; }
+.resultsTable table th.selected {
   background:#ffffff !important;
   color:#004563;
 }
-.table-seats .resultsTable table th.selected.up {
+.resultsTable table th.selected.up {
   background:#ffffff url("../img/sprites.png") right -493px no-repeat !important;
   text-indent:0px;
 }
-.table-seats .resultsTable table th.selected.down {
+.resultsTable table th.selected.down {
   background:#ffffff url("../img/sprites.png") right -447px no-repeat !important;
   text-indent:0px;
 }
