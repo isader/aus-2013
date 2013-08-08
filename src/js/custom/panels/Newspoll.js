@@ -13,10 +13,10 @@ NewsPoll.prototype.create = function(id) {
 	this.daysOfTheWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 	this.monthsOfTheYear =  [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 	var panelHTML = '<div class="panelHeader"><h1>State Polling</h1><h2></h2></div><div class="graphs">';
-	panelHTML += '<div class="graph"><h2>TWO-PARTY PREFERRED</h2><p>Two-party preferred based on preference flow at August 2009 QLD election</p><div class="graphDisplay" id="twoPartyPrefered"></div></div>';
-	panelHTML += '<div class="graph"><h2>PRIMARY VOTE</h2><p>If a state election was held today, which of the folling would you vote for?  If "uncommitted", to which one of these do you have a leaning? </p><div class="graphDisplay" id="primaryVote"></div></div>';
-	panelHTML += '<div class="graph"><h2>BETTER PREMIER</h2><p>Who do you think would make the better premier?</p><div class="graphDisplay" id="betterPM"></div></div>';
-	panelHTML += '<div class="graph"><h2>LEADERS NET SATISFACTION</h2><p>Are you satisfied or dissatisfied with the way... is doing his / her job as premier /  leader of the opposition?</p><div class="graphDisplay" id="satisfaction"></div></div></div><div id="loading"><img src="img/aus-spinner.gif"></div>';
+	panelHTML += '<div class="graph"><h2>TWO-PARTY PREFERRED</h2><p>Two-party preferred based on preference flow at August 2010 Federal election</p><div class="graphDisplay" id="twoPartyPrefered"></div></div>';
+	panelHTML += '<div class="graph"><h2>PRIMARY VOTE</h2><p>If the federal election for the house of representatives was held today, which one of the following would you vote for? If uncommitted, to which one of these do you have a leaning?</p><div class="graphDisplay" id="primaryVote"></div></div>';
+	panelHTML += '<div class="graph"><h2>BETTER PM</h2><p>Who do you think would make the better prime minister?</p><div class="graphDisplay" id="betterPM"></div></div>';
+	panelHTML += '<div class="graph"><h2>LEADERS NET SATISFACTION</h2><p>Are you satisfied or dissatisfied with the way Kevin Rudd is doing his job as prime minister? Are you satisfied or dissatisfied with the way Tony Abbott is doing his job as leader of the opposition?</p><div class="graphDisplay" id="satisfaction"></div></div></div><div id="loading"><img src="img/aus-spinner.gif"></div>';
 	return panelHTML;
 }
 /**
@@ -113,10 +113,11 @@ NewsPoll.prototype.tooltipsSatisfaction = function(point) {
 		var dataPoint = dataPoints[i];
 		var offset = (100- (Number(dataPoint.dissatisfied)+Number(dataPoint.satisfied)))/2
 		var colour = colours[dataPoint.party_id];
-		tooltipStr +=  '<div class="grathBarSat" style="margin-left:'+offset+'px">'
-		tooltipStr +=  '<div style="width:'+(Math.abs(Number(dataPoint.dissatisfied))*expandGraph)+'px !important;" class="bar0">'+dataPoint.dissatisfied+'</div>';
+		tooltipStr +=  '<div class="grathBarSat">';
+		tooltipStr +=  '<p style="margin-bottom:3px;">'+ dataPoint.leader + '</p>';
+		tooltipStr +=  '<div style="width:'+(Math.abs(Number(dataPoint.dissatisfied))*expandGraph)+'px !important;" class="bar0">'+Math.floor(dataPoint.dissatisfied)+'</div>';
 	 
-		tooltipStr +=  '<div style="background-color:'+colour+' !important; width:'+Math.abs(Number(dataPoint.satisfied)*expandGraph)+'px !important;" class="bar1">'+dataPoint.satisfied+'</div>';
+		tooltipStr +=  '<div style="background-color:'+colour+' !important; width:'+Math.abs(Number(dataPoint.satisfied)*expandGraph)+'px !important;" class="bar1">'+Math.floor(dataPoint.satisfied)+'</div>';
 		tooltipStr +=  '</div><div class="clear"></div>'
 		i--;
 	}
@@ -234,14 +235,14 @@ NewsPoll.prototype.buildBetterPM = function() {
 	this.twoPartyGraph = new Highcharts.Chart({
          chart: {
             renderTo: 'betterPM',
-            type: 'line'
+            type: 'column'
          },   
           tooltip: {
         	formatter:function(){ selfRef.tooltipBetterPM(this); return false;},
        		shared: true
     	},
     	legend: {y : 65},
-		  xAxis: {labels: {align : 'center',x: 0, y: 25}},
+		 xAxis: {labels: {align : 'center',x: 0, y: 25}},
          series: seriesData
       });
 }
