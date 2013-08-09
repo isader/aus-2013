@@ -121,56 +121,56 @@ DataInterface = function() {
 		fullName : 'New South Wales',
 		latlog : new google.maps.LatLng(-31.253218, 146.921099),
 		zoom : 6,
-		description: "This is the description of NSW"
+		description: "A handful of seats in western Sydney could decide the 2013 election. The Labor brand is at rock bottom in NSW after years of sleaze and corruption."
 	})
 	this.regions.push({
 		name: 'qld',
 		fullName : 'Queensland',
 		latlog : new google.maps.LatLng(-20.917574, 142.702796),
 		zoom : 5,
-		description: "This is the description of QLD"
+		description: " Labor's best hope of hedging against losses elsewhere is by winning seats in Queensland. The Rudd factor and unhappiness with the state LNP government could benefit the ALP."
 	})
 	this.regions.push({
 		name: 'vic',
 		fullName : 'Victoria',
 		latlog : new google.maps.LatLng(-37.471308, 144.785153),
 		zoom : 7,
-		description: "This is the description of VIC"
+		description: "The Coalition looks like picking up at least two seats in Victoria and possibly three. Satisfaction with the state Coalition government makes Labor's task harder."
 	})
 	this.regions.push({
 		name: 'wa',
 		fullName : 'Western Australia',
 		latlog : new google.maps.LatLng(-27.672817, 121.628310),
 		zoom : 5,
-		description: "This is the description of WA"
+		description: "Labor was facing a wipe out in Perth - a January Newspoll had the party's two-party vote at 43 per cent. Kevin Rudd has clawed back ground but several seats could change hands."
 	})
 	this.regions.push({
 		name: 'tas',
 		fullName : 'Tasmania',
 		latlog : new google.maps.LatLng(-41.365042, 146.628490),
 		zoom : 7,
-		description: "This is the description of TAS"
+		description: "Labor's support in Tasmania is on the wane amid dissatisfaction with the state's Labor-Greens alliance. The Coalition has two seats (Bass and Braddon) in its sights."
 	})
 	this.regions.push({
 		name: 'act',
 		fullName : 'Australian Capital Territory',
 		latlog : new google.maps.LatLng(-35.473468, 149.012368),
 		zoom : 7,
-		description: "This is the description of ACT"
+		description: "Labor holds both ACT seats. Neither is expected to change hands."
 	})
 	this.regions.push({
 		name: 'nt',
 		fullName : 'Northen Territories',
 		latlog : new google.maps.LatLng(-19.491411, 132.550960),
 		zoom : 5,
-		description: "This is the description of NT"
+		description: "With just two seats, the Territory is unlikely to play a major role in the campaign. However, Labor faces the loss of Lingiari if the results of the last territory poll are repeated federally."
 	})
 	this.regions.push({
 		name: 'sa',
 		fullName : 'South Australia',
 		latlog : new google.maps.LatLng(-30.000232, 136.209155),
 		zoom : 6,
-		description: "This is the description of SA"
+		description: " Labor hopes to pick up one Adelaide seat (Boothby), but could lose at least one (Hindmarsh). Labor's cars plan could win vote it in the home of Holden. State Labor is also on the nose."
 	})
 	// events
 	this.ELECTORATES_LOADED = 'electorates_loaded';
