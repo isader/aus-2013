@@ -19,6 +19,104 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 
 	var headers = [];
 
+	if(!this.showSwing) {
+		headers.push({
+			name : 'Single Income Families',
+			key : 'singleIncomeFamilies',
+			intDir : 'Up'
+		});
+		headers.push({
+			name : 'Children In Governments Schools',
+			key : 'childrenInGovernmentsSchools',
+			intDir : 'Up'
+		});
+		headers.push({
+			name : 'Year 12 School Level Attained',
+			key : 'year12SchoolLevelAttained',
+			intDir : 'Up'
+		});
+		headers.push({
+			name : 'Gross Household Weekly Income Above $3000',
+			key : 'grossHouseholdWeeklyIncomeAbove3000',
+			intDir : 'Up'
+		});
+		headers.push({
+			name : 'Gross Household Weekly Income Under $600',
+			key : 'grossHouseholdWeeklyIncomeUnder600',
+			intDir : 'Up'
+		});
+		headers.push({
+			name : 'Both Parents Born In Australia',
+			key : 'bothParentsBornInAustralia',
+			intDir : 'Up'
+		});
+		headers.push({
+			name : 'Born In Australia',
+			key : 'bornInAustralia',
+			intDir : 'Up'
+		});
+		headers.push({
+			name : 'Family Composition One Parent Family',
+			key : 'familyCompositionOneParentFamily',
+			intDir : 'Up'
+		});
+		headers.push({
+			name : 'Family Composition Couple With Children',
+			key : 'FamilyCompositionCoupleWithChildren',
+			intDir : 'Up'
+		});
+		headers.push({
+			name : 'Family Composition Couple Without Children',
+			key : 'familyCompositionCoupleWithoutChildren',
+			intDir : 'Up'
+		});
+		headers.push({
+			name : 'Bachelor Degree',
+			key : 'bachelorDegree',
+			intDir : 'Up'
+		});
+		headers.push({
+			name : 'Unemployment Rate Show National Average',
+			key : 'unemploymentRateShowNationalAverage',
+			intDir : 'Up'
+		});
+		headers.push({
+			name : 'Mortgage Payments 30% Or More Of Income',
+			key : 'mortgagePayments30OrMoreOfIncome',
+			intDir : 'Up'
+		});
+		headers.push({
+			name : 'Median Weekly Household Income',
+			key : 'MedianWeeklyHouseholdIncome',
+			intDir : 'Up'
+		});
+		headers.push({
+			name : 'Age 65+',
+			key : 'age65',
+			intDir : 'Up'
+		});
+		headers.push({
+			name : 'Age 44-64',
+			key : 'age4464',
+			intDir : 'Up'
+		});
+		headers.push({
+			name : 'Age 25-44',
+			key : 'age2544',
+			intDir : 'Up'
+		});
+		headers.push({
+			name : 'Age 15-24',
+			key : 'age1524',
+			intDir : 'Up'
+		});
+		headers.push({
+			name : 'Age 0-14',
+			key : 'age014',
+			intDir : 'Up'
+		});
+	}
+
 	headers.push({
 		name : 'Status',
 		key : 'status',
@@ -47,7 +145,7 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 
 	headers.push({
 		name : 'State',
-		key : 'region',
+		key : 'state',
 		intDir : 'Down'
 	});
 
@@ -56,6 +154,7 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 		key : 'name',
 		intDir : 'Down'
 	});
+
 
 	var i = headers.length - 1;
 	while(i >= 0) {
@@ -77,10 +176,12 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 		var electorate = this.rows[i];
 		var partyOnePercent = electorate.partyOnePercent;
 		var partyTwoPercent = electorate.partyTwoPercent;
+
 		if(this.showSwing) {
 			partyOnePercent = (electorate.newPartyOnePercent) ? electorate.newPartyOnePercent : electorate.partyOnePercent
 			partyTwoPercent = (electorate.newPartyTwoPercent) ? electorate.newPartyTwoPercent : electorate.partyTwoPercent
 		}
+
 		var margin = Number(partyOnePercent) - 50;
 		winningParty = electorate.partyOneCode;
 		if(margin < 0) {
@@ -96,8 +197,36 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 		}
 		if(this.showSwing) {
 			extraClasses = 'swingRow'
+			tableHTML += '<tr key="' + electorate.seat + '" class="resultRow ' + extraClasses + '"><td class="name">' + electorate.seat + '</td><td>' + electorate.state.toUpperCase() + '</td><td class="party" style="color:' + dataInterface.parties[winningParty].colour + '">' + shownCode + '</td><td>' + margin + '%</td><td>' + electorate.swingStatus + '</td></tr>';
 		}
-		tableHTML += '<tr key="' + electorate.seat + '" class="resultRow ' + extraClasses + '"><td class="name">' + electorate.seat + '</td><td>' + electorate.state.toUpperCase() + '</td><td class="party" style="color:' + dataInterface.parties[winningParty].colour + '">' + shownCode + '</td><td>' + margin + '%</td><td>' + electorate.swingStatus + '</td></tr>';
+		else {
+			tableHTML += '<tr key="' + electorate.seat + '" class="resultRow ' + extraClasses + '">';
+			tableHTML += '<td class="name">' + electorate.seat + '</td>';
+			tableHTML += '<td>' + electorate.state.toUpperCase() + '</td>';
+			tableHTML += '<td class="party" style="color:' + dataInterface.parties[winningParty].colour + '">' + shownCode + '</td>';
+			tableHTML += '<td>' + margin + '%</td>';
+			tableHTML += '<td>' + electorate.swingStatus + '</td>';
+			tableHTML += '<td>' + electorate.populationByAge0_14 + '</td>';
+			tableHTML += '<td>' + electorate.populationByAge15_24 + '</td>';
+			tableHTML += '<td>' + electorate.populationByAge25_44 + '</td>';
+			tableHTML += '<td>' + electorate.populationByAge45_65 + '</td>';
+			tableHTML += '<td>' + electorate.populationByAge65plus + '</td>';
+			tableHTML += '<td>' + electorate.medianWeeklyHouseholdIncome + '</td>';
+			tableHTML += '<td>' + electorate.mortgagePayments30OrMoreOfIncome + '</td>';
+			tableHTML += '<td>' + electorate.unemploymentRateShowNationalAverage + '</td>';
+			tableHTML += '<td>' + electorate.bachelorDegree + '</td>';
+			tableHTML += '<td>' + electorate.familyCompositionCoupleWithoutChildren + '</td>';
+			tableHTML += '<td>' + electorate.FamilyCompositionCoupleWithChildren + '</td>';
+			tableHTML += '<td>' + electorate.familyCompositionOneParentFamily + '</td>';
+			tableHTML += '<td>' + electorate.bornInAustralia + '</td>';
+			tableHTML += '<td>' + electorate.bothParentsBornInAustralia + '</td>';
+			tableHTML += '<td>' + electorate.grossHouseholdWeeklyIncomeUnder600 + '</td>';
+			tableHTML += '<td>' + electorate.grossHouseholdWeeklyIncomeAbove3000 + '</td>';
+			tableHTML += '<td>' + electorate.year12SchoolLevelAttained + '</td>';
+			tableHTML += '<td>' + electorate.childrenInGovernmentsSchools + '</td>';
+			tableHTML += '<td>' + electorate.singleIncomeFamilies + '</td>';
+			tableHTML += '</tr>';
+		}
 		i--;
 	}
 	tableHTML += '</table></div>';
@@ -172,9 +301,9 @@ ElectorateTable.prototype.partyDown = function(a, b) {
 	}
 }
 
-ElectorateTable.prototype.regionUp = function(a, b) {
-	var A = a.region.toLowerCase();
-	var B = b.region.toLowerCase();
+ElectorateTable.prototype.stateUp = function(a, b) {
+	var A = a.state.toLowerCase();
+	var B = b.state.toLowerCase();
 	if(A < B) {
 		return -1;
 	} else if(A > B) {
@@ -183,9 +312,9 @@ ElectorateTable.prototype.regionUp = function(a, b) {
 		return 0;
 	}
 }
-ElectorateTable.prototype.regionDown = function(a, b) {
-	var A = b.region.toLowerCase();
-	var B = a.region.toLowerCase();
+ElectorateTable.prototype.stateDown = function(a, b) {
+	var A = b.state.toLowerCase();
+	var B = a.state.toLowerCase();
 	if(A < B) {
 		return -1;
 	} else if(A > B) {

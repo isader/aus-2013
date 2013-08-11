@@ -83,7 +83,7 @@ NewsPoll.prototype.buildNetSatisfaction = function() {
         	formatter:function(){ selfRef.tooltipsSatisfaction(this); return false;},
        		shared: true
     	},
-         colors: ['#ef5b46',  '#277e9c',  '#c6cb8b'],	 
+         colors: ['#ef5b46',  '#277e9c',  '#c6cb8b'],
     	legend: {y : 65},
 		  xAxis: {labels: {align : 'center',x: 0, y: 25}},
          series: seriesData
@@ -225,7 +225,17 @@ NewsPoll.prototype.buildBetterPM = function() {
 		 		count = null
 		 	} 
 	 	partyData[dataPoint.opp_party_key].push([formatedDate,count]);
-	 	
+	 	// add uncommitted data
+	 	/**
+	 	if (partyData["Uncommitted"]==null){
+	 		partyData["Uncommitted"] = [];
+	 	}
+	 	count = Number(dataPoint.uncommitted)
+		if (count<0){
+		 		count = null
+		 	} 
+	 	partyData["Uncommitted"].push([formatedDate,count]);
+	 	**/
 	};
 	// reformat for a highcharts series
 	var seriesData =[];
@@ -242,8 +252,9 @@ NewsPoll.prototype.buildBetterPM = function() {
        		shared: true
     	},
     	legend: {y : 65},
-		 xAxis: {labels: {align : 'center',x: 0, y: 25}},
-         series: seriesData
+    	colors: ['#ef5b46',  '#277e9c',  '#aaaaaa'],
+		xAxis: {labels: {align : 'center',x: 0, y: 25}},
+        series: seriesData
       });
 }
 

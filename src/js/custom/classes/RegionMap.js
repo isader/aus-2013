@@ -144,6 +144,12 @@ RegionMap.prototype.buildMap = function(id) {
 		else if (regionName === "sydney") {
 			center = new google.maps.LatLng(-33.873052,151.200714);
 		}
+		else if (regionName === "solomon") {
+			center = new google.maps.LatLng(-12.416460,130.933685);
+		}
+		else if (regionName === "bonner") {
+			center = new google.maps.LatLng(-27.451009,153.149414);
+		}
 
 		if(electorateData.keyseat == 0) {
 			marker = new google.maps.Marker({

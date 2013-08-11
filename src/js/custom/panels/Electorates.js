@@ -310,8 +310,8 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 		
 		//
 		electorateHTML += "</ul><div class='demographics'><h4>Demographics</h4>";
-		electorateHTML += "<div class='demoBox'><h5>Average Income</h5><h4>" + numberExt.addCommas(electorateData.averageIncome) + "</h4><span></span></div>";
-		electorateHTML += "<div class='demoBox'><h5>Unemployment Rate</h5><h4>" + electorateData.unemploymentRate + "</h4><span></span></div>";
+		electorateHTML += "<div class='demoBox'><h5>Average Income</h5><h4>" + numberExt.addCommas(electorateData.medianWeeklyHouseholdIncome) + "</h4><span></span></div>";
+		electorateHTML += "<div class='demoBox'><h5>Unemployment Rate</h5><h4>" + electorateData.unemploymentRateShowNationalAverage + "</h4><span></span></div>";
 		electorateHTML += "<div class='clear'></div>";
 		electorateHTML += "<div class='graph'><h4>Population by Age %</h4>";
 		electorateHTML += "<div class='graphArea'>";
@@ -356,7 +356,7 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 			electorateHTML += "<div class='graphCol' style='margin-top:" + marginHeight + "px;'><div style='height:" + colHeight + "px;'></div><label>" + ageGroups[i].label + "</label></div>";
 		};
 		electorateHTML += "<div class='clear'></div></div></div>";
-		electorateHTML += "<p class='note'>Data provided by <a href='http://www.ecq.qld.gov.au/' target='_blank'>ECQ</a> and <a href='http://www.oesr.qld.gov.au/' target='_blank'>OESR</a></p>";
+		electorateHTML += "<p class='note'>Data provided by Census</p>";
 		$('#panel-' + this.id + ' .rightCol .electorate .seat').html(electorateHTML)
 		$('#panel-' + this.id + ' .rightCol .infoHolder').animate({
 			'margin-left' : -315

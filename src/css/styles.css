@@ -251,6 +251,9 @@ input.message { color:#7f7f7f; }
   width:873px;
   background-color: #fff;
 }
+.table-seats .resultsTable table {
+  width: 1300px;
+}
 .resultsTable {
   padding:5px;
   height:554px;
@@ -298,8 +301,12 @@ input.message { color:#7f7f7f; }
   font-size:11px;
   -moz-box-shadow:0px 1px 3px 1px #dad9d0;
   box-shadow:0px 1px 3px 1px #dad9d0;
-  background:transparent url("../img/sprites.png") 0px -947px no-repeat !important;
+  background:transparent url("../img/sprites.png") 0px -947px no-repeat;
+  background-image: none;
+  background-color: #bfd6e0;
   text-indent:0;
+  text-align: center;
+  vertical-align: bottom;
 }
 .resultsTable table .name {
   color:#277f9c;
