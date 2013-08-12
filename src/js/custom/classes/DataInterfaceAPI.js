@@ -25,6 +25,14 @@ DataInterface = function() {
 		name : 'Liberal National Party',
 		colour : '#277e9c'
 	};
+	this.parties['LP'] = {
+		name : 'Liberal Party',
+		colour : '#277e9c'
+	};
+	this.parties['NP'] = {
+		name : 'National Party',
+		colour : '#277e9c'
+	};
 	this.parties['GRN'] = {
 		name : 'The Greens',
 		colour : '#8da13e'

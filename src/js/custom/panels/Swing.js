@@ -105,10 +105,10 @@ SwingPanel.prototype.swingChange = function(percent) {
 		
 		//- minus swing is a swing towards the LNP
 		if(swingPercent < 0) {
-			if(electiorateData.partyOneCode == 'LNP') {
+			if(electiorateData.partyOneCode === 'LP' || electiorateData.partyOneCode === 'NP') {
 				percentTwo -= Math.abs(swingPercent);
 				percentOne += Math.abs(swingPercent);
-			} else if(electiorateData.partyTwoCode == 'LNP') {
+			} else if(electiorateData.partyTwoCode === 'LP' || electiorateData.partyTwoCode === 'NP') {
 				percentTwo += Math.abs(swingPercent);
 				percentOne -= Math.abs(swingPercent);
 			}
@@ -129,19 +129,17 @@ SwingPanel.prototype.swingChange = function(percent) {
 		
 		var seatWinner = (percentOne>percentTwo) ? electiorateData.partyOneCode : electiorateData.partyTwoCode;
 		
-		
 		electiorateData.newPartyOnePercent = percentOne
 		electiorateData.newPartyTwoPercent = percentTwo
 		updatedRows.push(electiorateData);
 		
 		if(seatWinner == 'ALP') {
 			partySeatsCount[0].count++;
-		} else if(seatWinner == 'LNP') {
+		} else if(seatWinner == 'LP' || seatWinner == 'NP') {
 			partySeatsCount[1].count++;
 		} else {
 			partySeatsCount[2].count++;
 		}
-		
 		// Colour electorates by winner of last election
 		regionMap.colourRegion(electiorateData.seat, dataInterface.parties[seatWinner].colour);
 		//

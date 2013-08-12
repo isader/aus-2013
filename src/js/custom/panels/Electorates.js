@@ -312,7 +312,12 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 		electorateHTML += "</ul><div class='demographics'><h4>Demographics</h4>";
 		electorateHTML += "<div class='demoBox'><h5>Average Income</h5><h4>" + numberExt.addCommas(electorateData.medianWeeklyHouseholdIncome) + "</h4><span></span></div>";
 		electorateHTML += "<div class='demoBox'><h5>Unemployment Rate</h5><h4>" + electorateData.unemploymentRateShowNationalAverage + "</h4><span></span></div>";
+		electorateHTML += "<div class='demoBox'><h5>Average Income</h5><h4>" + numberExt.addCommas(electorateData.medianWeeklyHouseholdIncome) + "</h4><span></span></div>";
+		electorateHTML += "<div class='demoBox'><h5>Unemployment Rate</h5><h4>" + electorateData.unemploymentRateShowNationalAverage + "</h4><span></span></div>";
+		electorateHTML += "<div class='demoBox'><h5>Average Income</h5><h4>" + numberExt.addCommas(electorateData.medianWeeklyHouseholdIncome) + "</h4><span></span></div>";
+		electorateHTML += "<div class='demoBox'><h5>Unemployment Rate</h5><h4>" + electorateData.unemploymentRateShowNationalAverage + "</h4><span></span></div>";
 		electorateHTML += "<div class='clear'></div>";
+		/**
 		electorateHTML += "<div class='graph'><h4>Population by Age %</h4>";
 		electorateHTML += "<div class='graphArea'>";
 
@@ -357,6 +362,7 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 		};
 		electorateHTML += "<div class='clear'></div></div></div>";
 		electorateHTML += "<p class='note'>Data provided by Census</p>";
+		**/
 		$('#panel-' + this.id + ' .rightCol .electorate .seat').html(electorateHTML)
 		$('#panel-' + this.id + ' .rightCol .infoHolder').animate({
 			'margin-left' : -315
