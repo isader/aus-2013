@@ -22,7 +22,7 @@ DataInterface = function() {
 		colour : '#ef5b46'
 	};
 	this.parties['LNP'] = {
-		name : 'Liberal National Party',
+		name : 'Coalition',
 		colour : '#277e9c'
 	};
 	this.parties['LP'] = {

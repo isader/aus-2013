@@ -310,12 +310,12 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 		
 		//
 		electorateHTML += "</ul><div class='demographics'><h4>Demographics</h4>";
-		electorateHTML += "<div class='demoBox'><h5>Average Income</h5><h4>" + numberExt.addCommas(electorateData.medianWeeklyHouseholdIncome) + "</h4><span></span></div>";
-		electorateHTML += "<div class='demoBox'><h5>Unemployment Rate</h5><h4>" + electorateData.unemploymentRateShowNationalAverage + "</h4><span></span></div>";
-		electorateHTML += "<div class='demoBox'><h5>Average Income</h5><h4>" + numberExt.addCommas(electorateData.medianWeeklyHouseholdIncome) + "</h4><span></span></div>";
-		electorateHTML += "<div class='demoBox'><h5>Unemployment Rate</h5><h4>" + electorateData.unemploymentRateShowNationalAverage + "</h4><span></span></div>";
-		electorateHTML += "<div class='demoBox'><h5>Average Income</h5><h4>" + numberExt.addCommas(electorateData.medianWeeklyHouseholdIncome) + "</h4><span></span></div>";
-		electorateHTML += "<div class='demoBox'><h5>Unemployment Rate</h5><h4>" + electorateData.unemploymentRateShowNationalAverage + "</h4><span></span></div>";
+		electorateHTML += "<div class='demoBox'><h5>Median Weekly Household <br>Income</h5><h4>" + numberExt.addCommas(electorateData.medianWeeklyHouseholdIncome) + "</h4><span></span></div>";
+		electorateHTML += "<div class='demoBox'><h5>Mortgage Payments 30% or More of Income</h5><h4>" + electorateData.mortgagePayments30OrMoreOfIncome + "</h4><span></span></div>";
+		electorateHTML += "<div class='demoBox'><h5>Jobless Rate</h5><h4>" + numberExt.addCommas(electorateData.unemploymentRateShowNationalAverage) + "</h4><span>NAT. AV. 5.7%</span></div>";
+		electorateHTML += "<div class='demoBox'><h5>Bachelor Degree</h5><h4>" + electorateData.bachelorDegree + "</h4><span>&nbsp;</span></div>";
+		electorateHTML += "<div class='demoBox'><h5>Born in <br>Australia</h5><h4>" + electorateData.bornInAustralia + "</h4><span></span></div>";
+		electorateHTML += "<div class='demoBox'><h5>Couples with Children</h5><h4>" + electorateData.FamilyCompositionCoupleWithChildren + "</h4><span></span></div>";
 		electorateHTML += "<div class='clear'></div>";
 		/**
 		electorateHTML += "<div class='graph'><h4>Population by Age %</h4>";

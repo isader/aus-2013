@@ -251,9 +251,9 @@ input.message { color:#7f7f7f; }
   width:873px;
   background-color: #fff;
 }
-.table-seats .resultsTable table {
+/*.table-seats .resultsTable table {
   width: 1300px;
-}
+}*/
 .resultsTable {
   padding:5px;
   height:554px;
@@ -298,7 +298,7 @@ input.message { color:#7f7f7f; }
   text-transform:uppercase;
   font-weight:bold;
   -webkit-box-shadow:0px 1px 3px 1px #dad9d0;
-  font-size:11px;
+  font-size:10px;
   -moz-box-shadow:0px 1px 3px 1px #dad9d0;
   box-shadow:0px 1px 3px 1px #dad9d0;
   background:transparent url("../img/sprites.png") 0px -947px no-repeat;
@@ -319,11 +319,11 @@ input.message { color:#7f7f7f; }
   color:#004563;
 }
 .resultsTable table th.selected.up {
-  background:#ffffff url("../img/sprites.png") right -493px no-repeat !important;
+  background:#ffffff url("../img/sprites.png") right -1380px no-repeat !important;
   text-indent:0px;
 }
 .resultsTable table th.selected.down {
-  background:#ffffff url("../img/sprites.png") right -447px no-repeat !important;
+  background:#ffffff url("../img/sprites.png") right -1488px no-repeat !important;
   text-indent:0px;
 }
 .rightCol {
@@ -953,7 +953,7 @@ input.message { color:#7f7f7f; }
 #panel-electorates .electorate .demographics .demoBox {
   width:120px;
   float:left;
-  margin:10px 15px 0 0;
+  margin:5px 15px 0 0;
 }
 #panel-electorates .electorate .demographics .demoBox h5, #panel-electorates .electorate .demographics .demoBox h4 {
   background:#f4f4f1;
@@ -972,9 +972,9 @@ input.message { color:#7f7f7f; }
 }
 #panel-electorates .electorate .demographics .demoBox span {
   text-align:center;
-  width:136px;
+  width:118px;
   display:block;
-  padding:6px;
+  padding:2px 6px;
   font-weight:normal;
 }
 #panel-electorates .electorate .graph p { line-height:1.2; }
