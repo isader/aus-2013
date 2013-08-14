@@ -14,6 +14,7 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 	var sortFunc = this.sortOn + this.sortDirection;
 	selfRef.rows.sort(selfRef[sortFunc])
 
+	var headersHTML = '<div class="headersTable"><table><tr>';
 	var tableHTML = '<div class="resultsTable"><table>';
 	tableHTML += '<tr>';
 
@@ -157,15 +158,18 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 
 
 	var i = headers.length - 1;
+	var tempHTML = "";
 	while(i >= 0) {
 		var header = headers[i];
 		var className = '';
 		if(this.sortOn == header.key) {
 			className = 'selected ' + this.sortDirection.toLowerCase();
 		}
-		tableHTML += '<th class="' + className + '" key="' + header.key + '" intDir="' + header.intDir + '">' + header.name + '</th>';
+		tempHTML += '<th class="' + className + ' ' + header.key + '" key="' + header.key + '" intDir="' + header.intDir + '">' + header.name + '</th>';
 		i--;
 	};
+	headersHTML += tempHTML + '</tr></table></div>';
+	tableHTML += tempHTML;
 	tableHTML += '<tr>';
 	
 	
@@ -202,26 +206,26 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 		else {
 			tableHTML += '<tr key="' + electorate.seat + '" class="resultRow ' + extraClasses + '">';
 			tableHTML += '<td class="name">' + electorate.seat + '</td>';
-			tableHTML += '<td>' + electorate.state.toUpperCase() + '</td>';
+			tableHTML += '<td class="state">' + electorate.state.toUpperCase() + '</td>';
 			tableHTML += '<td class="party" style="color:' + dataInterface.parties[winningParty].colour + '">' + shownCode + '</td>';
-			tableHTML += '<td>' + margin + '%</td>';
-			tableHTML += '<td>' + electorate.swingStatus + '</td>';
+			tableHTML += '<td class="margin">' + margin + '%</td>';
+			tableHTML += '<td class="status">' + electorate.swingStatus + '</td>';
 			/*tableHTML += '<td>' + electorate.populationByAge0_14 + '</td>';
 			tableHTML += '<td>' + electorate.populationByAge15_24 + '</td>';
 			tableHTML += '<td>' + electorate.populationByAge25_44 + '</td>';
 			tableHTML += '<td>' + electorate.populationByAge45_65 + '</td>';
 			tableHTML += '<td>' + electorate.populationByAge65plus + '</td>';*/
-			tableHTML += '<td>' + electorate.medianWeeklyHouseholdIncome + '</td>';
-			tableHTML += '<td>' + electorate.mortgagePayments30OrMoreOfIncome + '</td>';
-			tableHTML += '<td>' + electorate.unemploymentRateShowNationalAverage + '</td>';
-			tableHTML += '<td>' + electorate.bachelorDegree + '</td>';
+			tableHTML += '<td class="medianWeeklyHouseholdIncome">' + electorate.medianWeeklyHouseholdIncome + '</td>';
+			tableHTML += '<td class="mortgagePayments30OrMoreOfIncome">' + electorate.mortgagePayments30OrMoreOfIncome + '</td>';
+			tableHTML += '<td class="unemploymentRateShowNationalAverage">' + electorate.unemploymentRateShowNationalAverage + '</td>';
+			tableHTML += '<td class="bachelorDegree">' + electorate.bachelorDegree + '</td>';
 			/*tableHTML += '<td>' + electorate.familyCompositionCoupleWithoutChildren + '</td>';*/
-			tableHTML += '<td>' + electorate.FamilyCompositionCoupleWithChildren + '</td>';
+			tableHTML += '<td class="FamilyCompositionCoupleWithChildren">' + electorate.FamilyCompositionCoupleWithChildren + '</td>';
 			/*tableHTML += '<td>' + electorate.familyCompositionOneParentFamily + '</td>';*/
-			tableHTML += '<td>' + electorate.bornInAustralia + '</td>';
+			tableHTML += '<td class="bornInAustralia">' + electorate.bornInAustralia + '</td>';
 			/*tableHTML += '<td>' + electorate.bothParentsBornInAustralia + '</td>';
 			tableHTML += '<td>' + electorate.grossHouseholdWeeklyIncomeUnder600 + '</td>';*/
-			tableHTML += '<td>' + electorate.grossHouseholdWeeklyIncomeAbove3000 + '</td>';
+			tableHTML += '<td class="grossHouseholdWeeklyIncomeAbove3000">' + electorate.grossHouseholdWeeklyIncomeAbove3000 + '</td>';
 			/*tableHTML += '<td>' + electorate.year12SchoolLevelAttained + '</td>';*/
 			/*tableHTML += '<td>' + electorate.childrenInGovernmentsSchools + '</td>';
 			tableHTML += '<td>' + electorate.singleIncomeFamilies + '</td>';*/
@@ -230,17 +234,18 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 		i--;
 	}
 	tableHTML += '</table></div>';
-	$(placeIn).html(tableHTML)
+	$(placeIn).html(headersHTML + tableHTML)
 	
 	if(this.selectedKey){
-		this.selectedRow = $(placeIn + ' .resultsTable .selected');
+		this.selectedRow = $(placeIn + ' .selected');
 	}
 	
 	if(!$.browser.msie) {
 		$(placeIn + ' .resultsTable').jScrollPane({ autoReinitialise: true });
 	}
 
-	$(placeIn + ' .resultsTable table tr th').each(function(index) {
+	$(placeIn + ' table tr th').each(function(index) {
+		console.log($(this));
 		$(this).click(function() {
 			if(selfRef.sortOn == $(this).attr('key')) {
 				if(selfRef.sortDirection == "Down") {
@@ -259,7 +264,7 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 		})
 	});
 	if(!this.showSwing) {
-		$(placeIn + " .resultsTable table tr.resultRow").each(function(index) {
+		$(placeIn + " table tr.resultRow").each(function(index) {
 			$(this).click(function() {
 				selfRef.deSelect();
 				selfRef.selectedKey = $(this).attr('key');

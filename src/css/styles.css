@@ -254,15 +254,55 @@ input.message { color:#7f7f7f; }
 /*.table-seats .resultsTable table {
   width: 1300px;
 }*/
+.headersTable {
+  width: 825px;
+  margin: 10px 15px 0;
+}
+.headersTable .name,
+.resultsTable .name {width: 88px;}
+.headersTable .state,
+.resultsTable .state {width:42px;}
+.headersTable .party,
+.resultsTable .party {width:35px;}
+.headersTable .margin,
+.resultsTable .margin {width:41px;}
+.headersTable .status,
+.resultsTable .status {width:48px;}
+.headersTable .medianWeeklyHouseholdIncome,
+.resultsTable .medianWeeklyHouseholdIncome {width:64px;}
+.headersTable .mortgagePayments30OrMoreOfIncome,
+.resultsTable .mortgagePayments30OrMoreOfIncome {width:60px;}
+.headersTable .unemploymentRateShowNationalAverage,
+.resultsTable .unemploymentRateShowNationalAverage {width:50px;}
+.headersTable .bachelorDegree,
+.resultsTable .bachelorDegree {width:57px;}
+.headersTable .FamilyCompositionCoupleWithChildren,
+.resultsTable .FamilyCompositionCoupleWithChildren {width:55px;}
+.headersTable .bornInAustralia,
+.resultsTable .bornInAustralia {width:60px;}
+.headersTable .grossHouseholdWeeklyIncomeAbove3000,
+.resultsTable .grossHouseholdWeeklyIncomeAbove3000 {}
+
+#panel-swing .headersTable {width:521px; margin:10px 10px 0;}
+#panel-swing .headersTable .name {width:94px;}
+#panel-swing .headersTable .marginSwing {width:97px;}
+#panel-swing .headersTable .state {width:79px;}
+#panel-swing .headersTable .party {width:35px;}
+#panel-swing .headersTable .status {width:151px;}
+
 .resultsTable {
   padding:5px;
-  height:554px;
+  height:486px;
   overflow:hidden;
   *overflow:scroll;
   background:#ffffff;
   margin:10px;
+  margin-top: 0;
   width:840px;
   font-size:12px;
+}
+.resultsTable .jspPane {
+  padding-top:0 !important;
 }
 .leftCol .resultsTable {
   width: 530px;
@@ -274,25 +314,37 @@ input.message { color:#7f7f7f; }
   border-right:1px solid #c3c2b6;
   border-top:1px solid #c3c2b6;
 }
+.resultsTable table th {
+  display:none;
+}
+.headersTable table tr:hover,
 .resultsTable table tr:hover {
   background:#e4ecef;
   cursor:pointer;
 }
+.headersTable table tr:hover .name,
 .resultsTable table tr:hover .name { text-decoration:underline; }
+.headersTable table tr.swingRow:hover,
 .resultsTable table tr.swingRow:hover {
   background:none;
   cursor:auto;
 }
+.headersTable table tr.swingRow:hover .name,
 .resultsTable table tr.swingRow:hover .name { text-decoration:none; }
+.headersTable table tr.selected,
 .resultsTable table tr.selected { background:#6ba3bc; }
+.headersTable table tr.selected .name,
 .resultsTable table tr.selected .name { color:#ffffff; }
+.headersTable table tr.selected td,
 .resultsTable table tr.selected td { color:#ffffff; }
+.headersTable table tr.selected .party,
 .resultsTable table tr.selected .party { color:#ffffff !important; }
-.resultsTable table td, .resultsTable table th {
+.resultsTable table td, .resultsTable table th, .headersTable table th {
   border-left:1px solid #c3c2b6;
   border-bottom:1px solid #c3c2b6;
   padding:6px;
 }
+.headersTable table th,
 .resultsTable table th {
   color:#277f9c;
   text-transform:uppercase;
@@ -308,20 +360,23 @@ input.message { color:#7f7f7f; }
   text-align: center;
   vertical-align: bottom;
 }
-.resultsTable table .name {
+.resultsTable table td.name {
   color:#277f9c;
   font-weight:bold;
   font-size: 14px;
 }
 .resultsTable table .party { font-weight:bold; }
+.headerssTable table th.selected,
 .resultsTable table th.selected {
   background:#ffffff !important;
   color:#004563;
 }
+.headersTable table th.selected.up,
 .resultsTable table th.selected.up {
   background:#ffffff url("../img/sprites.png") right -1380px no-repeat !important;
   text-indent:0px;
 }
+.headersTable table th.selected.down,
 .resultsTable table th.selected.down {
   background:#ffffff url("../img/sprites.png") right -1488px no-repeat !important;
   text-indent:0px;

@@ -1,0 +1,27 @@
+/** Hide elements **/
+#nav {display: none;}
+#FederalElections {
+	width: 100%;
+}
+#content {
+	left: 0;
+	right: 0;
+}
+
+.panel {
+	width: 100%;
+}
+
+#panel-overview {
+	padding: 0;
+}
+
+#panel-overview .intro {
+	height: 224px;
+	background:#d0e0e6 url(../img/sprite-mobile.png) no-repeat 0 0 !important;
+	background-size: 640px auto !important;
+}
+
+#map {
+	display: none;
+}
