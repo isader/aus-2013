@@ -317,7 +317,6 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 		electorateHTML += "<div class='demoBox'><h5>Born in <br>Australia</h5><h4>" + electorateData.bornInAustralia + "</h4><span></span></div>";
 		electorateHTML += "<div class='demoBox'><h5>Couples with Children</h5><h4>" + electorateData.FamilyCompositionCoupleWithChildren + "</h4><span></span></div>";
 		electorateHTML += "<div class='clear'></div>";
-		/**
 		electorateHTML += "<div class='graph'><h4>Population by Age %</h4>";
 		electorateHTML += "<div class='graphArea'>";
 
@@ -362,7 +361,6 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 		};
 		electorateHTML += "<div class='clear'></div></div></div>";
 		electorateHTML += "<p class='note'>Data provided by Census</p>";
-		**/
 		$('#panel-' + this.id + ' .rightCol .electorate .seat').html(electorateHTML)
 		$('#panel-' + this.id + ' .rightCol .infoHolder').animate({
 			'margin-left' : -315
