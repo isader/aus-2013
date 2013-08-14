@@ -1,11 +1,19 @@
 /** Hide elements **/
 #nav {display: none;}
+
+
 #FederalElections {
 	width: 100%;
 }
+#main {
+	display: block;
+	width:100%;
+}
+
 #content {
 	left: 0;
 	right: 0;
+	width:100%;
 }
 
 .panel {
@@ -20,6 +28,31 @@
 	height: 224px;
 	background:#d0e0e6 url(../img/sprite-mobile.png) no-repeat 0 0 !important;
 	background-size: 640px auto !important;
+}
+
+#panel-overview .main-search {
+	top: 91px;
+	left: 13px;
+	right: 13px;
+	width: auto;
+	min-height: 35px;
+	border-width:2px;
+}
+
+#panel-overview .main-search input {
+	width:93%;
+	height: 35px;
+	padding: 0 7px;
+	font-size:13px;
+	line-height: 35px;
+}
+
+#panel-overview .main-search .search-icon {
+	top: 10px;
+	width: 15px;
+	height: 16px;
+	background-position: -801px -832px;
+	background-size: 820px auto;
 }
 
 #map {
