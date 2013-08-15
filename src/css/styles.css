@@ -268,20 +268,20 @@ input.message { color:#7f7f7f; }
 .resultsTable .margin {width:41px;}
 .headersTable .status,
 .resultsTable .status {width:48px;}
-.headersTable .medianWeeklyHouseholdIncome,
-.resultsTable .medianWeeklyHouseholdIncome {width:64px;}
-.headersTable .mortgagePayments30OrMoreOfIncome,
-.resultsTable .mortgagePayments30OrMoreOfIncome {width:60px;}
-.headersTable .unemploymentRateShowNationalAverage,
-.resultsTable .unemploymentRateShowNationalAverage {width:50px;}
-.headersTable .bachelorDegree,
-.resultsTable .bachelorDegree {width:57px;}
-.headersTable .FamilyCompositionCoupleWithChildren,
-.resultsTable .FamilyCompositionCoupleWithChildren {width:55px;}
+.headersTable .familyCompositionOneParentFamily,
+.resultsTable .familyCompositionOneParentFamily {width:64px;}
 .headersTable .bornInAustralia,
 .resultsTable .bornInAustralia {width:60px;}
+.headersTable .bothParentsBornInAustralia,
+.resultsTable .bothParentsBornInAustralia {width:55px;}
 .headersTable .grossHouseholdWeeklyIncomeAbove3000,
-.resultsTable .grossHouseholdWeeklyIncomeAbove3000 {}
+.resultsTable .grossHouseholdWeeklyIncomeAbove3000 {width:64px;}
+.headersTable .year12SchoolLevelAttained,
+.resultsTable .year12SchoolLevelAttained {width:55px;}
+.headersTable .childrenInGovernmentsSchools,
+.resultsTable .childrenInGovernmentsSchools {width:60px;}
+.headersTable .singleIncomeFamilies,
+.resultsTable .singleIncomeFamilies {}
 
 #panel-swing .headersTable {width:521px; margin:10px 10px 0;}
 #panel-swing .headersTable .name {width:94px;}

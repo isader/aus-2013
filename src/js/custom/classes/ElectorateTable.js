@@ -21,13 +21,13 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 	var headers = [];
 
 	if(!this.showSwing) {
-		/*headers.push({
+		headers.push({
 			name : 'Single Income Families',
 			key : 'singleIncomeFamilies',
 			intDir : 'Up'
 		});
 		headers.push({
-			name : 'Children In Governments Schools',
+			name : 'Children In Public Schools',
 			key : 'childrenInGovernmentsSchools',
 			intDir : 'Up'
 		});
@@ -35,7 +35,7 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 			name : 'Year 12 School Level Attained',
 			key : 'year12SchoolLevelAttained',
 			intDir : 'Up'
-		});*/
+		});
 		headers.push({
 			name : 'Gross Household Weekly Income Above $3000',
 			key : 'grossHouseholdWeeklyIncomeAbove3000',
@@ -45,32 +45,32 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 			name : 'Gross Household Weekly Income Under $600',
 			key : 'grossHouseholdWeeklyIncomeUnder600',
 			intDir : 'Up'
-		});
+		});*/
 		headers.push({
 			name : 'Both Parents Born In Australia',
 			key : 'bothParentsBornInAustralia',
 			intDir : 'Up'
-		});*/
+		});
 		headers.push({
 			name : 'Born In Australia',
 			key : 'bornInAustralia',
 			intDir : 'Up'
 		});
-		/*headers.push({
-			name : 'Family Composition One Parent Family',
+		headers.push({
+			name : 'One Parent Family',
 			key : 'familyCompositionOneParentFamily',
 			intDir : 'Up'
-		});*/
-		headers.push({
+		});
+		/*headers.push({
 			name : 'Couples With Children',
 			key : 'FamilyCompositionCoupleWithChildren',
 			intDir : 'Up'
 		});
-		/*headers.push({
-			name : 'Family Composition Couple Without Children',
+		headers.push({
+			name : 'Couple Without Children',
 			key : 'familyCompositionCoupleWithoutChildren',
 			intDir : 'Up'
-		});*/
+		});
 		headers.push({
 			name : 'Bachelor Degree',
 			key : 'bachelorDegree',
@@ -91,7 +91,7 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 			key : 'medianWeeklyHouseholdIncome',
 			intDir : 'Up'
 		});
-		/*headers.push({
+		headers.push({
 			name : 'Age 65+',
 			key : 'age65',
 			intDir : 'Up'
@@ -215,20 +215,20 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 			tableHTML += '<td>' + electorate.populationByAge25_44 + '</td>';
 			tableHTML += '<td>' + electorate.populationByAge45_65 + '</td>';
 			tableHTML += '<td>' + electorate.populationByAge65plus + '</td>';*/
-			tableHTML += '<td class="medianWeeklyHouseholdIncome">' + electorate.medianWeeklyHouseholdIncome + '</td>';
-			tableHTML += '<td class="mortgagePayments30OrMoreOfIncome">' + electorate.mortgagePayments30OrMoreOfIncome + '</td>';
-			tableHTML += '<td class="unemploymentRateShowNationalAverage">' + electorate.unemploymentRateShowNationalAverage + '</td>';
-			tableHTML += '<td class="bachelorDegree">' + electorate.bachelorDegree + '</td>';
-			/*tableHTML += '<td>' + electorate.familyCompositionCoupleWithoutChildren + '</td>';*/
-			tableHTML += '<td class="FamilyCompositionCoupleWithChildren">' + electorate.FamilyCompositionCoupleWithChildren + '</td>';
-			/*tableHTML += '<td>' + electorate.familyCompositionOneParentFamily + '</td>';*/
+			//tableHTML += '<td class="medianWeeklyHouseholdIncome">' + electorate.medianWeeklyHouseholdIncome + '</td>';
+			//tableHTML += '<td class="mortgagePayments30OrMoreOfIncome">' + electorate.mortgagePayments30OrMoreOfIncome + '</td>';
+			//tableHTML += '<td class="unemploymentRateShowNationalAverage">' + electorate.unemploymentRateShowNationalAverage + '</td>';
+			//tableHTML += '<td class="bachelorDegree">' + electorate.bachelorDegree + '</td>';
+			//tableHTML += '<td>' + electorate.familyCompositionCoupleWithoutChildren + '</td>';
+			//tableHTML += '<td class="FamilyCompositionCoupleWithChildren">' + electorate.FamilyCompositionCoupleWithChildren + '</td>';
+			tableHTML += '<td class="familyCompositionOneParentFamily">' + electorate.familyCompositionOneParentFamily + '</td>';
 			tableHTML += '<td class="bornInAustralia">' + electorate.bornInAustralia + '</td>';
-			/*tableHTML += '<td>' + electorate.bothParentsBornInAustralia + '</td>';
-			tableHTML += '<td>' + electorate.grossHouseholdWeeklyIncomeUnder600 + '</td>';*/
+			tableHTML += '<td class="bothParentsBornInAustralia">' + electorate.bothParentsBornInAustralia + '</td>';
+			//tableHTML += '<td>' + electorate.grossHouseholdWeeklyIncomeUnder600 + '</td>';
 			tableHTML += '<td class="grossHouseholdWeeklyIncomeAbove3000">' + electorate.grossHouseholdWeeklyIncomeAbove3000 + '</td>';
-			/*tableHTML += '<td>' + electorate.year12SchoolLevelAttained + '</td>';*/
-			/*tableHTML += '<td>' + electorate.childrenInGovernmentsSchools + '</td>';
-			tableHTML += '<td>' + electorate.singleIncomeFamilies + '</td>';*/
+			tableHTML += '<td class="year12SchoolLevelAttained">' + electorate.year12SchoolLevelAttained + '</td>';
+			tableHTML += '<td class="childrenInGovernmentsSchools">' + electorate.childrenInGovernmentsSchools + '</td>';
+			tableHTML += '<td class="singleIncomeFamilies">' + electorate.singleIncomeFamilies + '</td>';
 			tableHTML += '</tr>';
 		}
 		i--;
@@ -245,7 +245,6 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 	}
 
 	$(placeIn + ' table tr th').each(function(index) {
-		console.log($(this));
 		$(this).click(function() {
 			if(selfRef.sortOn == $(this).attr('key')) {
 				if(selfRef.sortDirection == "Down") {
@@ -414,39 +413,11 @@ ElectorateTable.prototype.marginSwingUp = function(a, b) {
 	return marginTwo - marginOne;
 };
 
-ElectorateTable.prototype.medianWeeklyHouseholdIncomeDown = function(a, b) {
-	return parseInt(b.medianWeeklyHouseholdIncome.replace(/\$|,/g, '')) - parseInt(a.medianWeeklyHouseholdIncome.replace(/\$|,/g, ''));
+ElectorateTable.prototype.familyCompositionOneParentFamilyDown = function(a, b) {
+	return parseFloat(b.familyCompositionOneParentFamily.replace('%', '')) - parseFloat(a.familyCompositionOneParentFamily.replace('%', ''));
 }
-ElectorateTable.prototype.medianWeeklyHouseholdIncomeUp = function(a, b) {
-	return parseInt(a.medianWeeklyHouseholdIncome.replace(/\$|,/g, '')) - parseInt(b.medianWeeklyHouseholdIncome.replace(/\$|,/g, ''));
-};
-
-ElectorateTable.prototype.mortgagePayments30OrMoreOfIncomeDown = function(a, b) {
-	return parseFloat(b.mortgagePayments30OrMoreOfIncome.replace('%', '')) - parseFloat(a.mortgagePayments30OrMoreOfIncome.replace('%', ''));
-}
-ElectorateTable.prototype.mortgagePayments30OrMoreOfIncomeUp = function(a, b) {
-	return parseFloat(a.mortgagePayments30OrMoreOfIncome.replace('%', '')) - parseFloat(b.mortgagePayments30OrMoreOfIncome.replace('%', ''));
-};
-
-ElectorateTable.prototype.unemploymentRateShowNationalAverageDown = function(a, b) {
-	return parseFloat(b.unemploymentRateShowNationalAverage.replace('%', '')) - parseFloat(a.unemploymentRateShowNationalAverage.replace('%', ''));
-}
-ElectorateTable.prototype.unemploymentRateShowNationalAverageUp = function(a, b) {
-	return parseFloat(a.unemploymentRateShowNationalAverage.replace('%', '')) - parseFloat(b.unemploymentRateShowNationalAverage.replace('%', ''));
-};
-
-ElectorateTable.prototype.bachelorDegreeDown = function(a, b) {
-	return parseFloat(b.bachelorDegree.replace('%', '')) - parseFloat(a.bachelorDegree.replace('%', ''));
-}
-ElectorateTable.prototype.bachelorDegreeUp = function(a, b) {
-	return parseFloat(a.bachelorDegree.replace('%', '')) - parseFloat(b.bachelorDegree.replace('%', ''));
-};
-
-ElectorateTable.prototype.FamilyCompositionCoupleWithChildrenDown = function(a, b) {
-	return parseFloat(b.FamilyCompositionCoupleWithChildren.replace('%', '')) - parseFloat(a.FamilyCompositionCoupleWithChildren.replace('%', ''));
-}
-ElectorateTable.prototype.FamilyCompositionCoupleWithChildrenUp = function(a, b) {
-	return parseFloat(a.FamilyCompositionCoupleWithChildren.replace('%', '')) - parseFloat(b.FamilyCompositionCoupleWithChildren.replace('%', ''));
+ElectorateTable.prototype.familyCompositionOneParentFamilyUp = function(a, b) {
+	return parseFloat(a.familyCompositionOneParentFamily.replace('%', '')) - parseFloat(b.familyCompositionOneParentFamily.replace('%', ''));
 };
 
 ElectorateTable.prototype.bornInAustraliaDown = function(a, b) {
@@ -456,9 +427,37 @@ ElectorateTable.prototype.bornInAustraliaUp = function(a, b) {
 	return parseFloat(a.bornInAustralia.replace('%', '')) - parseFloat(b.bornInAustralia.replace('%', ''));
 };
 
+ElectorateTable.prototype.bothParentsBornInAustraliaDown = function(a, b) {
+	return parseFloat(b.bothParentsBornInAustralia.replace('%', '')) - parseFloat(a.bothParentsBornInAustralia.replace('%', ''));
+}
+ElectorateTable.prototype.bothParentsBornInAustraliaUp = function(a, b) {
+	return parseFloat(a.bothParentsBornInAustralia.replace('%', '')) - parseFloat(b.bothParentsBornInAustralia.replace('%', ''));
+};
+
 ElectorateTable.prototype.grossHouseholdWeeklyIncomeAbove3000Down = function(a, b) {
 	return parseFloat(b.grossHouseholdWeeklyIncomeAbove3000.replace('%', '')) - parseFloat(a.grossHouseholdWeeklyIncomeAbove3000.replace('%', ''));
 }
 ElectorateTable.prototype.grossHouseholdWeeklyIncomeAbove3000Up = function(a, b) {
 	return parseFloat(a.grossHouseholdWeeklyIncomeAbove3000.replace('%', '')) - parseFloat(b.grossHouseholdWeeklyIncomeAbove3000.replace('%', ''));
+};
+
+ElectorateTable.prototype.year12SchoolLevelAttainedDown = function(a, b) {
+	return parseFloat(b.year12SchoolLevelAttained.replace('%', '')) - parseFloat(a.year12SchoolLevelAttained.replace('%', ''));
+}
+ElectorateTable.prototype.year12SchoolLevelAttainedUp = function(a, b) {
+	return parseFloat(a.year12SchoolLevelAttained.replace('%', '')) - parseFloat(b.year12SchoolLevelAttained.replace('%', ''));
+};
+
+ElectorateTable.prototype.childrenInGovernmentsSchoolsDown = function(a, b) {
+	return parseFloat(b.childrenInGovernmentsSchools.replace('%', '')) - parseFloat(a.childrenInGovernmentsSchools.replace('%', ''));
+}
+ElectorateTable.prototype.childrenInGovernmentsSchoolsUp = function(a, b) {
+	return parseFloat(a.childrenInGovernmentsSchools.replace('%', '')) - parseFloat(b.childrenInGovernmentsSchools.replace('%', ''));
+};
+
+ElectorateTable.prototype.singleIncomeFamiliesDown = function(a, b) {
+	return parseFloat(b.singleIncomeFamilies.replace('%', '')) - parseFloat(a.singleIncomeFamilies.replace('%', ''));
+}
+ElectorateTable.prototype.singleIncomeFamiliesUp = function(a, b) {
+	return parseFloat(a.singleIncomeFamilies.replace('%', '')) - parseFloat(b.singleIncomeFamilies.replace('%', ''));
 };
