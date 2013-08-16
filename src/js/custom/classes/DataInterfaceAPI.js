@@ -18,7 +18,7 @@ DataInterface = function() {
 	// parties
 	this.parties = {}
 	this.parties['ALP'] = {
-		name : 'Australian Labor Party',
+		name : 'Labor',
 		colour : '#ef5b46'
 	};
 	this.parties['LNP'] = {
@@ -168,7 +168,7 @@ DataInterface = function() {
 	})
 	this.regions.push({
 		name: 'nt',
-		fullName : 'Northen Territories',
+		fullName : 'Northern Territories',
 		latlog : new google.maps.LatLng(-19.491411, 132.550960),
 		zoom : 5,
 		description: "With just two seats, the Territory is unlikely to play a major role in the campaign. However, Labor faces the loss of Lingiari if the results of the last territory poll are repeated federally."

@@ -13,10 +13,10 @@ NewsPoll.prototype.create = function(id) {
 	this.daysOfTheWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 	this.monthsOfTheYear =  [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 	var panelHTML = '<div class="panelHeader"><h1>State Polling</h1><h2></h2></div><div class="graphs">';
-	panelHTML += '<div class="graph"><h2>TWO-PARTY PREFERRED</h2><p>Two-party preferred based on preference flow at August 2010 Federal election</p><div class="graphDisplay" id="twoPartyPrefered"></div></div>';
-	panelHTML += '<div class="graph"><h2>PRIMARY VOTE</h2><p>If the federal election for the house of representatives was held today, which one of the following would you vote for? If uncommitted, to which one of these do you have a leaning?</p><div class="graphDisplay" id="primaryVote"></div></div>';
+	panelHTML += '<div class="graph"><h2>TWO-PARTY PREFERRED</h2><p>Two-party preferred based on preference flow at August 2010 federal election</p><div class="graphDisplay" id="twoPartyPrefered"></div></div>';
+	panelHTML += '<div class="graph"><h2>PRIMARY VOTE</h2><p>If the federal election for the House of Representatives was held today, which one of the following would you vote for? If uncommitted, to which one of these do you have a leaning?</p><div class="graphDisplay" id="primaryVote"></div></div>';
 	panelHTML += '<div class="graph"><h2>BETTER PM</h2><p>Who do you think would make the better prime minister?</p><div class="graphDisplay" id="betterPM"></div></div>';
-	panelHTML += '<div class="graph"><h2>LEADERS NET SATISFACTION</h2><p>Are you satisfied or dissatisfied with the way Kevin Rudd is doing his job as prime minister? Are you satisfied or dissatisfied with the way Tony Abbott is doing his job as leader of the opposition?</p><div class="graphDisplay" id="satisfaction"></div></div></div><div id="loading"><img src="img/aus-spinner.gif"></div>';
+	panelHTML += '<div class="graph"><h2>LEADERS\' NET SATISFACTION</h2><p>Are you satisfied or dissatisfied with the way Kevin Rudd is doing his job as prime minister? Are you satisfied or dissatisfied with the way Tony Abbott is doing his job as leader of the opposition?</p><div class="graphDisplay" id="satisfaction"></div></div></div><div id="loading"><img src="img/aus-spinner.gif"></div>';
 	return panelHTML;
 }
 /**
@@ -56,7 +56,6 @@ NewsPoll.prototype.buildNetSatisfaction = function() {
 	var partyData ={};
 	partyData['ALP'] = [];
 	partyData['LIB'] = [];
-	partyData['NAT'] = [];
 
 	// place the data into parties
 	for (var i=0; i < dataInterface.satisfaction.length; i++) {
@@ -83,7 +82,7 @@ NewsPoll.prototype.buildNetSatisfaction = function() {
         	formatter:function(){ selfRef.tooltipsSatisfaction(this); return false;},
        		shared: true
     	},
-         colors: ['#ef5b46',  '#277e9c',  '#c6cb8b'],
+         colors: ['#ef5b46',  '#277e9c'],
     	legend: {y : 65},
 		  xAxis: {labels: {align : 'center',x: 0, y: 25}},
          series: seriesData
@@ -154,9 +153,11 @@ NewsPoll.prototype.buildTwoPartyPreferred = function() {
 	 	
 	};
 	// reformat for a highcharts series
-	var seriesData =[];
+	var seriesData =[],
+		name = "";
 	for(var key in partyData){	
-		seriesData.push({name:key,data:partyData[key]});
+		name = (key === "LIB") ? 'COALITION' : key;
+		seriesData.push({name:name,data:partyData[key]});
 	}	
 	this.twoPartyGraph = new Highcharts.Chart({
          chart: {
@@ -168,7 +169,7 @@ NewsPoll.prototype.buildTwoPartyPreferred = function() {
         	formatter:function() { selfRef.tooltipsTwoParty(this); return false},
        		shared: true
     	},
-         colors: ['#ef5b46', '#469bb8', '#277e9c', , '#7a7a7a'],
+         colors: ['#ef5b46', '#277e9c'],
 		 
     	legend: {y : 65},
 		  xAxis: {labels: {align : 'center',x: 0, y: 25}},
@@ -300,12 +301,8 @@ NewsPoll.prototype.buildPrimary = function() {
 	var partyData ={};
 	var partyPoint = {};
 	partyData['ALP'] = [];
-	partyData['LIB'] = [];
 	partyData['LNP'] = [];
 	partyData['GRN'] = [];
-	partyData['NAT'] = [];
-	partyData['DEM'] = [];
-	partyData['ONE'] = [];
 	partyData['OTH'] = [];
 	// place the data into parties
 	for (var i=0; i < dataInterface.primary.length; i++) {
@@ -338,9 +335,13 @@ NewsPoll.prototype.buildPrimary = function() {
 		 }	 	
 	};
 	// reformat for a highcharts series
-	var seriesData =[];
-	for(var key in partyData){	
-		seriesData.push({name:key,data:partyData[key]});
+	var seriesData =[],
+		name = "";
+	for(var key in partyData){
+		name = (key === "LNP") ? 'COALITION' : key;
+		name = (key === "GRN") ? 'GREENS' : name;
+		name = (key === "OTH") ? 'OTHERS' : name;
+		seriesData.push({name:name,data:partyData[key]});
 	}
 	this.twoPartyGraph = new Highcharts.Chart({
          chart: {
@@ -351,9 +352,10 @@ NewsPoll.prototype.buildPrimary = function() {
         	formatter:function(){ selfRef.tooltips(this); return false;},
        		shared: true
     	},
+    	colors: ['#ef5b46', '#277e9c', '#71a120', '#c0c0c0'],
     	legend: {y : 65},
-		  xAxis: {labels: {align : 'center',x: 0, y: 25}},
-         series: seriesData
+		xAxis: {labels: {align : 'center',x: 0, y: 25}},
+        series: seriesData
       });
 }
 /** 

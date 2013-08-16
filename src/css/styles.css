@@ -259,7 +259,7 @@ input.message { color:#7f7f7f; }
   margin: 10px 15px 0;
 }
 .headersTable .name,
-.resultsTable .name {width: 88px;}
+.resultsTable .name {width: 95px;}
 .headersTable .state,
 .resultsTable .state {width:42px;}
 .headersTable .party,

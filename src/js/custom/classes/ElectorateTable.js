@@ -57,7 +57,7 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 			intDir : 'Up'
 		});
 		headers.push({
-			name : 'One Parent Family',
+			name : 'One-Parent Family',
 			key : 'familyCompositionOneParentFamily',
 			intDir : 'Up'
 		});
