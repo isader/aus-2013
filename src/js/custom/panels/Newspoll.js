@@ -15,8 +15,8 @@ NewsPoll.prototype.create = function(id) {
 	var panelHTML = '<div class="panelHeader"><h1>State Polling</h1><h2></h2></div><div class="graphs">';
 	panelHTML += '<div class="graph"><h2>TWO-PARTY PREFERRED</h2><p>Two-party preferred based on preference flow at August 2010 federal election</p><div class="graphDisplay" id="twoPartyPrefered"></div></div>';
 	panelHTML += '<div class="graph"><h2>PRIMARY VOTE</h2><p>If the federal election for the House of Representatives was held today, which one of the following would you vote for? If uncommitted, to which one of these do you have a leaning?</p><div class="graphDisplay" id="primaryVote"></div></div>';
-	panelHTML += '<div class="graph"><h2>BETTER PM</h2><p>Who do you think would make the better prime minister?</p><div class="graphDisplay" id="betterPM"></div></div>';
-	panelHTML += '<div class="graph"><h2>LEADERS\' NET SATISFACTION</h2><p>Are you satisfied or dissatisfied with the way Kevin Rudd is doing his job as prime minister? Are you satisfied or dissatisfied with the way Tony Abbott is doing his job as leader of the opposition?</p><div class="graphDisplay" id="satisfaction"></div></div></div><div id="loading"><img src="img/aus-spinner.gif"></div>';
+	panelHTML += '<div class="graph"><h2>BETTER PM</h2><p>Who do you think would make the better Prime Minister?</p><div class="graphDisplay" id="betterPM"></div></div>';
+	panelHTML += '<div class="graph"><h2>LEADERS\' NET SATISFACTION</h2><p>Are you satisfied or dissatisfied with the way Kevin Rudd is doing his job as Prime Minister? Are you satisfied or dissatisfied with the way Tony Abbott is doing his job as Leader of the Opposition?</p><div class="graphDisplay" id="satisfaction"></div></div></div><div id="loading"><img src="img/aus-spinner.gif"></div>';
 	return panelHTML;
 }
 /**

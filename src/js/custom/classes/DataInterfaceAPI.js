@@ -168,7 +168,7 @@ DataInterface = function() {
 	})
 	this.regions.push({
 		name: 'nt',
-		fullName : 'Northern Territories',
+		fullName : 'Northern Territory',
 		latlog : new google.maps.LatLng(-19.491411, 132.550960),
 		zoom : 5,
 		description: "With just two seats, the Territory is unlikely to play a major role in the campaign. However, Labor faces the loss of Lingiari if the results of the last territory poll are repeated federally."
