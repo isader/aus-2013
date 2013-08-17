@@ -203,6 +203,8 @@ tooltipStr +=  '<div class="grathBar">'
 NewsPoll.prototype.buildBetterPM = function() {
 	var selfRef = this;
 	var partyData ={};
+	var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
 	// place the data into parties
 	for (var i=0; i < dataInterface.betterPM.length; i++) {
 	 	var dataPoint = dataInterface.betterPM[i];
@@ -227,7 +229,7 @@ NewsPoll.prototype.buildBetterPM = function() {
 		 	} 
 	 	partyData[dataPoint.opp_party_key].push([formatedDate,count]);
 	 	// add uncommitted data
-	 	/**
+	 	
 	 	if (partyData["Uncommitted"]==null){
 	 		partyData["Uncommitted"] = [];
 	 	}
@@ -236,28 +238,59 @@ NewsPoll.prototype.buildBetterPM = function() {
 		 		count = null
 		 	} 
 	 	partyData["Uncommitted"].push([formatedDate,count]);
-	 	**/
+	 	
 	};
 	// reformat for a highcharts series
 	var seriesData =[];
 	for(var key in partyData){
 		seriesData.push({name:key,data:partyData[key]});
 	}
+	var xAxisLabels = [];
+	for (var d = 0; d < seriesData.length; d = d + 1) {
+		for (var b = 0; b < seriesData[d].data.length; b = b + 1) {
+			var milli = seriesData[d].data[b][0];
+			if (milli) {
+				var label = new Date(milli);
+				label = months[label.getMonth()] + ' \'' + label.getDate();
+				xAxisLabels.push(label);
+			}
+		}
+	}
+
 	this.twoPartyGraph = new Highcharts.Chart({
-         chart: {
+        chart: {
             renderTo: 'betterPM',
             type: 'column'
-         },   
-          tooltip: {
+        },
+        xAxis: {
+            type: 'datetime',
+        	tickInterval: 86400000,
+        	min: 1372636800000 - (86400000 * 3),
+        	max: 1376265600000 + (86400000 * 3),
+			labels: {
+			    align : 'center',
+			    x: 0, y: 25,
+			    formatter: function () {
+			    	var date = new Date(this.value);
+			    	var formattedDate = months[date.getMonth()] + ' \'' + date.getDate();
+			    	for (var o = 0; o < xAxisLabels.length; o = o + 1) {
+			    		if (xAxisLabels[o] === formattedDate) {
+			    			return formattedDate;
+			    		}
+			    	}
+			    }
+		    }
+		},
+        tooltip: {
         	formatter:function(){ selfRef.tooltipBetterPM(this); return false;},
        		shared: true
     	},
     	legend: {y : 65},
-    	colors: ['#ef5b46',  '#277e9c',  '#aaaaaa'],
-		xAxis: {labels: {align : 'center',x: 0, y: 25}},
+    	colors: ['#ef5b46', '#277e9c', '#aaaaaa'],
         series: seriesData
-      });
+    });
 }
+
 
 
 /** 
@@ -279,6 +312,9 @@ NewsPoll.prototype.tooltipBetterPM = function(point) {
 		 var laederName = dataPoint.gov_leader;
 		 if (point.series.name==dataPoint.opp_party_key){
 		 	laederName = dataPoint.opp_leader;
+		 }
+		 if (point.series.name == "Uncommitted") {
+		 	laederName = "Uncommitted";
 		 }
 		 
 		 tooltipStr +=  '<div class="graphData"><span>'+laederName+'</span></div>';
