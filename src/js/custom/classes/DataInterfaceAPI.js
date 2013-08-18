@@ -2,6 +2,7 @@ DataInterface = function() {
 	// var
 	this.useAPI = false;
 	this.dataAPIURL = 'http://uat.api.ni.news.com.au/mm/dataset/';
+	this.touchType = ('ontouchstart' in document.documentElement) ? 'touchstart' : 'click';
 	// data
 	this.electorates = [];
 	this.electoratesLoaded = false;

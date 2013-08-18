@@ -1041,8 +1041,8 @@ input.message { color:#7f7f7f; }
   height:73px;
 }
 #panel-electorates .electorate .graph .graphCol {
-  width:28px;
-  margin:0 10px 0 10px;
+  width:32px;
+  margin:0 8px 0 8px;
   float:left;
 }
 #panel-electorates .electorate .graph .graphCol div {

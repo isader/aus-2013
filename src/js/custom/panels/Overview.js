@@ -76,9 +76,11 @@ OverviewPanel.prototype.build = function() {
 	}
 	// build set link
 	$('.seat .pageBtn').each(function(index) {
-		$(this).click(function() {
-			selfRef.openElectorate($(this).attr("key"));
-		});
+		if (dataInterface.touchType !== "touchstart") {
+			$(this).click(function() {
+				selfRef.openElectorate($(this).attr("key"));
+			});
+		}
 	});
 
 	// add the list of names to the auto complete
@@ -97,16 +99,21 @@ OverviewPanel.prototype.build = function() {
 	});
 	//
 	$('#panel-overview input').focus(function() {
- 		 if($(this).val()==selfRef.searchMessage){
- 		 	$(this).val('')
- 		 	$(this).removeClass('message');
- 		 }
+        $('body').addClass('search-active');
+ 		if ($(this).val()==selfRef.searchMessage){
+ 		    $(this).val('')
+ 		    $(this).removeClass('message');
+ 		}
 	});
 	$('#panel-overview input').blur(function() {
- 		 if($(this).val()==''){
- 		 	$(this).val(selfRef.searchMessage)
- 		 	$(this).addClass('message');
- 		 }
+ 		if ($(this).val()==''){
+ 			$(this).val(selfRef.searchMessage)
+ 			$(this).addClass('message');
+ 		}
+	});
+
+	$('#panel-overview .main-search .search-icon').hammer().on("tap", function (event) {
+		$('body').removeClass('search-active');
 	});
 	
 	// input change test
@@ -139,6 +146,21 @@ OverviewPanel.prototype.build = function() {
 			selfRef.moveToSeat(selfRef.currentSeat + 1)
 		}
 	});
+	$('#panel-overview .leftCol .seats .pageBtn').hammer().on("tap", function(event) {
+        selfRef.openElectorate($(this).attr("key"));
+    });
+
+    $('#panel-overview .leftCol .seats .pageBtn').hammer().on("swipeleft", function(event) {
+        if (selfRef.currentSeat < selfRef.seatsToWatch.length - 1) {
+			selfRef.moveToSeat(selfRef.currentSeat + 1, "mobile");
+		}
+    });
+
+    $('#panel-overview .leftCol .seats .pageBtn').hammer().on("swiperight", function(event) {
+        if (selfRef.currentSeat > 0) {
+			selfRef.moveToSeat(selfRef.currentSeat - 1, "mobile");
+		}
+    });
 	this.moveToSeat(0);
 }
 /**
@@ -153,8 +175,9 @@ OverviewPanel.prototype.openElectorate = function(electorate) {
 /**
  * Open Panel
  */
-OverviewPanel.prototype.moveToSeat = function(id) {
-	var margin = -515 * id;
+OverviewPanel.prototype.moveToSeat = function(id, device) {
+	var distance = (device !== undefined && device === "mobile") ? -238 : -515;
+	var margin = distance * id;
 	this.currentSeat = id;
 	$('.nav .num').html((this.currentSeat + 1) + ' of ' + this.seatsToWatch.length)
 	$('.seatsHolder').stop();

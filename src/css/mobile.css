@@ -14,13 +14,27 @@
 	left: 0;
 	right: 0;
 	width:100%;
+	height: 650px;
+	border-bottom: 1px solid #d6d6d6;
 }
 
 .panel {
 	width: 100%;
+	height: auto;
+}
+
+.leftCol {
+	float: none;
+	width: 100%;
+	height: auto;
+	padding: 0;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
 }
 
 #panel-overview {
+	height: 650px;
 	padding: 0;
 }
 
@@ -30,6 +44,114 @@
 	background-size: 640px auto !important;
 }
 
+#panel-overview .leftCol {
+	width: 100%;
+	height: auto;
+	padding: 0 0 20px 9px;
+	border-bottom: 1px solid #d6d6d6;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none
+	box-shadow: none;
+}
+
+#panel-overview .leftCol h2 {
+	float: none;
+	width: 100%;
+	padding-bottom: 13px;
+	font-size: 27px;
+	text-align: center;
+}
+
+#panel-overview .leftCol .nav {
+	display: none;
+}
+
+#panel-overview .leftCol .seats {
+	width: 100%;
+	height: auto;
+}
+
+#panel-overview .leftCol .seats .seatsHolder {
+	height: 180px;
+}
+
+#panel-overview .leftCol .seats .seat {
+	position: relative;
+	width: 220px;
+	height: 180px;
+	margin: 0 9px;
+}
+
+#panel-overview .leftCol .seats .seat h3 {
+	position: absolute;
+	bottom: 0;
+	float: none;
+	width: 100%;
+	margin: 0;
+	font-size: 21px;
+	text-align: center;
+	line-height: 42px;
+	color: #fff;
+	border: none;
+	background-color: rgba(55,90,110,0.8);
+}
+
+#panel-overview .leftCol .seats .seat img {
+	border-radius: 0;
+}
+
+#panel-overview .leftCol .seats .seat .description p {
+	display: none;
+}
+
+#panel-overview .leftCol .seats .seat .description .pageBtn {
+	position: absolute;
+	top: -10px;
+	left: 0;
+	height: 165px;
+	margin: 10px 0 0 0;
+	text-indent: -9999em;
+	background: transparent none !important;
+}
+
+#panel-overview .rightCol {
+	float: none;
+	width: 100%;
+	height: auto;
+	padding-bottom: 20px;
+}
+
+#panel-overview .rightCol .swing {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: #ffffff url(../img/sprite-mobile.png) no-repeat left -226px !important;
+	background-size: 640px auto !important;
+}
+
+#panel-overview .rightCol .swing h2 {
+	display: none;
+}
+
+#panel-overview .rightCol .swing p {
+	padding: 54px 150px 5px 20px;
+}
+
+#panel-overview .rightCol .swing .pageBtn {
+	width: auto;
+	padding: 10px 0;
+	margin: 0 17px;
+	border-radius: 3px;
+	background: #4f7e9a none !important;
+}
+
+#panel-overview .rightCol .polling {
+	display: none;
+}
+
+
+/** Search **/
 #panel-overview .main-search {
 	top: 91px;
 	left: 13px;
@@ -37,6 +159,8 @@
 	width: auto;
 	min-height: 35px;
 	border-width:2px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
 }
 
 #panel-overview .main-search input {
@@ -55,6 +179,91 @@
 	background-size: 820px auto;
 }
 
+#panel-overview .main-search .ac_results ul {
+	max-height: 553px !important;
+}
+
+.search-active #panel-overview .intro {
+	height:65px;
+	border-bottom: 1px solid #92a8b9;
+	background: #d3dfe5 none !important;
+}
+
+.search-active #panel-overview .intro .main-search {
+	top: 13px;
+	box-shadow: none !important;
+}
+
+.search-active #panel-overview .main-search .search-icon {
+	top: 6px;
+	right: 6px;
+	width: 22px;
+	height: 22px;
+	background: #ffffff url(../img/sprite-mobile.png) no-repeat right top !important;
+	background-size: 640px auto !important;
+	cursor: pointer;
+}
+
+.search-active #panel-overview .main-search .ac_results {
+	position: absolute;
+	top: 51px !important;
+	left: -14px !important;
+	display: block !important;
+	width: 320px !important;
+}
+
+.search-active #panel-overview .main-search .ac_results li {
+	position: relative;
+	padding: 8px 17px;
+	font-size: 15px;
+}
+
+.search-active #panel-overview .main-search .ac_results li:after {
+	content: ' ';
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	width: 9px;
+	height: 14px;
+	margin-top: -7px;
+	background: url(../img/sprite-mobile.png) no-repeat right -36px !important;
+	background-size: 640px auto !important;
+}
+
+.search-active #panel-overview .main-search .ac_results .search-result {
+	float: left;
+	line-height: 30px;
+	width: 270px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.search-active #panel-overview .main-search .ac_results .search-result-type {
+	float: left;
+	clear: left;
+	line-height: 12px
+}
+
+.search-active #panel-overview .rightCol,
+.search-active #panel-overview .leftCol {
+	display:none;
+}
+
 #map {
 	display: none;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
