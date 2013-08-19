@@ -240,9 +240,9 @@ ElectorateTable.prototype.buildTable = function(placeIn) {
 		this.selectedRow = $(placeIn + ' .selected');
 	}
 	
-	if(!$.browser.msie) {
+	//if(!$.browser.msie) {
 		$(placeIn + ' .resultsTable').jScrollPane({ autoReinitialise: true });
-	}
+	//}
 
 	$(placeIn + ' table tr th').each(function(index) {
 		$(this).click(function() {
