@@ -56,6 +56,20 @@ SwingControler = function(id) {
 		$(this.id + ' .swingControl span').css('margin-left', this.rangeCenter + 'px');
 	}
 
+/**
+    $( "#slider-range-min" ).slider({
+      range: "min",
+      value: 0,
+      min: -100,
+      max: 100,
+      slide: function( event, ui ) {
+        $( "#amount" ).val(ui.value);
+      }
+    });
+    $( "#amount" ).val($( "#slider-range-min" ).slider( "value" ));
+    **/
+
+
 }
 
 SwingControler.prototype.startDrag = function(e) {
