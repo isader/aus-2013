@@ -154,9 +154,9 @@ ElectoratesPanel.prototype.build = function() {
 	}
 	
 	//<ul class='seatList'>
-	if(!$.browser.msie) {
+	//if(!$.browser.msie) {
 		$('#panel-' + this.id + ' .keyseats').jScrollPane();
-	}
+	//}
 
 	
 	// add events to the key seats
@@ -369,7 +369,7 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 		var pane = $('#panel-' + this.id + ' .seat-scroll'),
 			api;
 
-		if(!$.browser.msie) {
+		//if(!$.browser.msie) {
 			if (!pane.hasClass('jspScrollable')) {
 				pane.jScrollPane({
 					maintainPosition: false
@@ -379,7 +379,7 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 				api = pane.data('jsp');
 				api.reinitialise();
 			}
-		}
+		//}
 		//
 
 		regionMap.selectRegion(electorateData.seat)
@@ -455,9 +455,9 @@ ElectoratesPanel.prototype.openRegion = function(region) {
 		'margin-left' : -315
 	}, 200);
 	//<ul class='seatList'>
-	if(!$.browser.msie) {
+	//if(!$.browser.msie) {
 		$('#panel-' + this.id + ' .scrollList').jScrollPane();
-	}
+	//}
 	// add events to the key seats
 	$("#panel-" + this.id + " .rightCol .electorate .seat ul.seatList li").each(function(index) {
 		$(this).click(function() {

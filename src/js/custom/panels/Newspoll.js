@@ -38,9 +38,9 @@ NewsPoll.prototype.setUp = function() {
 NewsPoll.prototype.buildGraphs = function() {
 	$('#panel-newspoll .graphs').show();
 	$('#panel-newspoll #loading').hide();
-	if(!$.browser.msie) {
+	//if(!$.browser.msie) {
 		$('#panel-newspoll .graphs').jScrollPane();
-	}
+	//}
 	var lastdate = dataInterface.twoPartyPerferred[0].date.split('-');
 	$('#panel-newspoll .panelHeader h2').html('Latest Poll Results '+lastdate[2]+'/'+lastdate[1]+'/'+lastdate[0]);
 	this.buildTwoPartyPreferred();
