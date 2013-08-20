@@ -6,72 +6,103 @@
  */
 SwingControler = function(id) {
 	var selfRef = this;
-	this.rotation = 0;
-	this.rotationRange = 90;
-	this.percentMax = 100;
-	this.widthRange = 600;
-	this.xRange = 100;
-	this.startX = 0;
+	//this.rotation = 0;
+	//this.rotationRange = 90;
+	//this.percentMax = 100;
+	//this.widthRange = 600;
+	//this.xRange = 100;
+	//this.startX = 0;
 	this.id = id;
+	this.currentPercent = 0;
+	/*
 	if($.browser.msie) {
 		this.basic = true;
 	} else {
 		this.basic = false;
 	}
 	this.basicClass = '';
-	this.currentPercent = 0;
 	if(this.basic) {
 		this.basicClass = 'basic';
 	}
-	$(this.id).append('<div class="swingLeft"></div><div class="swingRight"></div><div class="swingControl ' + this.basicClass + '"><span></span></div><div class="key ' + this.basicClass + '"><label class="value">0%</label><label class="reset">reset</label></div>')
-
+	*/
+	$(this.id).append('<div class="swingLeft"></div><div class="swingRight"></div><div id="swing-slider"></div><div class="key"><label class="value">0%</label><label class="reset">reset</label></div>')
+	this.slider = $("#swing-slider");
+	/*
 	$(this.id).mousedown(function(e) {
 		selfRef.startDrag(e);
 	});
-	var hammertime = Hammer(this.id).on("dragleft", function(e) {
-		var startX = e.gesture.startEvent.touches[0].pageX,
-			pageX = e.gesture.touches[0].pageX;
-
-        selfRef.updateSwingSwipe(startX, pageX);
-    });
-    var hammertime = Hammer(this.id).on("dragright", function(e) {
-        var startX = e.gesture.startEvent.touches[0].pageX,
-			pageX = e.gesture.touches[0].pageX;
-
-        selfRef.updateSwingSwipe(startX, pageX);
-    });
+*/
 	$(this.id + ' .reset').click(function() {
-		selfRef.reset();
+		selfRef.currentPercent = 0;
+		selfRef.slider.slider('value', selfRef.currentPercent);
+		$(selfRef).trigger('change', selfRef.currentPercent);
+		//selfRef.reset();
 	});
 	$(this.id + ' .swingLeft').click(function() {
-		selfRef.setPercent(-1)
-		$(selfRef).trigger('change', selfRef.currentPercent)
+		selfRef.currentPercent = selfRef.currentPercent - 1;
+		selfRef.slider.slider('value', selfRef.currentPercent);
+		$(selfRef).trigger('change', selfRef.currentPercent);
 	});
 	$(this.id + ' .swingRight').click(function() {
-		selfRef.setPercent(1)
-		$(selfRef).trigger('change', selfRef.currentPercent)
+		selfRef.currentPercent = selfRef.currentPercent + 1;
+		selfRef.slider.slider('value', selfRef.currentPercent);
+		$(selfRef).trigger('change', selfRef.currentPercent);
 	});
+	/*
 	if(this.basic) {
 		this.rangeCenter = -((this.widthRange) / 2 - $(this.id + ' .swingControl').width() / 2);
 		$(this.id + ' .swingControl span').css('margin-left', this.rangeCenter + 'px');
 	}
-
-/**
-    $( "#slider-range-min" ).slider({
+*/
+    this.slider.slider({
       range: "min",
       value: 0,
       min: -100,
       max: 100,
-      slide: function( event, ui ) {
-        $( "#amount" ).val(ui.value);
+      stop: function(event, ui) {
+      	//console.log(ui.value);
+      	selfRef.currentPercent = ui.value;
+		$(selfRef).trigger('change', selfRef.currentPercent);
       }
     });
-    $( "#amount" ).val($( "#slider-range-min" ).slider( "value" ));
-    **/
 
+    SwingControler.prototype.reset = function() {
+		this.currentPercent = 0;
+		this.slider.slider('value', this.currentPercent);
+		$(this).trigger('change', this.currentPercent);
+	}
+/*
+    function disableSliderTrack($slider){
+	    $slider.bind("mousedown", function(event) {
+	    	console.log(isTouchInSliderHandle($(this), event));
+	        return isTouchInSliderHandle($(this), event);   
+	    });
+
+	    $slider.bind("touchstart", function(event) {
+	    	console.log(isTouchInSliderHandle($(this), event));
+	        return isTouchInSliderHandle($(this), event.originalEvent.touches[0]);
+	    });
+	}
+
+	function isTouchInSliderHandle($slider, coords){
+	    var x = coords.pageX;
+	    var y = coords.pageY;
+
+	    var $handle = $slider.find(".ui-slider-handle");
+
+	    var left = $handle.offset().left;
+	    var right = (left + $handle.outerWidth());
+	    var top = $handle.offset().top;
+	    var bottom = (top + $handle.outerHeight());
+
+	    return (x >= left && x <= right && y >= top && y <= bottom);    
+	}
+	
+	disableSliderTrack(this.slider);
+*/
 
 }
-
+/**
 SwingControler.prototype.startDrag = function(e) {
 	var selfRef = this;
 	this.startX = e.pageX;
@@ -89,13 +120,7 @@ SwingControler.prototype.endDrag = function(e) {
 
 }
 
-SwingControler.prototype.reset = function() {
-	
-	this.rotation = 0;
-	this.currentPercent = 0;
-	this.setPercent(0)
-	$(this).trigger('change', this.currentPercent)
-}
+
 
 SwingControler.prototype.updateSwingSwipe = function(startX, pageX) {
 	var difference = startX - pageX;
@@ -146,3 +171,5 @@ SwingControler.prototype.setPercent = function(percent) {
 	}
 	
 };
+*/
+
