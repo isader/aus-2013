@@ -20,7 +20,7 @@
 
 .panel {
 	width: 100%;
-	height: auto;
+	height: 640px;
 }
 
 .leftCol {
@@ -135,7 +135,8 @@
 }
 
 #panel-overview .rightCol .swing p {
-	padding: 54px 150px 5px 20px;
+	width: 155px;
+	padding: 54px 0 5px 20px;
 }
 
 #panel-overview .rightCol .swing .pageBtn {
@@ -250,8 +251,78 @@
 	display:none;
 }
 
+/* Twitter **/
+#panel-overview .intro .twitter-follow-button {
+	top: 170px;
+	left:95px;
+}
+
+.search-active #panel-overview .intro .twitter-follow-button {
+	display: none;
+}
+
+
+
+/** Electorates Panels **/
+#panel-electorates .panelHeader {
+	display: none;
+}
+
+#panel-electorates .electorate h3.back {
+	display: none;
+}
+
+#panel-electorates .electorate h5.viewRegion {
+	display: none;
+}
+
+#panel-electorates .electorate h4 {
+	/*margin-top: 169px;*/
+}
+
+#panel-electorates .rightCol {
+	height: 635px;
+}
+
+#panel-electorates .keyseats {
+	display: none;
+}
+
+#panel-electorates .jspVerticalBar {
+	display: none;
+}
+
+#panel-electorates .rightCol .seat-scroll {
+	height: 640px;
+}
+
+#panel-electorates .rightCol .infoHolder {
+	height: 640px;
+}
+
+
+/** Swing Panel **/
+#panel-swing .leftCol {
+	display: none;
+}
+
+#panel-swing .panelHeader {
+	width: 284px;
+	height: 83px;
+	background: url(../img/sprite-mobile.png) no-repeat 0 -36px !important;
+	background-size: 640px auto !important;
+}
+
+#panel-swing .panelHeader ul {
+	display: none;
+}
+
 #map {
 	display: none;
+	top: 90px;
+	left: 0;
+	width: 320px;
+	height: 165px;
 }
 
 

@@ -266,11 +266,13 @@ NewsPoll.prototype.buildBetterPM = function() {
             type: 'datetime',
         	tickInterval: 86400000,
         	min: 1372636800000 - (86400000 * 3),
-        	max: 1376265600000 + (86400000 * 3),
+        	max: 1376870400000 + (86400000 * 5),
 			labels: {
 			    align : 'center',
 			    x: 0, y: 25,
 			    formatter: function () {
+			    	//console.log(this.value);
+			    	//console.log(new Date(this.value));
 			    	var date = new Date(this.value);
 			    	var formattedDate = months[date.getMonth()] + ' \'' + date.getDate();
 			    	for (var o = 0; o < xAxisLabels.length; o = o + 1) {

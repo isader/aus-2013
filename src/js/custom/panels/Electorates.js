@@ -20,6 +20,7 @@ ElectoratesPanel.prototype.create = function(id) {
 	this.id = id;
 
 	var panelHTML = '<div class="panelHeader"><ul><li class="first selected mapTab">Key Seats</li><li class="last tableTab">All Seats</li></ul><h2>state electorates</h2><input type="text" name="elecorateName" id="elecorateName" /></div>';
+	panelHTML += '<div class="mobileHeader"><a href="#" class="back-to-overview">Back</a><a href="#" class="search-again">Search Again</a></div>';
 	panelHTML += '<div class="leftCol"></div>';
 	panelHTML += '<div class="rightCol">';
 	panelHTML += '<div class="info"><div class="infoHolder">';
@@ -177,6 +178,7 @@ ElectoratesPanel.prototype.build = function() {
 	$("#panel-" + this.id + " .rightCol .electorate .back").click(function() {
 		selfRef.closeElectorate();
 	});
+
 	// add the list of names to the auto complete
 	$("#panel-" + this.id + " #elecorateName").autocomplete(dataInterface.searchList, {resultsClass: "ac_results small-autocomplete", formatMatch: function (row) {
 		if (row.type === "Electorate") {

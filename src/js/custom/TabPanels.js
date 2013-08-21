@@ -119,6 +119,15 @@ TabPanels.prototype.buildPanels = function() {
 	$('#contentHolder .panel').each(function(id) {
 		$(this).css("top", (selfRef.panelHeight * id) + 'px');
 	});
+
+	$(".back-to-overview").click(function () {
+		selfRef.moveToPanel(0);
+	});
+
+	$(".search-again").click(function () {
+		selfRef.moveToPanel(0);
+		$('body').addClass('search-active');
+	});
 }
 /**
  * Move To Next Panel
