@@ -308,9 +308,13 @@
 
 #panel-swing .panelHeader {
 	width: 284px;
-	height: 83px;
-	background: url(../img/sprite-mobile.png) no-repeat 0 -36px !important;
+	height: 60px;
+	background: url(../img/sprite-mobile.png) no-repeat 0 -350px !important;
 	background-size: 640px auto !important;
+}
+
+#panel-swing .panelHeader .intro {
+	display: none;
 }
 
 #panel-swing .panelHeader ul {
