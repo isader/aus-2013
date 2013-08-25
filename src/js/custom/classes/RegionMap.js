@@ -92,7 +92,7 @@ RegionMap.prototype.buildMap = function(id) {
 	});
 	//
 	this.centerLatlng = new google.maps.LatLng(-25.274398, 133.775136);
-	this.orgZoom = 3;
+	this.orgZoom = 4;
 	var myOptions = {
 		zoom : this.orgZoom,
 		minZoom : this.orgZoom,
