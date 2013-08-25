@@ -11,7 +11,8 @@ SwingPanel = function() {
 SwingPanel.prototype.create = function(id) {
 	this.id = id;
 	this.isBuilt = false;
-	var panelHTML = '<div class="panelHeader"><ul><li class="first selected mapTab">Key Seats</li><li class="last tableTab">All Seats</li></ul><h2>swingo-meter</h2><p class="intro">Click and drag the slider below to change the swing.</p></div>';
+	var panelHTML = '<div class="mobileHeader"><a href="#" class="back-to-overview">Back</a></div>';
+	panelHTML += '<div class="panelHeader"><ul><li class="first selected mapTab">Key Seats</li><li class="last tableTab">All Seats</li></ul><h2>swingo-meter</h2><p class="intro">Click and drag the slider below to change the swing.</p></div>';
 	panelHTML += '<div class="leftCol"></div>';
 	panelHTML += '<div class="rightCol"><h4>Result of Swing</h4><h5 class="textResult"></h5><div class="swingControler"></div>';
 	panelHTML += '<div class="resultTable"></div>';

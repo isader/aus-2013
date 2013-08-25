@@ -146,9 +146,12 @@ OverviewPanel.prototype.build = function() {
 			selfRef.moveToSeat(selfRef.currentSeat + 1)
 		}
 	});
-	$('#panel-overview .leftCol .seats .pageBtn').hammer().on("tap", function(event) {
-        selfRef.openElectorate($(this).attr("key"));
-    });
+
+	if (dataInterface.touchType === "touchstart") {
+		$('#panel-overview .leftCol .seats .pageBtn').hammer().on("tap", function(event) {
+       		selfRef.openElectorate($(this).attr("key"));
+    	});
+    }
 
     $('#panel-overview .leftCol .seats .pageBtn').hammer().on("swipeleft", function(event) {
         if (selfRef.currentSeat < selfRef.seatsToWatch.length - 1) {

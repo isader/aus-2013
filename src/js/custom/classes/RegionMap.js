@@ -92,7 +92,7 @@ RegionMap.prototype.buildMap = function(id) {
 	});
 	//
 	this.centerLatlng = new google.maps.LatLng(-25.274398, 133.775136);
-	this.orgZoom = 4;
+	this.orgZoom = 3;
 	var myOptions = {
 		zoom : this.orgZoom,
 		minZoom : this.orgZoom,
@@ -103,7 +103,15 @@ RegionMap.prototype.buildMap = function(id) {
 		streetViewControl : false,
 		center : this.centerLatlng,
 		mapTypeIds : [google.maps.MapTypeId.ROADMAP, 'aus_styles']
+	}
 
+	if (dataInterface.touchType === "touchstart") {
+	//if (true) {
+		myOptions.panControl = false;
+		myOptions.zoomControl = false;
+		myOptions.draggable = false; 
+		myOptions.scrollwheel = false;
+		myOptions.disableDoubleClickZoom = true
 	}
 
 	this.map = new google.maps.Map(document.getElementById(id), myOptions);
@@ -171,43 +179,47 @@ RegionMap.prototype.buildMap = function(id) {
 				id : count
 			});
 
-			google.maps.event.addListener(marker, "click", function (evt) {
-				console.log('Marker Clicked')
-				$(selfRef).trigger('selected', regionName);
-			});
+			if (dataInterface.touchType !== "touchstart") {
+				google.maps.event.addListener(marker, "click", function (evt) {
+					$(selfRef).trigger('selected', regionName);
+				});
+			}
 		}
 
 		selfRef.districtMarkers[regionName] = marker;
 
-		google.maps.event.addListener(regionPolygon, "click", function (evt) {
-			$(selfRef).trigger('selected', regionName);
-		});
+		if (dataInterface.touchType !== "touchstart") {
 
-		google.maps.event.addListener(regionPolygon, "mouseover", function (evt) {
-			selfRef.overName = regionName;
-			$(selfRef).stop();
-			$(selfRef).animate({
-				count : selfRef.selfRef + 1000
-			}, 500, function() {
-				selfRef.overInfo();
+			google.maps.event.addListener(regionPolygon, "click", function (evt) {
+				$(selfRef).trigger('selected', regionName);
 			});
 
-			if(selfRef.selectedRegion != this) {
-				this.setOptions({
-					fillOpacity : 0.7
+			google.maps.event.addListener(regionPolygon, "mouseover", function (evt) {
+				selfRef.overName = regionName;
+				$(selfRef).stop();
+				$(selfRef).animate({
+					count : selfRef.selfRef + 1000
+				}, 500, function() {
+					selfRef.overInfo();
 				});
-			}
-		});
 
-		google.maps.event.addListener(regionPolygon, "mouseout", function (evt) {
-			selfRef.closeInfo(regionName);
-			$(selfRef).stop();
-			if (selfRef.selectedRegion != this) {
-				this.setOptions({
-					fillOpacity : 0.6
-				});
-			}
-		});
+				if(selfRef.selectedRegion != this) {
+					this.setOptions({
+						fillOpacity : 0.7
+					});
+				}
+			});
+
+			google.maps.event.addListener(regionPolygon, "mouseout", function (evt) {
+				selfRef.closeInfo(regionName);
+				$(selfRef).stop();
+				if (selfRef.selectedRegion != this) {
+					this.setOptions({
+						fillOpacity : 0.6
+					});
+				}
+			});
+		}
 
 		regionPolygon.setMap(selfRef.map);
 	};
@@ -380,7 +392,6 @@ RegionMap.prototype.reset = function() {
 }
 
 RegionMap.prototype.zoomToLoction = function(latlog, zoomLevel) {
-
 	this.map.setCenter(latlog);
 	this.map.setZoom(zoomLevel);
 }
@@ -402,7 +413,7 @@ RegionMap.prototype.selectRegion = function(regionName) {
 	var regionPolygon = this.districtPolygons[polyName];
 	this.map.fitBounds(regionPolygon.getBounds());
 
-	this.selectedRegion = regionPolygon
+	this.selectedRegion = regionPolygon;
 	if(regionPolygon) {
 		var newPolyOptions = {
 			strokeOpacity : 1,

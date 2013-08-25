@@ -528,6 +528,9 @@ input.message { color:#7f7f7f; }
   clear:both;
   font-size:10px;
 }
+.mobileHeader {
+  display: none;
+}
 #panel-overview {
   padding:20px 0 0 20px;
   height:620px;
@@ -857,7 +860,7 @@ input.message { color:#7f7f7f; }
   *overflow:scroll;
 }
 #panel-electorates .scrollList {
-  height:470px;
+  height:370px;
   width:315px;
   *overflow:hidden;
   *overflow:scroll;

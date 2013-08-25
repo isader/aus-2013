@@ -1,8 +1,26 @@
 /** Hide elements **/
 #nav {display: none;}
 
+#loading {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	height: auto;
+}
+
+#loading img {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin: -30px 0 0 -30px;
+}
 
 #FederalElections {
+	position: static;
 	width: 100%;
 }
 #main {
@@ -14,13 +32,23 @@
 	left: 0;
 	right: 0;
 	width:100%;
-	height: 650px;
+	height: auto;
 	border-bottom: 1px solid #d6d6d6;
 }
 
+#contentHolder {
+	margin-top: 0 !important;
+}
+
 .panel {
+	position: static;
+	display: none;
 	width: 100%;
-	height: 640px;
+	height: auto;
+}
+
+.panel.current-tab {
+	display: block;
 }
 
 .leftCol {
@@ -34,8 +62,12 @@
 }
 
 #panel-overview {
-	height: 650px;
+	height: auto;
 	padding: 0;
+}
+
+.search-active #panel-overview {
+	height: 450px;
 }
 
 #panel-overview .intro {
@@ -57,9 +89,14 @@
 #panel-overview .leftCol h2 {
 	float: none;
 	width: 100%;
-	padding-bottom: 13px;
+	height: 40px;
+	padding: 0;
+	margin: 0;
 	font-size: 27px;
 	text-align: center;
+	text-indent: -9999em;
+	background: url(../img/sprite-mobile.png) no-repeat 0 -447px; !important;
+	background-size: 640px auto !important;
 }
 
 #panel-overview .leftCol .nav {
@@ -108,6 +145,7 @@
 	position: absolute;
 	top: -10px;
 	left: 0;
+	width: 238px;
 	height: 165px;
 	margin: 10px 0 0 0;
 	text-indent: -9999em;
@@ -181,7 +219,7 @@
 }
 
 #panel-overview .main-search .ac_results ul {
-	max-height: 553px !important;
+	max-height: 355px !important;
 }
 
 .search-active #panel-overview .intro {
@@ -209,8 +247,9 @@
 	position: absolute;
 	top: 51px !important;
 	left: -14px !important;
+	right: -15px !important;
 	display: block !important;
-	width: 320px !important;
+	width: auto !important;
 }
 
 .search-active #panel-overview .main-search .ac_results li {
@@ -272,6 +311,13 @@
 	display: none;
 }
 
+#panel-electorates .electorate h5.keyseat {
+	width: 108px;
+	border: none;
+	background: url(../img/sprite-mobile.png) no-repeat right -133px !important;
+	background-size: 640px auto !important;
+}
+
 #panel-electorates .electorate h5.viewRegion {
 	display: none;
 }
@@ -281,7 +327,8 @@
 }
 
 #panel-electorates .rightCol {
-	height: 635px;
+	width: 100%;
+	height: auto;
 }
 
 #panel-electorates .keyseats {
@@ -293,11 +340,36 @@
 }
 
 #panel-electorates .rightCol .seat-scroll {
-	height: 640px;
+	height: auto;
+}
+
+#panel-electorates .rightCol .seat-scroll .jspPane {
+	position: static !important;
+	width: 100% !important;
+	margin: 0 !important;
+
+}
+
+#panel-electorates .rightCol .info {
+	width: 100%;
 }
 
 #panel-electorates .rightCol .infoHolder {
-	height: 640px;
+	width: 100%;
+	height: auto;
+	margin-left: 0 !important;
+}
+
+#panel-electorates .rightCol .results {
+	display: none;
+}
+
+#panel-electorates .rightCol .electorate {
+	width: 100%;
+}
+
+#panel-electorates .electorate .graph .graphCol {
+	width:35px;
 }
 
 
@@ -321,18 +393,76 @@
 	display: none;
 }
 
+.mobileHeader {
+	display: block;
+	border-top: 1px solid #edede9;
+	border-bottom: 1px solid #edede9;
+	background-color: #f4f2ef;
+}
+
+.mobileHeader a {
+	text-decoration: none;
+	font-size: 11px;
+	color: #4f7e99;
+	line-height: 45px;
+}
+
+.mobileHeader .back-to-overview:before {
+	content: ' ';
+	float: left;
+	width: 20px;
+	height: 19px;
+	margin: 12px 6px 0 13px;
+	background: url(../img/sprite-mobile.png) no-repeat right -74px !important;
+	background-size: 640px auto !important;
+}
+
+.mobileHeader .search-again {
+	float: right;
+	line-height: 30px;
+	margin-top: 8px;
+	padding-left: 13px;
+	border-left: 1px solid #e1e1da;
+}
+
+.mobileHeader .search-again:after {
+	content: ' ';
+	float: right;
+	width: 19px;
+	height: 19px;
+	margin: 4px 13px 0 6px;
+	background: url(../img/sprite-mobile.png) no-repeat right -105px !important;
+	background-size: 640px auto !important;
+}
+
 #map {
 	display: none;
-	top: 90px;
+	position: relative;
+	top: auto !important;
 	left: 0;
-	width: 320px;
+	width: 100%;
 	height: 165px;
+	margin: 10px 0;
 }
 
 
+@media only screen and (orientation : landscape) {
+	#panel-overview .intro {
+		background-position: 78px 0 !important;
+	}
 
+	#panel-overview .intro .twitter-follow-button {
+		left: 170px;
+	}
 
+	#panel-overview .leftCol h2 {
+		background-position: 73px -447px;
+	}
 
+	#panel-electorates .electorate .demographics .demoBox {
+		height: 85px;
+	}
+}
 
 
 

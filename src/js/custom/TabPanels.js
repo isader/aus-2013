@@ -114,8 +114,8 @@ TabPanels.prototype.buildPanels = function() {
 		});
 		var id = this.panelList[i].id;
 		$('#contentHolder').append('<div class="panel" id="panel-' + id + '">' + panel.create(id) + '</div>');
-
 	};
+
 	$('#contentHolder .panel').each(function(id) {
 		$(this).css("top", (selfRef.panelHeight * id) + 'px');
 	});
@@ -147,7 +147,13 @@ TabPanels.prototype.moveToPanel = function($id, $data) {
 	$('#menu-' + this.currentPanel).addClass(classname + 'Selected');
 	var selfRef = this;
 	this.setUpPanel();
-	var margin = -this.currentPanel * this.panelHeight
+	var margin = -this.currentPanel * this.panelHeight;
+	var currentTab = $(".panel:eq(" + this.currentPanel + ")");
+	$(".panel").removeClass('current-tab');
+	currentTab.addClass('current-tab');
+	if (dataInterface.touchType === "touchstart") {
+		$(window).scrollTop(0);
+	}
 	this.currentPageData = $data
 	$('#contentHolder').animate({
 		'margin-top' : margin

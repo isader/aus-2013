@@ -155,9 +155,10 @@ ElectoratesPanel.prototype.build = function() {
 	}
 	
 	//<ul class='seatList'>
-	//if(!$.browser.msie) {
+	if (dataInterface.touchType !== "touchstart") {
+	//if (false) {
 		$('#panel-' + this.id + ' .keyseats').jScrollPane();
-	//}
+	}
 
 	
 	// add events to the key seats
@@ -293,7 +294,7 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 			electorateHTML += "<h5 class='keyseat'>Key seat</h5>"
 		}
 		electorateHTML += "<h5 class='viewRegion' key='"+electorateData.state+"'>More seats in this state</h5><div class='clear'></div>";
-		electorateHTML += "<h4>Seat summary</h4>";
+		electorateHTML += "<h4 class=\"seat-summary\">Seat summary</h4>";
 		electorateHTML += "<p>" + electorateData.description + "</p><div class='clear'></div>";
 		electorateHTML += "<h4>Main Candidates</h4><ul>";
 		
@@ -363,7 +364,20 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 		};
 		electorateHTML += "<div class='clear'></div></div></div>";
 		electorateHTML += "<p class='note'>Data provided by Census</p>";
-		$('#panel-' + this.id + ' .rightCol .electorate .seat').html(electorateHTML)
+
+		if (dataInterface.touchType === "touchstart") {
+		//if (true) {
+			//$("#map").appendTo("body").hide();
+		}
+
+		$('#panel-' + this.id + ' .rightCol .electorate .seat').html(electorateHTML);
+
+		if (dataInterface.touchType === "touchstart") {
+		//if (true) {
+			//$("#panel-electorates").find(".seat-summary").before( $("#map") );
+			//$("#map").show();
+		}
+
 		$('#panel-' + this.id + ' .rightCol .infoHolder').animate({
 			'margin-left' : -315
 		}, 200);
@@ -371,7 +385,8 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 		var pane = $('#panel-' + this.id + ' .seat-scroll'),
 			api;
 
-		//if(!$.browser.msie) {
+		if (dataInterface.touchType !== "touchstart") {
+		//if (false) {
 			if (!pane.hasClass('jspScrollable')) {
 				pane.jScrollPane({
 					maintainPosition: false
@@ -381,7 +396,7 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 				api = pane.data('jsp');
 				api.reinitialise();
 			}
-		//}
+		}
 		//
 
 		regionMap.selectRegion(electorateData.seat)
@@ -395,7 +410,6 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 				regionMap.zoomToLoction(regionData.latlog, regionData.zoom)
 			});
 		});
-	
 		
 	}
 
@@ -457,9 +471,10 @@ ElectoratesPanel.prototype.openRegion = function(region) {
 		'margin-left' : -315
 	}, 200);
 	//<ul class='seatList'>
-	//if(!$.browser.msie) {
+	if (dataInterface.touchType !== "touchstart") {
+	//if (false) {
 		$('#panel-' + this.id + ' .scrollList').jScrollPane();
-	//}
+	}
 	// add events to the key seats
 	$("#panel-" + this.id + " .rightCol .electorate .seat ul.seatList li").each(function(index) {
 		$(this).click(function() {
