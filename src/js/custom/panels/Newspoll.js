@@ -265,8 +265,8 @@ NewsPoll.prototype.buildBetterPM = function() {
         xAxis: {
             type: 'datetime',
         	tickInterval: 86400000,
-        	min: 1373932800000 - (86400000 * 3),
-        	max: 1377475200000 + (86400000 * 5),
+        	min: 1374796800000 - (86400000 * 3),
+        	max: 1377907200000 + (86400000 * 5),
 			labels: {
 			    align : 'center',
 			    x: 0, y: 25,

@@ -114,6 +114,14 @@ DataInterface = function() {
 		name : 'One Nation',
 		colour : '#999999'
 	};
+	this.parties['FP'] = {
+		name : 'Future Party',
+		colour : '#999999'
+	};
+	this.parties['RUA'] = {
+		name : 'Rise Up Australia Party',
+		colour : '#999999'
+	};
 	this.parties['IND'] = {
 		name : '',
 		colour : '#999999'
