@@ -40,15 +40,19 @@ DataInterface = function() {
 	};
 	this.parties['KAP'] = {
 		name : "Katter's Australian Party",
-		colour : '#8da13e'
+		colour : '#999999'
+	};
+	this.parties['APP'] = {
+		name : "Katter's Australian Party",
+		colour : '#999999'
 	};
 	this.parties['DSQ'] = {
 		name : 'DS4SEQ',
-		colour : '#000000'
+		colour : '#999999'
 	};
 	this.parties['FFP'] = {
 		name : 'Family First Party',
-		colour : '#000000'
+		colour : '#999999'
 	};
 	this.parties['ONP'] = {
 		name : 'One Nation',
@@ -577,7 +581,7 @@ DataInterface.prototype.loadCandidates = function(startOffset) {
  */
 DataInterface.prototype.findElectorateData = function(electorate) {
 	for(var i = 0; i < this.electorates.length; i++) {
-		if(electorate.toLowerCase() == this.electorates[i].seat.toLowerCase().replace('\'', '')) {
+		if(electorate.toLowerCase().replace('\'', '') == this.electorates[i].seat.toLowerCase().replace('\'', '')) {
 			return this.electorates[i];
 		}
 	}

@@ -307,7 +307,8 @@ ElectoratesPanel.prototype.openElectorate = function(electorate) {
 			}
 			var cadidate = cadidatesList[i];
 			var cCode = (cadidate.partyCode=='ZZZ') ? 'IND' : cadidate.partyCode;
-			electorateHTML += "<li class='"+extraClass+"'><span style='color:" + dataInterface.parties[cadidate.partyCode].colour + "'> " + cCode + "</span>" + cadidate.candidate+ "</li>";
+			var colour = (dataInterface.parties[cadidate.partyCode] === undefined) ? "#999999" : dataInterface.parties[cadidate.partyCode].colour;
+			electorateHTML += "<li class='"+extraClass+"'><span style='color:" + colour + "'> " + cCode + "</span>" + cadidate.candidate+ "</li>";
 		};
 			
 		
